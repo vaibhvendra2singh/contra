@@ -2,7 +2,6 @@ package com.contra.oms.service;
 
 import com.contra.oms.api.ApiModels;
 import com.contra.oms.domain.FeatureFlag;
-import com.contra.oms.domain.InvalidOrderTransitionException;
 import com.contra.oms.domain.NotificationLog;
 import com.contra.oms.domain.Order;
 import com.contra.oms.domain.OrderLine;
@@ -33,8 +32,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@SuppressWarnings("null")
 public class OrderManagementService {
-    private static final String SYSTEM_ACTOR = "system";
     private final OrderRepository orders;
     private final ProductRepository products;
     private final PaymentAttemptRepository payments;

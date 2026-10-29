@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.time.Instant;
 
 @Service
+@SuppressWarnings("null")
 public class JiraIntegrationService {
     private final JiraClient jira;
     private final FeatureFlagRepository flags;

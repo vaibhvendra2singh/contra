@@ -18,7 +18,7 @@ import org.springframework.core.annotation.Order;
 public class SeedData {
     @Bean
     @Order(1)
-    CommandLineRunner seedCatalog(ProductRepository products, FeatureFlagRepository flags) {
+    public CommandLineRunner seedCatalog(ProductRepository products, FeatureFlagRepository flags) {
         return args -> {
             seedProduct(products, "CONTRA-MUG", "Contra Ceramic Mug", "A sturdy 350 ml ceramic mug.", "12.00", 40,
                     "00000000-0000-0000-0000-000000000001");
@@ -34,7 +34,7 @@ public class SeedData {
 
     @Bean
     @Order(2)
-    CommandLineRunner demoOrder(OrderManagementService orders,
+    public CommandLineRunner demoOrder(OrderManagementService orders,
                                 @org.springframework.beans.factory.annotation.Value("${oms.demo-mode:false}") boolean demoMode) {
         return args -> {
             if (!demoMode || orders.allOrders().stream().anyMatch(o -> "demo@contra.test".equals(o.customerEmail()))) return;
@@ -48,12 +48,14 @@ public class SeedData {
         };
     }
 
+    @SuppressWarnings("null")
     private void seedProduct(ProductRepository repository, String sku, String name, String description,
                              String price, int stock, String id) {
         UUID uuid = UUID.fromString(id);
         if (!repository.existsById(uuid)) repository.save(new Product(uuid, sku, name, description, new BigDecimal(price), stock));
     }
 
+    @SuppressWarnings("null")
     private void seedFlag(FeatureFlagRepository repository, String key, String description,
                           String storyKey, String qaIssueKey) {
         FeatureFlag flag = repository.findById(key).orElseGet(() -> new FeatureFlag(key, description, false));

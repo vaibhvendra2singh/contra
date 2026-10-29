@@ -4,10 +4,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
@@ -43,10 +40,10 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("occurredAt ASC")
-    private List<OrderTransition> transitions = new ArrayList<>();
+    private final List<OrderTransition> transitions = new ArrayList<>();
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderLine> items = new ArrayList<>();
+    private final List<OrderLine> items = new ArrayList<>();
 
     protected Order() { }
 
@@ -110,6 +107,7 @@ public class Order {
     }
 
     public UUID getId() { return id; }
+    public long getVersion() { return version; }
     public OrderStatus getStatus() { return status; }
     public int getPaymentRetries() { return paymentRetries; }
     public List<OrderTransition> getTransitions() { return Collections.unmodifiableList(transitions); }

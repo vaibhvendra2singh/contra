@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.http.MediaType;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriUtils;
@@ -20,15 +21,16 @@ import java.util.Map;
 /** Small Jira Cloud REST adapter. Failures are contained at the service boundary. */
 @Component
 @Conditional(JiraRestClient.ConfiguredJiraCondition.class)
+@SuppressWarnings("null")
 public class JiraRestClient implements JiraClient {
     public static class ConfiguredJiraCondition implements Condition {
-        @Override public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        @Override public boolean matches(@NonNull ConditionContext context, @NonNull AnnotatedTypeMetadata metadata) {
             String url = context.getEnvironment().getProperty("oms.jira.base-url", "");
             return !url.isBlank() && !url.contains("your-site.atlassian.net");
         }
     }
     public static class NotConfiguredJiraCondition implements Condition {
-        @Override public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        @Override public boolean matches(@NonNull ConditionContext context, @NonNull AnnotatedTypeMetadata metadata) {
             String url = context.getEnvironment().getProperty("oms.jira.base-url", "");
             return url.isBlank() || url.contains("your-site.atlassian.net");
         }

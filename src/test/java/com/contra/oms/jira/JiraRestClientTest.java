@@ -18,6 +18,7 @@ class JiraRestClientTest {
     private static final String BASE_URL = "https://jira.example.test";
 
     @Test
+    @SuppressWarnings("null")
     void createsBugWithOrderContextWhenNoOpenDuplicateExists() {
         RestClient.Builder builder = RestClient.builder();
         MockRestServiceServer server = MockRestServiceServer.bindTo(builder).build();
@@ -39,6 +40,7 @@ class JiraRestClientTest {
     }
 
     @Test
+    @SuppressWarnings("null")
     void reusesExistingOpenBugInsteadOfCreatingDuplicate() {
         RestClient.Builder builder = RestClient.builder();
         MockRestServiceServer server = MockRestServiceServer.bindTo(builder).build();

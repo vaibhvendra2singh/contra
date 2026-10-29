@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         "oms.demo-mode=false"
 })
 @Transactional
+@SuppressWarnings("null")
 class OrderManagementIntegrationTest {
     @Autowired private OrderManagementService service;
     @Autowired private ProductRepository products;
