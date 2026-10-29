@@ -27,6 +27,7 @@ oms:
     project-key: ${JIRA_PROJECT_KEY:OM2}
   payment:
     max-retries: ${MAX_PAYMENT_RETRIES:3}
+  demo-mode: ${DEMO_MODE:false}
   orders:
     stuck-threshold-hours: ${STUCK_ORDER_HOURS:24}
 springdoc:

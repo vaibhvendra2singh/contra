@@ -1,51 +1,48 @@
-# Jira setup status
+# Jira Setup Status
 
-The visible Jira browser was used to create the Scrum team-managed project and
-configure its board. The project is **E-Commerce Feature Rollout & Order
-Management 2** (`OM2`), with board ID `172`.
+The project and backlog were created using the visible Jira browser on `vaibhvendra-vusimq0m.atlassian.net`.
 
-## Completed in Jira
+## Project
 
-- Project and Scrum board created on `vaibhvendra-vusimq0m.atlassian.net`.
-- Board columns: To Do, In Progress, In Review, QA, Done.
-- Epics created: Order Creation & Checkout (OM2-1), Payment Processing
-  (OM2-2), Inventory & Fulfillment (OM2-3), Shipping & Tracking (OM2-4),
-  Release Management & Feature Flags (OM2-5), Jira Integration & Dashboard
-  (OM2-6), QA & Release Readiness (OM2-7), and Cancellation, Returns & Refunds
-  (OM2-8).
-- The visible work item form exposes Epic, Feature, Task, Story, Bug, and
-  Sub-task. Story point estimate was inspected as `customfield_10016`.
-- Three empty sprints were created by Jira: OM2 Sprint 1, OM2 Sprint 2, and
-  OM2 Sprint 3.
+- Name: **E-Commerce Feature Rollout & Order Management 2**
+- Key: **OM2**
+- Project type: Scrum team-managed
+- Project URL: <https://vaibhvendra-vusimq0m.atlassian.net/jira/software/projects/OM2>
+- Board URL: <https://vaibhvendra-vusimq0m.atlassian.net/jira/software/projects/OM2/boards/172>
+- Backlog URL: <https://vaibhvendra-vusimq0m.atlassian.net/jira/software/projects/OM2/boards/172/backlog>
 
-## Still to configure
+## Configured
 
-- Stories, acceptance criteria, points, priorities, labels, QA tasks, and
-  dependencies have not yet been created/assigned in Jira. The full source
-  backlog is in [`../jira/seed.json`](../jira/seed.json).
-- The browser-visible team-managed project settings expose sprints and story
-  point estimation but no Releases page. The direct project Releases route
-  returned Jira's `not-found` page. Consequently, versions and sprint goals are
-  not claimed as configured.
-- `jira/rest-fallback.py` can create missing versions and set up missing sprint
-  names/goals using Jira REST. It was not run. Existing sprint names are checked
-  first, making reruns safe. Use `--dry-run` before applying changes.
-- The optional invite step was skipped; no teammates were invited.
+- Board ID 172; columns To Do, In Progress, In Review, QA, Done.
+- Eight epics: OM2-1 through OM2-8 for checkout, payments, inventory/fulfillment, shipping/tracking, feature flags, Jira integration, QA/release readiness, and returns/refunds.
+- Jira issue type and story estimate field were inspected. The UI exposes Epic, Feature, Task, Story, Bug, and Sub-task; story point estimate field is `customfield_10016`.
+- Three empty sprints exist: OM2 Sprint 1, OM2 Sprint 2, OM2 Sprint 3.
+- 25 story-type work items OM2-9 through OM2-33 are in the backlog. OM2-24 duplicates the release flag story that is also OM2-23.
 
-## REST fallback credentials
+## Still incomplete
 
-If you want to run the fallback, generate an Atlassian API token from your
-Atlassian account security settings, then put it in a local `.env` (already
-ignored by Git) or export the variables in your shell. Keep `.env.example` as a
-placeholder only:
+- Remove or repurpose duplicate OM2-24; the source `jira/seed.json` defines 24 stories.
+- Stories currently have no story point estimates or detailed acceptance criteria entered in Jira; all are To Do and unassigned.
+- Development/QA tasks and subtasks have not been created; stories are not linked to QA tasks.
+- The three sprints are empty; sprint goals are not set and Sprint 1 is not started.
+- Dependency issue links are not configured.
+- Release versions v0.1, v0.2, and v1.0 are not configured. The visible team-managed project UI did not expose a Releases page.
+- Definition of Done and release-readiness checklist still need to be entered in the Jira project description.
+- No sprint dashboard or weekly Jira status report has been created; no Confluence spec page has been published.
+- No teammates were invited.
+
+The 404 previously shown was the invalid `/boards/172/not-found` route. The working backlog and board URLs above load; the board remains visually empty until stories are assigned to a sprint and Sprint 1 is started.
+
+## REST fallback for versions and sprint goals
+
+`jira/rest-fallback.py` is idempotent by version/sprint name and supports `--dry-run`. The sprint metadata is available in `jira/seed.json`. It has not been run because no API token is present in the workspace.
+
+To configure it, generate an Atlassian API token from the account security settings and set these variables in the ignored `.env` file:
 
 ```sh
-export JIRA_BASE_URL=https://vaibhvendra-vusimq0m.atlassian.net
-export JIRA_EMAIL=your-atlassian-login@example.com
-export JIRA_API_TOKEN=your-local-token
-python3 jira/rest-fallback.py --dry-run
-python3 jira/rest-fallback.py
+JIRA_BASE_URL=https://vaibhvendra-vusimq0m.atlassian.net
+JIRA_EMAIL=your-atlassian-login@example.com
+JIRA_API_TOKEN=your-local-token
 ```
 
-The fallback does not create stories, link dependencies, or assign work to
-sprints; those require the backlog tickets to exist first.
+Then run `python3 jira/rest-fallback.py --dry-run`, inspect the proposed changes, and run `python3 jira/rest-fallback.py` to apply. Never commit `.env` or print the token.
