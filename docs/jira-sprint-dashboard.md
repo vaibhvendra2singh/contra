@@ -22,9 +22,9 @@
 
 | Sprint | Work items | Points | State | Next step |
 | --- | ---: | ---: | --- | --- |
-| OM2 Sprint 1 | 0 | Not estimated | Not started | Add checkout/payment stories and goal; groom before start |
-| OM2 Sprint 2 | 0 | Not estimated | Not started | Add inventory/fulfillment/shipping/cancellation scope |
-| OM2 Sprint 3 | 0 | Not estimated | Not started | Add returns/flags/QA/Jira scope |
+| OM2 Sprint 1 | 0 | Not estimated | Not started | Goal set; assign checkout/payment stories and groom before start |
+| OM2 Sprint 2 | 0 | Not estimated | Not started | Goal set; assign inventory/fulfillment/shipping/cancellation scope |
+| OM2 Sprint 3 | 0 | Not estimated | Not started | Goal set; assign returns/flags/QA/Jira scope |
 
 ## Risks and planning gaps
 

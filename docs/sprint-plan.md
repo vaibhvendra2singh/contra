@@ -1,6 +1,6 @@
 # Sprint Plan
 
-The plan below is the intended three-sprint sequence from the project seed. Jira currently contains three empty sprints; the stories still need sprint assignment, sprint goals, and Sprint 1 activation in Jira.
+The plan below is the intended three-sprint sequence from the project seed. Jira contains three empty sprints with goals configured. Stories still need sprint assignment and grooming before Sprint 1 can be started.
 
 | Sprint | Goal | Planned scope | Release |
 | --- | --- | --- | --- |

@@ -34,6 +34,6 @@ The order-management application, Jira REST boundary, release readiness page, an
 ## Next actions
 
 1. Remove/repurpose OM2-24 and add story acceptance criteria, labels, and Fibonacci estimates.
-2. Create linked development and QA tasks; assign stories to sprints and configure sprint goals.
+2. Create linked development and QA tasks; assign stories to sprints. Goals are configured; keep Sprint 1 unstarted until it is groomed.
 3. Configure release versions and dependencies, then start Sprint 1 and track real status changes.
 4. Add local Jira API token in ignored `.env` only when testing runtime Jira integration.

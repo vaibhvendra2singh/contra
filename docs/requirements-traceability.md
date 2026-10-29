@@ -27,7 +27,7 @@ The original Submission 1 file was not in the workspace, so this matrix traces t
 | 3–5 stories per epic with AC, Fibonacci points, priority, labels | Partial | 25 story work items exist for 24 desired stories; OM2-24 duplicates OM2-23. Jira AC, points, labels, and priority values need completion. |
 | Dev and QA tasks/subtasks; QA-task blocker link per story | Not done | No tasks/subtasks or issue-to-QA links yet. |
 | Dependency links between payment, fulfillment, shipping, returns | Not verified / pending | Seed defines desired links; live links were not confirmed. |
-| Sprint goals, contents, Sprint 1 start | Not done | Three empty, unstarted sprints. |
+| Sprint goals, contents, Sprint 1 start | Partial | Goals are set; all three sprints are empty and unstarted. |
 | v0.1, v0.2, v1.0 versions and story assignments | Not done | Release versions unavailable in visible team-managed project UI; REST fallback is documented but not run. |
 | DoD in Jira description and Confluence spec | Not done | Local documents exist; not entered/published in Jira/Confluence. |
 | Jira sprint dashboard and weekly report | Partial | Snapshot and weekly report saved locally; not published as a live Jira dashboard or Confluence page. |

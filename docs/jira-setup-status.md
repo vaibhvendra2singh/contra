@@ -24,7 +24,7 @@ The project and backlog were created using the visible Jira browser on `vaibhven
 - Remove or repurpose duplicate OM2-24; the source `jira/seed.json` defines 24 stories.
 - Stories currently have no story point estimates or detailed acceptance criteria entered in Jira; all are To Do and unassigned.
 - Development/QA tasks and subtasks have not been created; stories are not linked to QA tasks.
-- The three sprints are empty; sprint goals are not set and Sprint 1 is not started.
+- All three sprint goals are now set. The sprints remain empty, and Sprint 1 is not started.
 - Dependency issue links are not configured.
 - Release versions v0.1, v0.2, and v1.0 are not configured. The visible team-managed project UI did not expose a Releases page.
 - Definition of Done and release-readiness checklist still need to be entered in the Jira project description.
@@ -33,7 +33,9 @@ The project and backlog were created using the visible Jira browser on `vaibhven
 
 The 404 previously shown was the invalid `/boards/172/not-found` route. The working backlog and board URLs above load; the board remains visually empty until stories are assigned to a sprint and Sprint 1 is started.
 
-## REST fallback for versions and sprint goals
+## REST fallback for versions and sprint assignment
+
+Sprint goals were entered in Jira directly. Versions and sprint issue assignments still require the REST fallback or manual Jira setup.
 
 `jira/rest-fallback.py` is idempotent by version/sprint name and supports `--dry-run`. The sprint metadata is available in `jira/seed.json`. It has not been run because no API token is present in the workspace.
 
