@@ -6,7 +6,7 @@
 | --- | ---: | --- |
 | Order state machine valid/invalid transitions | 4 | PASS |
 | Jira integration behavior, feature flag gating, readiness and failure handling | 4 | PASS |
-| Spring/H2 lifecycle, payment retry, inventory, refunds, wallet checkout, order totals and notification logs | 4 | PASS |
+| Spring/H2 lifecycle, payment retry, fulfillment queue, tracking, inventory, refunds, wallet checkout, order totals and notification logs | 4 | PASS |
 
 The test suite uses a mock Jira boundary. Separately, live Jira REST access to the OM2 project, versions, issue search and board sprint data was verified. This does not validate every browser interaction or create an operational auto-bug, which would create external Jira work. The local web app is running at http://localhost:8080 and the Shop and Operations screens were inspected in the browser.
 
