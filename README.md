@@ -39,6 +39,8 @@ For scoped Atlassian API tokens, `JIRA_BASE_URL` is `https://api.atlassian.com/e
 
 ## Jira setup and integration
 
+- The live [OM2 Jira project](https://vaibhvendra-vusimq0m.atlassian.net/jira/software/projects/OM2) has 67/67 work items Done and three closed sprints. The [OM2 Confluence specification](https://vaibhvendra-vusimq0m.atlassian.net/wiki/spaces/OM2/pages/16646145/Product+Specification+Order+Management+and+Safe+Feature+Rollout) and [weekly status report](https://vaibhvendra-vusimq0m.atlassian.net/wiki/spaces/OM2/pages/16678913/Weekly+Status+and+Release+Readiness+2026-10-29) are published.
+
 - Read [`docs/spec.md`](docs/spec.md) and [`jira/seed.json`](jira/seed.json) for the canonical specification and desired backlog.
 - [`jira/rest-fallback.py`](jira/rest-fallback.py) can create missing release versions and sprint goals. Run `python3 jira/rest-fallback.py --dry-run` first.
 - Runtime Jira calls use `JiraClient`; the offline implementation returns empty integration data and never prevents order operations. Verify a scoped token without printing it using `python3 jira/verify-connection.py`.

@@ -16,7 +16,7 @@
 3. **1:15–2:15 — Customer timeline.** The order should appear in Track Order with its ID and status timeline. The seeded order `demo@contra.test` is already delivered with tracking number `DEMO-TRACK-001`; use the full Order ID shown on its Operations card, then enter that ID in Track Order.
 4. **2:15–3:15 — Fulfillment.** In Operations, explain the order counts, fulfillment queue, and notifications. For a newly checked-out order, choose Start fulfillment, add a tracking number, and mark it delivered. The state changes are recorded with actor and timestamp.
 5. **3:15–4:00 — Returns and payments.** Use the delivered seeded demo order to request a return. In Operations, receive the return and issue the refund. For a payment retry demo, create a checkout with `fail-demo`; use Retry payment and leave the token blank to succeed.
-6. **4:00–5:00 — Jira and release safety.** Show the Jira delivery and Release Readiness sections. With Jira credentials configured these display the live Jira version, status, blockers, and points. Offline mode explains why readiness cannot be confirmed and leaves order operations usable. Feature flags start disabled and require the linked delivery issue and QA issue to be Done before enabling; the new-checkout flag has completed Jira story/QA links and can be shown gated; self-service-returns and tracking-notifications remain blocked until their linked work is Done. v0.1 is READY at 29/29; v1.0 remains NOT READY at 0/60.
+6. **4:00–5:00 — Jira and release safety.** Show the Jira delivery and Release Readiness sections. With Jira credentials configured these display the live Jira version, status, blockers, and points. Offline mode explains why readiness cannot be confirmed and leaves order operations usable. Feature flags start disabled and require the linked delivery issue and QA issue to be Done before enabling; all three flags have linked stories and QA tasks marked Done. You can show each flag’s controlled toggle. Readiness reports READY for v0.1 (29/29), v0.2 (27/27), and v1.0 (60/60).
 
 ## Reset demo data
 
@@ -24,4 +24,4 @@ Stop the app, then remove the local database files under `data/` and rerun `./sc
 
 ## Submission note
 
-Sprint 1 is closed with 6 stories / 29 points and QA evidence; Sprint 2 and Sprint 3 are future sprints. Show the completed Sprint 1 Jira report and explain the remaining planned scope accurately.
+All three sprints are closed with every story and linked QA task Done. Show the three sprint reports, release versions, dependency links, and live READY verdicts. Explain that Jira records were caught up after code implementation and do not claim normal multi-week velocity.

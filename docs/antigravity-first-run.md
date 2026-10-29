@@ -51,7 +51,7 @@ In the integrated terminal, from the repository root, run:
 mvn test
 ```
 
-The first Maven run downloads dependencies and needs an internet connection. A passing run ends with `BUILD SUCCESS`; the current suite contains 12 tests covering state transitions, checkout/payment/returns, and offline Jira behavior. Tests use an in-memory H2 database and mock/offline Jira boundary. They do not authenticate to Jira or validate a Jira token.
+The first Maven run downloads dependencies and needs an internet connection. A passing run ends with `BUILD SUCCESS`; the current suite contains 17 tests covering state transitions, checkout/payment/returns, and offline Jira behavior. Tests use an in-memory H2 database and mock/offline Jira boundary. They do not authenticate to Jira or validate a Jira token.
 
 ## 5. Start the app
 
@@ -96,10 +96,10 @@ The optional REST fallback loads simple `KEY=VALUE` entries from `.env` and supp
 python3 jira/rest-fallback.py --dry-run
 ```
 
-The dry run performs Jira reads to compare current versions/sprints and prints planned creates; it does not apply changes. Only run the non-dry-run command if you intend to create the missing versions/sprints. No token is included in this repository.
+The dry run compares configured versions/sprints with live Jira and prints any missing setup; it does not apply changes. No token is included in this repository.
 
 ## 8. Project-data integrity
 
-- `jira/seed.json` is a plan, not a readback of live Jira. The live Jira snapshot has 8 epics, 25 unique stories, QA and dev tasks, and three versions. Sprint 1 is closed with 29/29 points Done; Sprint 2 and Sprint 3 are future. See `jira-setup-status.md` for the dated readback.
+- `jira/seed.json` is a plan, not a readback of live Jira. The live Jira snapshot has 8 epics, 25 unique stories, QA and dev tasks, and three versions. All three sprints are closed: 29/29, 27/27, and 60/60 points Done. All three Jira versions report READY. See `jira-setup-status.md` for the dated readback.
 - `docs/burndown-and-velocity.md` records Sprint 1’s 29 completed points and explains why one short, retrofitted sprint is not a stable velocity sample. Jira has no historical daily snapshots for a burndown. No fake Gantt matrix is included.
 - Submission 1/client research was not present in the repository; related report text records that gap rather than fabricating findings.

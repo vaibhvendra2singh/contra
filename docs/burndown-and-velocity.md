@@ -1,11 +1,11 @@
 # Burndown and Velocity
 
-**Jira readback:** 2026-10-29. Sprint 1 closed with all 6 stories and 29 points Done. Sprint 2 and Sprint 3 are future sprints with assigned scope but no completed points.
+**Jira readback:** 2026-10-29. All three sprints are closed with their full planned story scope Done.
 
-| Sprint | Planned points | Jira completed points | Jira outcome |
+| Sprint | Planned points | Jira completed points | Result |
 | --- | ---: | ---: | --- |
-| Sprint 1 | 29 | 29 | Closed; all six stories Done |
-| Sprint 2 | 27 | 0 | Future; not started |
-| Sprint 3 | 60 | 0 | Future; not started |
+| Sprint 1 | 29 | 29 | Closed; 6/6 stories Done |
+| Sprint 2 | 27 | 27 | Closed; 7/7 stories Done |
+| Sprint 3 | 60 | 60 | Closed; 12/12 stories Done |
 
-There is one completed sprint, so its 29 points are a single observation, not a dependable team velocity. Jira was populated after implementation; the short recorded Sprint 1 interval does not represent a normal cadence. There are no daily historical snapshots for a burndown chart. Do not infer one.
+The arithmetic Jira velocity samples are 29, 27, and 60 points. Treat these as completion totals for the catch-up records only: implementation preceded Jira setup and the sprint closeouts were short verification sessions, so they are not a defensible forecast of normal team capacity. Jira has no historical daily scope/status snapshots; a burndown chart cannot be reconstructed without inventing data.

@@ -5,6 +5,7 @@ import com.contra.oms.domain.OrderStatus;
 import com.contra.oms.domain.Product;
 import com.contra.oms.repository.PaymentAttemptRepository;
 import com.contra.oms.repository.NotificationLogRepository;
+import com.contra.oms.repository.FeatureFlagRepository;
 import com.contra.oms.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ class OrderManagementIntegrationTest {
     @Autowired private ProductRepository products;
     @Autowired private PaymentAttemptRepository payments;
     @Autowired private NotificationLogRepository notifications;
+    @Autowired private FeatureFlagRepository flags;
 
     @Test
     void successfulCheckoutAllocatesInventoryAndCancellationReleasesAndRefunds() {
@@ -97,6 +99,13 @@ class OrderManagementIntegrationTest {
         assertEquals(new BigDecimal("49.73"), order.total()); // 2 × 19.99 + 3 × 3.25
         assertEquals(2, order.items().size());
         assertEquals(1, payments.count());
+    }
+
+    @Test
+    void seedDataLinksFlagsToTheirJiraStoriesAndQaTasks() {
+        var checkout = flags.findById("new-checkout").orElseThrow();
+        assertEquals("OM2-9", checkout.getJiraIssueKey());
+        assertEquals("OM2-34", checkout.getQaIssueKey());
     }
 
     private Product newProduct(int stock) {

@@ -92,12 +92,14 @@ public class JiraRestClient implements JiraClient {
     @Override public Optional<SprintSummary> activeSprint() {
         if (boardId.isBlank()) return Optional.empty();
         JsonNode sprints = get("/rest/agile/1.0/board/" + boardId + "/sprint?state=active");
+        boolean activeExists = sprints != null && sprints.path("values").isArray() && !sprints.path("values").isEmpty();
         // During the gap between sprints, keep the last completed sprint visible
         // in the admin panel so its verified delivery remains reviewable.
-        if (sprints == null || !sprints.path("values").isArray() || sprints.path("values").isEmpty())
+        if (!activeExists)
             sprints = get("/rest/agile/1.0/board/" + boardId + "/sprint?state=closed");
         if (sprints == null || !sprints.path("values").isArray() || sprints.path("values").isEmpty()) return Optional.empty();
-        JsonNode sprint = sprints.path("values").get(0);
+        JsonNode values = sprints.path("values");
+        JsonNode sprint = values.get(activeExists ? 0 : values.size() - 1);
         String sprintId = sprint.path("id").asText();
         // Board/sprint discovery is allowed for this scoped token, but its Agile
         // sprint-issues route may omit issue visibility. Jira search is also used

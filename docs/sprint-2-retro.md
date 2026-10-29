@@ -1,14 +1,19 @@
 # Sprint 2 Retrospective — Inventory and Fulfillment
 
-Sprint 2 is planned in Jira but has not started. This file is a retrospective template/readiness note, not a report of a completed sprint.
+Sprint 2 closed with 7/7 stories and 27/27 points Done. Jira was populated after the implementation and the sprint was closed after acceptance checks, so this record does not represent a normal multi-week team sprint.
 
-## Ready for the sprint
+## What went well
 
-- Seven stories (27 points) are assigned with a goal and release version.
-- Inventory, shipping, tracking and cancellation paths exist in the app and have automated lifecycle coverage.
+- Integration checks cover allocation only after payment, fulfillment queue behavior, shipping/tracking, cancellation stock release, and notification logging.
+- QA evidence is attached to each linked subtask.
 
-## Actions for the team
+## What did not go well
 
-1. Start Sprint 2 after Sprint 1 closeout and carry over any unfinished real work.
-2. Record inventory, fulfillment, tracking and cancellation acceptance evidence against QA tasks.
-3. Write the review and retro from the actual Jira outcome at sprint close.
+- The work was implemented before sprint planning, so owners and historical status changes were not recorded as development happened.
+- The short verification closeout is not useful as a standard velocity baseline.
+
+## Actions
+
+1. Use the remaining project work as a live class exercise with named team owners if the course requires it.
+2. For future work, create and groom Jira stories before coding starts.
+3. Record real changes daily so a burndown can be generated from actual history.

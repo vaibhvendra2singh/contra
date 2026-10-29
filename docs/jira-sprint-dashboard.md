@@ -2,12 +2,12 @@
 
 **Live snapshot:** 2026-10-29 · [Project](https://vaibhvendra-vusimq0m.atlassian.net/jira/software/projects/OM2) · [Board 172](https://vaibhvendra-vusimq0m.atlassian.net/jira/software/projects/OM2/boards/172)
 
-| Sprint | Stories | Points | Done | State |
-| --- | ---: | ---: | ---: | --- |
-| OM2 Sprint 1 | 6 | 29 | 29 | Closed |
-| OM2 Sprint 2 | 7 | 27 | 0 | Future |
-| OM2 Sprint 3 | 12 | 60 | 0 | Future |
+| Sprint | Stories Done | Points Done | State |
+| --- | ---: | ---: | --- |
+| OM2 Sprint 1 | 6 / 6 | 29 / 29 | Closed |
+| OM2 Sprint 2 | 7 / 7 | 27 / 27 | Closed |
+| OM2 Sprint 3 | 12 / 12 | 60 / 60 | Closed |
 
-Eight epics, 25 stories, 25 linked QA subtasks, nine development tasks, and three versions are configured. Sprint 1 QA comments point to the 12-test passing run; its six stories are Done. Sprint 2 and 3 are planned but not started.
+Project work-item readback: 67 total — 8 epics, 25 stories, 9 development tasks, and 25 QA subtasks; all are Done. All QA links are resolved. Versions v0.1, v0.2 and v1.0 each report READY in the live application.
 
-One closed sprint is not enough to claim a reliable team velocity. No historical daily Jira snapshots exist, so this report does not invent a burndown chart.
+The Jira sprint history was caught up after implementation. These short closeouts are not a normal velocity baseline; no daily historical snapshots exist for a burndown chart.

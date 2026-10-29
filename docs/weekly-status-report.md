@@ -1,25 +1,25 @@
 # Weekly Status Report — OM2
 
-**Date:** 2026-10-29 · **Status:** Sprint 1 closed · **Source:** live Jira readback and local test run.
+**Date:** 2026-10-29 · **Status:** Jira backlog and all three sprint scopes Done · **Source:** live Jira readback, app readiness endpoints and Maven test suite.
 
 ## Summary
 
-The order-management app is running locally, 12 automated tests pass, and live Jira runtime reads work. OM2 has 8 epics, 25 estimated stories, 25 linked QA subtasks, 9 development tasks, 3 versions and 3 populated sprints. Sprint 1 is closed with all six stories / 29 points Done. Sprint 2 and Sprint 3 are future sprints.
+The order-management app is running locally, 17 automated tests pass, and the Jira REST integration is live. All 67 OM2 work items are Done. The three closed sprints total 116/116 planned points. The app reports READY for v0.1, v0.2 and v1.0 with no blocking issues or unresolved dependencies.
 
 ## Metrics
 
-| Sprint | Stories | Assigned points | Done points | State |
-| --- | ---: | ---: | ---: | --- |
-| Sprint 1 | 6 | 29 | 29 | Closed |
-| Sprint 2 | 7 | 27 | 0 | Future |
-| Sprint 3 | 12 | 60 | 0 | Future |
+| Sprint | Stories | Points | State |
+| --- | ---: | ---: | --- |
+| Sprint 1 | 6 / 6 Done | 29 / 29 | Closed |
+| Sprint 2 | 7 / 7 Done | 27 / 27 | Closed |
+| Sprint 3 | 12 / 12 Done | 60 / 60 | Closed |
 
-## Highlights
+## Verification
 
-- Jira integration verified in app: the latest closed sprint, issue links, points and release readiness load from live Jira.
-- Release readiness returns NOT READY for v1.0 with 0/60 points done and open blockers, matching Jira.
-- `mvn test -q`: 12 passed, 0 failed.
+- `mvn test -q`: 17 passed, 0 failed.
+- Live readiness: v0.1 READY 29/29; v0.2 READY 27/27; v1.0 READY 60/60.
+- All 25 QA subtasks and 9 development tasks are Done; QA comments contain test evidence.
 
-## Remaining execution
+## Accuracy note
 
-Sprint 1 QA evidence is recorded and the sprint is closed. The team must start Sprint 2, then Sprint 3, assign real owners, and record their execution and closeout. One closed sprint is not a reliable velocity trend; Jira has no historical daily snapshots for burndown. Exact Submission 1 client findings were not provided; no client research has been invented.
+Jira tracking was populated after the code implementation, and the sprint closeouts were short verification/catch-up sessions. Do not present the recorded points as a normal multi-week velocity trend or invent a historical burndown. The original Submission 1 file was not in the workspace; insert its exact client-research findings before hand-in.
