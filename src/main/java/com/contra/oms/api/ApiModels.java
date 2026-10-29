@@ -56,7 +56,15 @@ public final class ApiModels {
                                 List<OrderView> fulfillmentQueue, List<NotificationView> recentNotifications) { }
     public record NotificationView(UUID orderId, String recipient, String channel, String subject,
                                    String message, Instant createdAt) { }
-    public record FeatureFlagView(String key, String description, boolean enabled) { }
+    public record FeatureFlagView(String key, String description, boolean enabled, String jiraIssueKey,
+                                  String qaIssueKey) { }
     public record ToggleRequest(boolean enabled) { }
+    public record JiraIssueView(String key, String summary, String status, int points, boolean openBlocker,
+                                String url) { }
+    public record ReleaseReadinessView(String version, boolean jiraAvailable, boolean ready, List<String> reasons,
+                                       Map<String, List<JiraIssueView>> issuesByStatus, int donePoints,
+                                       int totalPoints, List<JiraIssueView> blockers) { }
+    public record JiraPanelView(boolean jiraAvailable, String boardUrl, String sprintName, String sprintGoal,
+                                int donePoints, int totalPoints, List<JiraIssueView> recentIssues) { }
     public record ErrorView(String error, String message) { }
 }

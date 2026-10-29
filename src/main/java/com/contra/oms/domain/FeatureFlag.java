@@ -13,17 +13,27 @@ public class FeatureFlag {
     private String key;
     private String description;
     private boolean enabled;
+    private String jiraIssueKey;
+    private String qaIssueKey;
 
     protected FeatureFlag() { }
 
     public FeatureFlag(String key, String description, boolean enabled) {
+        this(key, description, enabled, null, null);
+    }
+
+    public FeatureFlag(String key, String description, boolean enabled, String jiraIssueKey, String qaIssueKey) {
         this.key = key;
         this.description = description;
         this.enabled = enabled;
+        this.jiraIssueKey = jiraIssueKey;
+        this.qaIssueKey = qaIssueKey;
     }
 
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
     public String getKey() { return key; }
     public String getDescription() { return description; }
     public boolean isEnabled() { return enabled; }
+    public String getJiraIssueKey() { return jiraIssueKey; }
+    public String getQaIssueKey() { return qaIssueKey; }
 }

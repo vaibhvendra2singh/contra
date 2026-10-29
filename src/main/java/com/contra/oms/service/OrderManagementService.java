@@ -223,14 +223,14 @@ public class OrderManagementService {
 
     @Transactional(readOnly = true)
     public List<ApiModels.FeatureFlagView> listFlags() {
-        return flags.findAll(Sort.by("key")).stream().map(f -> new ApiModels.FeatureFlagView(f.getKey(), f.getDescription(), f.isEnabled())).toList();
+        return flags.findAll(Sort.by("key")).stream().map(f -> new ApiModels.FeatureFlagView(f.getKey(), f.getDescription(), f.isEnabled(), f.getJiraIssueKey(), f.getQaIssueKey())).toList();
     }
 
     @Transactional
     public ApiModels.FeatureFlagView toggleFlag(String key, boolean enabled) {
         FeatureFlag flag = flags.findById(key).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Feature flag not found"));
         flag.setEnabled(enabled);
-        return new ApiModels.FeatureFlagView(flag.getKey(), flag.getDescription(), flag.isEnabled());
+        return new ApiModels.FeatureFlagView(flag.getKey(), flag.getDescription(), flag.isEnabled(), flag.getJiraIssueKey(), flag.getQaIssueKey());
     }
 
     private Order requireOrder(UUID id) {

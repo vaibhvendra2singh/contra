@@ -20,6 +20,11 @@ spring:
       enabled: true
       path: /h2-console
 oms:
+  jira:
+    base-url: ${JIRA_BASE_URL:}
+    email: ${JIRA_EMAIL:}
+    api-token: ${JIRA_API_TOKEN:}
+    project-key: ${JIRA_PROJECT_KEY:OM2}
   payment:
     max-retries: ${MAX_PAYMENT_RETRIES:3}
   orders:

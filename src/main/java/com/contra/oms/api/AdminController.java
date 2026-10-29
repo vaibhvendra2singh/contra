@@ -1,6 +1,7 @@
 package com.contra.oms.api;
 
 import com.contra.oms.service.OrderManagementService;
+import com.contra.oms.service.JiraIntegrationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +17,19 @@ import java.util.UUID;
 @RequestMapping("/api/admin")
 public class AdminController {
     private final OrderManagementService service;
-    public AdminController(OrderManagementService service) { this.service = service; }
+    private final JiraIntegrationService jira;
+    public AdminController(OrderManagementService service, JiraIntegrationService jira) { this.service = service; this.jira = jira; }
 
     @GetMapping("/dashboard")
     public ApiModels.DashboardView dashboard() { return service.dashboard(); }
+
+    @GetMapping("/jira/dashboard")
+    public ApiModels.JiraPanelView jiraDashboard() { return jira.dashboardPanel(); }
+
+    @GetMapping("/jira/readiness")
+    public ApiModels.ReleaseReadinessView readiness(@org.springframework.web.bind.annotation.RequestParam(defaultValue = "v1.0") String version) {
+        return jira.readiness(version);
+    }
 
     @GetMapping("/orders")
     public List<ApiModels.OrderView> orders() { return service.allOrders(); }
@@ -49,7 +59,7 @@ public class AdminController {
 
     @PutMapping("/flags/{key}")
     public ApiModels.FeatureFlagView toggle(@PathVariable String key, @RequestBody ApiModels.ToggleRequest request) {
-        return service.toggleFlag(key, request.enabled());
+        return jira.toggleFlag(key, request.enabled());
     }
 
     @PostMapping("/products/{id}/restock")

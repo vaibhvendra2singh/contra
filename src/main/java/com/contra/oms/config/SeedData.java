@@ -22,9 +22,9 @@ public class SeedData {
                     "00000000-0000-0000-0000-000000000002");
             seedProduct(products, "CONTRA-TEE", "Contra Team T-shirt", "Soft cotton team shirt.", "24.00", 18,
                     "00000000-0000-0000-0000-000000000003");
-            flags.findById("self-service-returns").orElseGet(() -> flags.save(new FeatureFlag("self-service-returns", "Customer return request flow", true)));
-            flags.findById("new-checkout").orElseGet(() -> flags.save(new FeatureFlag("new-checkout", "Updated checkout experience", false)));
-            flags.findById("tracking-notifications").orElseGet(() -> flags.save(new FeatureFlag("tracking-notifications", "Shipping status notifications", true)));
+            flags.findById("self-service-returns").orElseGet(() -> flags.save(new FeatureFlag("self-service-returns", "Customer return request flow", true, "OM2-32", null)));
+            flags.findById("new-checkout").orElseGet(() -> flags.save(new FeatureFlag("new-checkout", "Updated checkout experience", false, "OM2-9", null)));
+            flags.findById("tracking-notifications").orElseGet(() -> flags.save(new FeatureFlag("tracking-notifications", "Shipping status notifications", true, "OM2-20", null)));
         };
     }
 
