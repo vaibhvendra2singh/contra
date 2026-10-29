@@ -11,7 +11,7 @@ cp .env.example .env   # optional; keep real values only in this ignored file
 ./scripts/start.sh
 ```
 
-The one-command demo launcher checks Java and Maven, creates the H2 file database under `data/`, seeds the catalog, and progresses a delivered demo order with tracking. Open [http://localhost:8080](http://localhost:8080). API docs are at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html). Leave the terminal open and press Ctrl+C to stop. Set `DEMO_MODE=false` to disable demo order creation. The demo runner is idempotent for `demo@contra.test`. Follow [`docs/demo-script.md`](docs/demo-script.md) for the teacher walkthrough and reset steps.
+The one-command launcher checks Java and Maven, creates the H2 file database under `data/`, seeds a clearly identified local sample catalog, and (with `DEMO_MODE=true`) progresses a clearly identified local demo order with tracking. These fixtures are not real client or customer data; Jira status reports use observed project data. Open [http://localhost:8080](http://localhost:8080). API docs are at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html). Leave the terminal open and press Ctrl+C to stop. Set `DEMO_MODE=false` to disable demo order creation. The demo runner is idempotent for `demo@contra.test`. Follow [`docs/antigravity-first-run.md`](docs/antigravity-first-run.md) for first-time installation, setup, and verification, and [`docs/demo-script.md`](docs/demo-script.md) for the teacher walkthrough and reset steps.
 
 To run tests:
 
@@ -31,9 +31,9 @@ mvn test
 | `JIRA_EMAIL` | Jira account email for runtime REST calls | unset |
 | `JIRA_API_TOKEN` | Jira API token for runtime REST calls | unset |
 | `JIRA_PROJECT_KEY` | Project used for status reads and operational bugs | `OM2` |
-| `DEMO_MODE` | Create a demo order on first startup | `false` (the start script defaults it to `true`) |
+| `DEMO_MODE` | Create a local delivered demo fixture on first startup | `false` in Spring Boot; `true` in `scripts/start.sh` for the teacher demo |
 
-Generate an Atlassian API token in your account security settings only if you want the running app to query Jira. Put values in `.env`; never commit that file. Project/backlog setup itself was done in the visible Jira browser. The optional version/sprint REST fallback supports `--dry-run` and uses the same `JIRA_*` variables.
+Generate an Atlassian API token in your account security settings only if you want the running app to query Jira. Put values in `.env`; never commit that file. Project/backlog setup itself was done in the visible Jira browser. The optional version/sprint REST fallback supports `--dry-run` and loads the `JIRA_*` variables from `.env` (exported shell variables take precedence).
 
 ## Jira setup and integration
 
@@ -73,6 +73,7 @@ Capture these for the submission; the exact target pages are listed in [`docs/ev
 - [`docs/product-backlog.md`](docs/product-backlog.md) — MoSCoW stories and estimates.
 - [`docs/sprint-plan.md`](docs/sprint-plan.md) — planned sprint goals and scope.
 - [`docs/definition-of-done.md`](docs/definition-of-done.md) — release checklist.
+- [`docs/antigravity-first-run.md`](docs/antigravity-first-run.md) — setup from a clean start in Antigravity.
 - [`docs/demo-script.md`](docs/demo-script.md) — five-minute walkthrough.
 - [`docs/test-report.md`](docs/test-report.md) — test cases and recorded results.
 - [`docs/submission-1-mapping.md`](docs/submission-1-mapping.md) — problem, gap, and client findings mapping.

@@ -82,7 +82,28 @@ def ensure_sprints(jira: Jira, board_id: int):
             print(f"  created id={created.get('id')}")
 
 
+def load_env_file(path: str = ".env") -> None:
+    """Load simple KEY=VALUE entries without replacing exported environment values."""
+    try:
+        lines = open(path, encoding="utf-8")
+    except FileNotFoundError:
+        return
+    with lines:
+        for raw_line in lines:
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip()
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in ("\"", "'"):
+                value = value[1:-1]
+            if key and key not in os.environ:
+                os.environ[key] = value
+
+
 def main() -> int:
+    load_env_file()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="inspect existing Jira setup and print planned creates")
     parser.add_argument("--board-id", type=int, default=172)

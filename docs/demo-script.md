@@ -7,7 +7,7 @@
 3. Wait for Spring Boot to print `Started OrderManagementApplication`.
 4. Open `http://localhost:8080`. The first startup downloads dependencies and creates `data/oms`.
 5. Keep Terminal open during the presentation. Use `Ctrl+C` to stop the app afterward.
-6. Jira is optional for the app demo. Without Jira credentials the order app works in offline mode and readiness correctly reports missing live Jira data.
+6. Jira is optional for the app demo. Without Jira credentials the order app works in offline mode and readiness reports missing live Jira data. The local catalog and delivered Contra Demo Customer order are synthetic fixtures for exercising the application; do not present them as actual client/customer records.
 
 ## Walkthrough (about five minutes)
 

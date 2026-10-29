@@ -17,6 +17,12 @@ if ! command -v mvn >/dev/null 2>&1; then
   echo "Maven 3.8 or later is required. Install Maven, then run this script again." >&2
   exit 1
 fi
+MAVEN_VERSION="$(mvn -version 2>&1 | sed -n '1s/^Apache Maven \([0-9]*\)\.\([0-9]*\).*/\1 \2/p')"
+read -r MAVEN_MAJOR MAVEN_MINOR <<< "$MAVEN_VERSION"
+if [[ -z "${MAVEN_MAJOR:-}" || "$MAVEN_MAJOR" -lt 3 || ( "$MAVEN_MAJOR" -eq 3 && "$MAVEN_MINOR" -lt 8 ) ]]; then
+  echo "Maven 3.8 or later is required. Detected: $(mvn -version 2>&1 | head -n 1)" >&2
+  exit 1
+fi
 
 if [[ -f .env ]]; then
   set -a
