@@ -128,7 +128,7 @@ function renderAdminOrder(order) {
   if (order.status === 'SHIPPED') action = `<button data-action="deliver" data-id="${order.id}">Mark delivered</button>`;
   if (order.status === 'RETURN_REQUESTED') action = `<button data-action="returned" data-id="${order.id}">Receive return</button>`;
   if (order.status === 'RETURNED') action = `<button data-action="refund" data-id="${order.id}">Issue refund</button>`;
-  return `<article class="order-card"><div class="order-header"><div><h2>${escapeHtml(order.id.slice(0, 8).toUpperCase())} · ${money(order.total)}</h2><div class="muted">${escapeHtml(order.customerName)} · ${escapeHtml(order.customerEmail)}</div></div><span class="status-pill">${pretty(order.status)}</span></div><p class="stock-label">${order.items.map(item => `${item.quantity} × ${escapeHtml(item.productName)}`).join(' · ')}</p>${action ? `<div class="order-actions">${action}</div>` : ''}</article>`;
+  return `<article class="order-card"><div class="order-header"><div><h2>${escapeHtml(order.id.slice(0, 8).toUpperCase())} · ${money(order.total)}</h2><div class="muted">Order ID: <code>${escapeHtml(order.id)}</code></div><div class="muted">${escapeHtml(order.customerName)} · ${escapeHtml(order.customerEmail)}</div></div><span class="status-pill">${pretty(order.status)}</span></div><p class="stock-label">${order.items.map(item => `${item.quantity} × ${escapeHtml(item.productName)}`).join(' · ')}</p>${action ? `<div class="order-actions">${action}</div>` : ''}</article>`;
 }
 async function adminAction(button) {
   const id = button.dataset.id, action = button.dataset.action;

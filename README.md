@@ -4,14 +4,14 @@ College project for Agile Software Development (CSET455), Team Contra. The appli
 
 ## Run locally
 
-Requirements: Java 17 and Maven 3.9 or later.
+Requirements: Java 17 or later and Maven 3.8 or later. The launcher will tell you if either is missing.
 
 ```sh
 cp .env.example .env   # optional; keep real values only in this ignored file
 ./scripts/start.sh
 ```
 
-The script starts the Spring Boot app on port 8080, creates the H2 file database under `data/`, seeds the catalog, and enables a demo order that is progressed through delivery. Open [http://localhost:8080](http://localhost:8080). API docs are at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html). Set `DEMO_MODE=false` to disable demo order creation. The demo runner is idempotent for `demo@contra.test`.
+The one-command demo launcher checks Java and Maven, creates the H2 file database under `data/`, seeds the catalog, and progresses a delivered demo order with tracking. Open [http://localhost:8080](http://localhost:8080). API docs are at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html). Leave the terminal open and press Ctrl+C to stop. Set `DEMO_MODE=false` to disable demo order creation. The demo runner is idempotent for `demo@contra.test`. Follow [`docs/demo-script.md`](docs/demo-script.md) for the teacher walkthrough and reset steps.
 
 To run tests:
 
@@ -41,7 +41,7 @@ Generate an Atlassian API token in your account security settings only if you wa
 - [`jira/rest-fallback.py`](jira/rest-fallback.py) can create missing release versions and sprint goals. Run `python3 jira/rest-fallback.py --dry-run` first.
 - Runtime Jira calls use `JiraClient`; the offline implementation returns empty integration data and never prevents order operations.
 - Admin APIs include `/api/admin/jira/dashboard` and `/api/admin/jira/readiness?version=v1.0`.
-- The admin screen shows sprint progress and release readiness. An enabled flag can be switched off at any time; enabling requires both linked Jira issues to be Done.
+- The admin screen shows sprint progress and release readiness. Demo flags start disabled; enabling requires both linked Jira issues to be Done. Jira credentials are optional: without them the page clearly shows offline/unready status, while checkout and order processing continue normally.
 - Payment failures after the configured retries and old stuck orders create deduplicated Jira Bugs when Jira credentials are configured.
 
 ## Architecture
