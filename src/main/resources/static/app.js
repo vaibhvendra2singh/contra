@@ -1,6 +1,6 @@
 const state = { products: [], cart: new Map() };
 const $ = (selector, root = document) => root.querySelector(selector);
-const money = value => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value || 0);
+const money = value => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value || 0);
 const dateTime = value => new Date(value).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
 
 async function api(path, options = {}) {
