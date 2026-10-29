@@ -20,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
@@ -40,12 +41,14 @@ public class OrderManagementService {
     private final NotificationLogRepository notifications;
     private final FeatureFlagRepository flags;
     private final PaymentGateway gateway;
+    private final JiraIntegrationService jiraIntegration;
     private final int maxRetries;
     private final long stuckThresholdHours;
 
     public OrderManagementService(OrderRepository orders, ProductRepository products,
                                   PaymentAttemptRepository payments, NotificationLogRepository notifications,
                                   FeatureFlagRepository flags, PaymentGateway gateway,
+                                  JiraIntegrationService jiraIntegration,
                                   @Value("${oms.payment.max-retries:3}") int maxRetries,
                                   @Value("${oms.orders.stuck-threshold-hours:24}") long stuckThresholdHours) {
         this.orders = orders;
@@ -54,6 +57,7 @@ public class OrderManagementService {
         this.notifications = notifications;
         this.flags = flags;
         this.gateway = gateway;
+        this.jiraIntegration = jiraIntegration;
         this.maxRetries = maxRetries;
         this.stuckThresholdHours = stuckThresholdHours;
     }
@@ -116,6 +120,9 @@ public class OrderManagementService {
                 result.reference(), Instant.now()));
         if (!result.success()) {
             transition(order, OrderStatus.PAYMENT_FAILED, "payment-gateway");
+            if (order.getPaymentRetries() >= maxRetries) {
+                jiraIntegration.createOperationalBug(order.getId().toString(), order.getStatus().name(), latestTransitionTime(order));
+            }
             return;
         }
         transition(order, OrderStatus.PAID, actor);
@@ -265,5 +272,15 @@ public class OrderManagementService {
 
     private Instant latestTransitionTime(Order order) {
         return order.getTransitions().get(order.getTransitions().size() - 1).getOccurredAt();
+    }
+
+    @Scheduled(fixedDelayString = "${oms.orders.stuck-scan-ms:300000}")
+    @Transactional(readOnly = true)
+    public void reportStuckOrders() {
+        Instant threshold = Instant.now().minus(Duration.ofHours(stuckThresholdHours));
+        orders.findAll().stream()
+                .filter(o -> !List.of(OrderStatus.DELIVERED, OrderStatus.CANCELLED, OrderStatus.REFUNDED).contains(o.getStatus()))
+                .filter(o -> latestTransitionTime(o).isBefore(threshold))
+                .forEach(o -> jiraIntegration.createOperationalBug(o.getId().toString(), o.getStatus().name(), latestTransitionTime(o)));
     }
 }

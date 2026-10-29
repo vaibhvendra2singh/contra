@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -54,5 +55,15 @@ class JiraIntegrationServiceTest {
         assertEquals(8, readiness.totalPoints());
         assertEquals(5, readiness.donePoints());
         assertEquals(1, readiness.blockers().size());
+    }
+
+    @Test
+    void operationalBugReportingIsBestEffortWhenJiraFails() {
+        JiraClient jira = mock(JiraClient.class);
+        when(jira.createOperationalBug("order-1", "PAYMENT_FAILED", Instant.EPOCH))
+                .thenThrow(new IllegalStateException("Jira offline"));
+        JiraIntegrationService service = new JiraIntegrationService(jira, mock(FeatureFlagRepository.class));
+
+        assertTrue(service.createOperationalBug("order-1", "PAYMENT_FAILED", Instant.EPOCH).isEmpty());
     }
 }

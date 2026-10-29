@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.time.Instant;
 
 @Service
 public class JiraIntegrationService {
@@ -48,6 +49,11 @@ public class JiraIntegrationService {
         return active.map(s -> new ApiModels.JiraPanelView(true, s.boardUrl(), s.name(), s.goal(), s.completedPoints(),
                         s.totalPoints(), s.recentIssues().stream().map(this::view).toList()))
                 .orElseGet(() -> new ApiModels.JiraPanelView(false, "", "", "", 0, 0, List.of()));
+    }
+
+    public Optional<String> createOperationalBug(String orderId, String status, Instant occurredAt) {
+        try { return jira.createOperationalBug(orderId, status, occurredAt); }
+        catch (RuntimeException unavailable) { return Optional.empty(); }
     }
 
     @Transactional

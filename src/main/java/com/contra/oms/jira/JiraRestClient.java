@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.time.Instant;
+import java.util.Map;
 
 /** Small Jira Cloud REST adapter. Failures are contained at the service boundary. */
 @Component
@@ -90,6 +92,26 @@ public class JiraRestClient implements JiraClient {
         int done = issues.stream().filter(i -> "Done".equalsIgnoreCase(i.status())).mapToInt(IssueSummary::points).sum();
         return Optional.of(new SprintSummary(sprint.path("name").asText(), sprint.path("goal").asText(), total, done,
                 issues.stream().limit(10).toList(), baseUrl + "/jira/software/projects/" + projectKey + "/boards/" + boardId));
+    }
+
+    @Override public Optional<String> createOperationalBug(String orderId, String status, Instant occurredAt) {
+        String summary = "Order " + orderId + " stuck in " + status;
+        String jql = "project=" + projectKey + " AND issuetype=Bug AND labels=auto-created AND summary ~ \"" + orderId + "\" AND statusCategory != Done";
+        JsonNode found = get("/rest/api/3/search?jql=" + UriUtils.encodeQueryParam(jql, StandardCharsets.UTF_8) + "&maxResults=1&fields=key");
+        if (found != null && found.path("issues").isArray() && !found.path("issues").isEmpty())
+            return Optional.of(found.path("issues").get(0).path("key").asText());
+        try {
+            Map<String, Object> description = Map.of("type", "doc", "version", 1, "content", List.of(
+                    Map.of("type", "paragraph", "content", List.of(Map.of("type", "text", "text",
+                            "Order ID: " + orderId + "; status: " + status + "; observed at: " + occurredAt)))));
+            Map<String, Object> fields = Map.of("project", Map.of("key", projectKey),
+                    "issuetype", Map.of("name", "Bug"), "summary", summary,
+                    "labels", List.of("auto-created"), "description", description);
+            JsonNode created = rest.post().uri("/rest/api/3/issue").contentType(MediaType.APPLICATION_JSON)
+                    .body(Map.of("fields", fields))
+                    .retrieve().body(JsonNode.class);
+            return created == null ? Optional.empty() : Optional.ofNullable(created.path("key").asText(null));
+        } catch (RuntimeException unavailable) { return Optional.empty(); }
     }
 
     private JsonNode get(String path) {
