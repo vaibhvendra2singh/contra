@@ -16,7 +16,7 @@ The supplied project brief records the key finding: this is not just a storefron
 
 ## Agile process followed
 
-Implementation proceeded in repository phases: state machine and persistence; core operations and UI; Jira project and backlog setup; Jira integration; and demo/docs. The implementation was delivered before most Jira tracking was configured, so the issue history does not mirror the coding sequence. Jira Sprint 1 is active with 6 stories / 29 points; all are To Do. Sprint 2 has 7 / 27 and Sprint 3 has 12 / 60 assigned as future sprints. The team must execute and close the sprints before claiming Jira delivery, velocity, or burndown. Current Jira and app readbacks are recorded in `jira-setup-status.md`, `sprint-plan.md`, and `jira-sprint-dashboard.md`.
+Implementation proceeded in repository phases: state machine and persistence; core operations and UI; Jira project and backlog setup; Jira integration; and demo/docs. The implementation was delivered before most Jira tracking was configured, so the issue history does not mirror the coding sequence. Jira Sprint 1 is closed with 6 stories / 29 points Done and QA evidence comments. Sprint 2 has 7 / 27 and Sprint 3 has 12 / 60 assigned as future sprints. The team still needs to execute those sprints; one completed sprint is not a stable velocity measure, and no daily burndown history exists. Current Jira and app readbacks are recorded in `jira-setup-status.md`, `sprint-plan.md`, and `jira-sprint-dashboard.md`.
 
 ## Architecture
 
@@ -24,7 +24,7 @@ The browser frontend calls Spring Boot REST controllers. The order service appli
 
 ## Jira structure
 
-Jira project **E-Commerce Feature Rollout & Order Management 2** (`OM2`) uses Scrum board 172 and eight epics. The live project has eight epics, 25 unique stories, 25 linked QA subtasks, and nine development tasks. All stories have acceptance criteria, estimates, priorities, labels, sprint assignments, and release versions. Sprint 1 is active; the stories remain To Do. See `jira-setup-status.md` for live links and exact state.
+Jira project **E-Commerce Feature Rollout & Order Management 2** (`OM2`) uses Scrum board 172 and eight epics. The live project has eight epics, 25 unique stories, 25 linked QA subtasks, and nine development tasks. All stories have acceptance criteria, estimates, priorities, labels, sprint assignments, and release versions. Sprint 1 is closed with all six stories and linked QA tasks Done; the remaining sprints are future. See `jira-setup-status.md` for exact state.
 
 ## Results
 

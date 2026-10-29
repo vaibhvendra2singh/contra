@@ -62,8 +62,12 @@ class OrderManagementIntegrationTest {
     void deliveredOrderCanCompleteReturnAndRefundLifecycle() {
         Product product = newProduct(5);
         ApiModels.CheckoutResponse checkout = service.checkout(request(product, ""));
+        assertEquals(1, service.dashboard().fulfillmentQueue().size());
         service.beginFulfillment(checkout.orderId());
-        service.ship(checkout.orderId(), "CT-DEMO-123");
+        assertEquals(OrderStatus.FULFILLING.name(), service.getOrder(checkout.orderId()).status());
+        ApiModels.OrderView shipped = service.ship(checkout.orderId(), "CT-DEMO-123");
+        assertEquals("CT-DEMO-123", shipped.trackingNumber());
+        assertEquals("CT-DEMO-123", service.getOrder(checkout.orderId()).trackingNumber());
         service.markDelivered(checkout.orderId());
         service.requestReturn(checkout.orderId(), "customer@example.test");
         service.markReturned(checkout.orderId(), "admin");

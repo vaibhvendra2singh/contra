@@ -92,6 +92,10 @@ public class JiraRestClient implements JiraClient {
     @Override public Optional<SprintSummary> activeSprint() {
         if (boardId.isBlank()) return Optional.empty();
         JsonNode sprints = get("/rest/agile/1.0/board/" + boardId + "/sprint?state=active");
+        // During the gap between sprints, keep the last completed sprint visible
+        // in the admin panel so its verified delivery remains reviewable.
+        if (sprints == null || !sprints.path("values").isArray() || sprints.path("values").isEmpty())
+            sprints = get("/rest/agile/1.0/board/" + boardId + "/sprint?state=closed");
         if (sprints == null || !sprints.path("values").isArray() || sprints.path("values").isEmpty()) return Optional.empty();
         JsonNode sprint = sprints.path("values").get(0);
         String sprintId = sprint.path("id").asText();

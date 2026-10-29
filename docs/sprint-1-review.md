@@ -1,7 +1,9 @@
 # Sprint 1 Review — Order Core and Payments
 
-**Live Jira status:** Sprint 1 is active with six stories assigned (29 points). Readback on 2026-10-29 showed all six To Do, unassigned, and zero completed points. No Jira sprint review or closeout is recorded.
+**Jira outcome:** Closed 2026-10-29. Six stories (OM2-9–OM2-14), 29 planned points, all Done. Each linked QA subtask (OM2-34–OM2-39) is Done with test evidence comments. The sprint goal was order creation, checkout, payment capture and retry paths.
 
-**Product evidence:** checkout, mock card/wallet payment, retries, persistence and order state transitions exist in the repository. The real test run passed all 12 automated tests, including order/payment integration cases. These code and test results are not represented as Jira story completion.
+**Evidence:** `mvn test -q` passed 12 tests (0 failures). The coverage includes order creation and inventory allocation, exact multi-line totals, order timeline actor/timestamps, CARD and WALLET checkout, decline/retry limits, and capture/refund records. Evidence is on the linked Jira QA subtasks and in `docs/test-report.md`.
 
-**Review outcome:** the sprint is in progress; no completion or velocity is reported. The team should assign owners, do the sprint work, record acceptance evidence on Jira, and review/close it after the goal is met.
+**Process note:** Jira tracking was added after implementation, so the sprint was closed once the implemented scope was tested and caught up in Jira. The short Jira interval is not a representative team velocity measure. No daily burndown history exists.
+
+**Review outcome:** Sprint 1 goal scope is accepted against repository and automated test evidence; no carryover items.

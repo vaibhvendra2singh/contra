@@ -1,19 +1,20 @@
 # Sprint 1 Retrospective — Order Core and Payments
 
-**Status:** Sprint 1 has started in Jira, but no sprint review or closeout has happened. This is a readiness note, not a retrospective of completed sprint work.
+**Jira Sprint 1 closed on 2026-10-29** with six stories / 29 points done and all six linked QA tasks done. Jira tracking was retrofitted after implementation; this sprint record reflects verification and Jira catch-up, not two weeks of historical activity.
 
-## What is ready
+## What went well
 
-- Jira has six estimated stories totaling 29 points and a clear goal.
-- The repository includes the order state machine, mock payment retries, and automated lifecycle tests.
+- Automated coverage verifies checkout, precise totals, CARD/WALLET, retries, lifecycle audit and refunds.
+- QA evidence was attached to each Sprint 1 story's linked Jira task.
+- Sprint scope and 29 points are now visible on the closed sprint.
 
-## Risks to address during the sprint
+## What did not go well
 
-- Stories remain To Do and unassigned in the live Jira board.
-- Jira code/test evidence is not attached to each QA subtask.
+- Implementation began before the Jira backlog and sprint were ready, leaving no historical status trail or daily burndown.
+- Stories were unassigned; ownership should be set during planning next time.
 
 ## Actions
 
-1. Assign owners and update statuses as work actually proceeds.
-2. Run and record acceptance tests against the linked QA subtasks.
-3. Write the real review and retrospective at sprint closeout; record any carryover then.
+1. Plan and start Sprint 2 after reviewing its dependencies and assigning real owners.
+2. Add QA evidence as each story is completed instead of retrofitting it.
+3. Track daily scope/status changes to support a real burndown and meaningful velocity.

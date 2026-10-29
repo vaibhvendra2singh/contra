@@ -33,10 +33,10 @@ This guide starts from a clean checkout on macOS and shows how to verify the loc
 
 ## 3. Configure local settings
 
-The app runs without Jira credentials. For the first local run, no `.env` file is required. If you want to set local settings explicitly, copy the template and edit it:
+The app runs without Jira credentials. For the first local run, no `.env` file is required. This project folder already has a local `.env` configured; do not overwrite it. For a clean checkout, only create `.env` if you need custom settings:
 
 ```sh
-cp .env.example .env
+test -f .env || cp .env.example .env
 ```
 
 Leave the `JIRA_*` values blank for offline mode. Never put API tokens in `AGENTS.md`, source code, screenshots, chat prompts, or committed files. `.env` is git-ignored.
@@ -100,6 +100,6 @@ The dry run performs Jira reads to compare current versions/sprints and prints p
 
 ## 8. Project-data integrity
 
-- `jira/seed.json` is a plan, not a readback of live Jira. The live snapshot says 8 epics, 25 stories (including a duplicate), all stories To Do/unassigned/without estimates, and three empty unstarted sprints with goals.
-- `docs/burndown-and-velocity.md` explicitly says Jira has no real burndown history or completed velocity. No fake Gantt matrix is included. Do not turn planned story points into claimed completed work.
+- `jira/seed.json` is a plan, not a readback of live Jira. The live Jira snapshot has 8 epics, 25 unique stories, QA and dev tasks, and three versions. Sprint 1 is closed with 29/29 points Done; Sprint 2 and Sprint 3 are future. See `jira-setup-status.md` for the dated readback.
+- `docs/burndown-and-velocity.md` records Sprint 1’s 29 completed points and explains why one short, retrofitted sprint is not a stable velocity sample. Jira has no historical daily snapshots for a burndown. No fake Gantt matrix is included.
 - Submission 1/client research was not present in the repository; related report text records that gap rather than fabricating findings.
