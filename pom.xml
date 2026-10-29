@@ -26,6 +26,14 @@
     <build>
         <plugins>
             <plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId></plugin>
+            <!-- Explicit agent attachment keeps Mockito-compatible Spring test listeners working on newer JDKs. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-javaagent:${settings.localRepository}/net/bytebuddy/byte-buddy-agent/1.17.7/byte-buddy-agent-1.17.7.jar</argLine>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

@@ -22,6 +22,8 @@ spring:
 oms:
   payment:
     max-retries: ${MAX_PAYMENT_RETRIES:3}
+  orders:
+    stuck-threshold-hours: ${STUCK_ORDER_HOURS:24}
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

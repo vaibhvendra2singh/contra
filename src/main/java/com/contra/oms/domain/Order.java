@@ -4,13 +4,17 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
 import java.time.Instant;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,12 +32,21 @@ public class Order {
 
     private int paymentRetries;
 
+    private String customerName;
+    private String customerEmail;
+    private String paymentMethod;
+    private String trackingNumber;
+    private BigDecimal total = BigDecimal.ZERO;
+
     @Version
     private long version;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("occurredAt ASC")
     private List<OrderTransition> transitions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderLine> items = new ArrayList<>();
 
     protected Order() { }
 
@@ -42,6 +55,20 @@ public class Order {
         this.status = OrderStatus.CREATED;
         this.transitions.add(new OrderTransition(this, null, OrderStatus.CREATED, actor, createdAt));
     }
+
+    public void setCheckoutDetails(String customerName, String customerEmail, String paymentMethod) {
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void addItem(OrderLine item) {
+        items.add(item);
+        item.setOrder(this);
+        total = total.add(item.getLineTotal());
+    }
+
+    public void setTrackingNumber(String trackingNumber) { this.trackingNumber = trackingNumber; }
 
     public static Order create(String actor) {
         return new Order(UUID.randomUUID(), actor, Instant.now());
@@ -86,4 +113,10 @@ public class Order {
     public OrderStatus getStatus() { return status; }
     public int getPaymentRetries() { return paymentRetries; }
     public List<OrderTransition> getTransitions() { return Collections.unmodifiableList(transitions); }
+    public List<OrderLine> getItems() { return Collections.unmodifiableList(items); }
+    public String getCustomerName() { return customerName; }
+    public String getCustomerEmail() { return customerEmail; }
+    public String getPaymentMethod() { return paymentMethod; }
+    public String getTrackingNumber() { return trackingNumber; }
+    public BigDecimal getTotal() { return total; }
 }
