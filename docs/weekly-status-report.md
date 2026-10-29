@@ -4,7 +4,7 @@
 
 ## Summary
 
-The order-management app is running locally, 11 automated tests pass, and live Jira runtime reads work. OM2 has 8 epics, 25 estimated stories, 25 linked QA subtasks, 9 development tasks, 3 versions and 3 populated sprints. Sprint 1 is active; no Jira work is yet marked Done.
+The order-management app is running locally, 12 automated tests pass, and live Jira runtime reads work. OM2 has 8 epics, 25 estimated stories, 25 linked QA subtasks, 9 development tasks, 3 versions and 3 populated sprints. Sprint 1 is active; no Jira work is yet marked Done.
 
 ## Metrics
 
@@ -18,7 +18,7 @@ The order-management app is running locally, 11 automated tests pass, and live J
 
 - Jira integration verified in app: active sprint, issue links, points and release readiness load from live Jira.
 - Release readiness returns NOT READY for v1.0 with 0/60 points done and open blockers, matching Jira.
-- `mvn test -q`: 11 passed, 0 failed.
+- `mvn test -q`: 12 passed, 0 failed.
 
 ## Remaining execution
 

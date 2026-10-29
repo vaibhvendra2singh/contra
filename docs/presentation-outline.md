@@ -10,7 +10,7 @@
 8. **Jira plan** — project, epics, target sprints/versions, dependencies, Definition of Done.
 9. **Jira snapshot and honest process status** — 8 epics, 25 stories, 25 linked QA subtasks, nine dev tasks, 3 versions; Sprint 1 active at 0/29 done. Explain remaining real sprint execution.
 10. **Integration and release safety** — readiness verdict, Jira dashboard, feature flag gate, auto-bug deduplication, offline behavior.
-11. **Verification and demo results** — 11 passing tests, demo order reaches DELIVERED, known Jira limitations.
+11. **Verification and demo results** — 12 passing tests, demo order reaches DELIVERED, known Jira limitations.
 12. **Conclusion and next steps** — run and close the three real sprints, insert exact Submission 1 findings, capture Jira evidence, future production hardening.
 
 Use `docs/demo-script.md` for a five-minute live walkthrough. Do not present planned points or future sprint activities as completed results.

@@ -51,7 +51,7 @@ In the integrated terminal, from the repository root, run:
 mvn test
 ```
 
-The first Maven run downloads dependencies and needs an internet connection. A passing run ends with `BUILD SUCCESS`; the current suite contains 11 tests covering state transitions, checkout/payment/returns, and offline Jira behavior. Tests use an in-memory H2 database and mock/offline Jira boundary. They do not authenticate to Jira or validate a Jira token.
+The first Maven run downloads dependencies and needs an internet connection. A passing run ends with `BUILD SUCCESS`; the current suite contains 12 tests covering state transitions, checkout/payment/returns, and offline Jira behavior. Tests use an in-memory H2 database and mock/offline Jira boundary. They do not authenticate to Jira or validate a Jira token.
 
 ## 5. Start the app
 

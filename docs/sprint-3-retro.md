@@ -6,7 +6,7 @@ Sprint 3 is assigned in Jira but remains a future sprint. This is a preparation 
 
 - Jira calls sit behind an interface with an offline implementation.
 - Readiness fails closed when release work is incomplete, while order operations continue.
-- The local demo and 11 passing tests provide a working implementation baseline.
+- The local demo and 12 passing tests provide a working implementation baseline.
 
 ## Actions for the team
 

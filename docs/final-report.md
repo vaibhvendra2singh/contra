@@ -32,7 +32,7 @@ Jira project **E-Commerce Feature Rollout & Order Management 2** (`OM2`) uses Sc
 - The admin screen combines order metrics, Jira sprint progress, and selected-version readiness.
 - Readiness shows status groups, points, blockers, and reasons; unavailable Jira produces NOT READY.
 - Operational bug reporting is best-effort and checks for an existing open issue before creating another.
-- `mvn test -q`: 11 tests passed, 0 failures, 0 errors. The test report maps them to stories.
+- `mvn test -q`: 12 tests passed, 0 failures, 0 errors. The test report maps them to stories.
 - The one-command demo script starts the app and seeds a delivered order on first run.
 
 ## Limitations

@@ -4,6 +4,7 @@ import com.contra.oms.api.ApiModels;
 import com.contra.oms.domain.OrderStatus;
 import com.contra.oms.domain.Product;
 import com.contra.oms.repository.PaymentAttemptRepository;
+import com.contra.oms.repository.NotificationLogRepository;
 import com.contra.oms.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ class OrderManagementIntegrationTest {
     @Autowired private OrderManagementService service;
     @Autowired private ProductRepository products;
     @Autowired private PaymentAttemptRepository payments;
+    @Autowired private NotificationLogRepository notifications;
 
     @Test
     void successfulCheckoutAllocatesInventoryAndCancellationReleasesAndRefunds() {
@@ -39,6 +41,7 @@ class OrderManagementIntegrationTest {
         assertEquals(OrderStatus.CANCELLED.name(), cancelled.status());
         assertEquals(0, products.findById(product.getId()).orElseThrow().getAllocatedQuantity());
         assertEquals(2, payments.count()); // capture and cancellation refund
+        assertEquals(5, notifications.count()); // created, pending, paid, allocated, cancelled
     }
 
     @Test
@@ -71,6 +74,25 @@ class OrderManagementIntegrationTest {
         assertEquals(5, afterReturn.getStockQuantity());
         assertEquals(0, afterReturn.getAllocatedQuantity());
         assertEquals(2, payments.count()); // capture and return refund
+        assertEquals(10, notifications.count()); // creation and each lifecycle transition
+    }
+
+    @Test
+    void walletCheckoutPersistsAccurateMultiLineOrderTotal() {
+        Product first = newProduct(4);
+        Product second = products.save(new Product(UUID.randomUUID(), "TEST-" + UUID.randomUUID().toString().substring(0, 8),
+                "Second test item", "Used for multi-line checkout integration tests", new BigDecimal("3.25"), 5));
+        ApiModels.CheckoutRequest request = new ApiModels.CheckoutRequest("Wallet Customer", "wallet@example.test", "WALLET",
+                "", List.of(new ApiModels.ItemRequest(first.getId(), 2), new ApiModels.ItemRequest(second.getId(), 3)));
+
+        ApiModels.CheckoutResponse checkout = service.checkout(request);
+        ApiModels.OrderView order = service.getOrder(checkout.orderId());
+
+        assertEquals(OrderStatus.INVENTORY_ALLOCATED.name(), order.status());
+        assertEquals("WALLET", order.paymentMethod());
+        assertEquals(new BigDecimal("49.73"), order.total()); // 2 × 19.99 + 3 × 3.25
+        assertEquals(2, order.items().size());
+        assertEquals(1, payments.count());
     }
 
     private Product newProduct(int stock) {

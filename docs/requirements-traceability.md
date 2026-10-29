@@ -16,7 +16,7 @@ The original Submission 1 file was not present in the workspace. This matrix tra
 | Simulated notification log | Done | `NotificationLog` and admin notification view |
 | Database feature flags/admin control | Done | `FeatureFlag` entity/repository and admin UI |
 | Jira release gate for flags | Done | Each seeded flag has a real Jira story and QA key; live Jira verification requires both Done before enablement. |
-| Seed data, REST API docs, state/payment tests | Done | `SeedData`, OpenAPI, `mvn test -q` (11 passing) |
+| Seed data, REST API docs, state/payment tests | Done | `SeedData`, OpenAPI, `mvn test -q` (12 passing) |
 
 ## Jira setup
 
@@ -51,7 +51,7 @@ The original Submission 1 file was not present in the workspace. This matrix tra
 | Real sprint issue movement, closeout, carryover | In progress | Sprint 1 is active; Jira stories remain To Do. Finish real work and close out/roll over in Jira before claiming delivery. |
 | Sprint review and retrospective records | Done as factual status records | Sprint documents state that no Jira sprint ran and record observations/actions. |
 | Planned vs completed points / burndown | Partial | Planned seed points and actual Jira zero recorded; true Jira estimates and burndown history unavailable. |
-| Test report mapped to stories | Done | `test-report.md` records 11 passing tests. |
+| Test report mapped to stories | Done | `test-report.md` records 12 passing tests. |
 | Screenshot checklist | Done | `evidence-checklist.md` |
 | Final report and presentation outline | Done | `final-report.md`, `presentation-outline.md`; Submission 1 exact findings still need insertion. |
 | Single-command demo and lifecycle demo mode | Done | `./scripts/start.sh`; verified demo order reaches DELIVERED. |
