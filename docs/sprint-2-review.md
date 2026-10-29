@@ -1,7 +1,7 @@
 # Sprint 2 Review — Inventory, Fulfillment, Shipping, and Cancellation
 
-**Jira status: Not started.** OM2 Sprint 2 contained 0 work items and was not started at the 2026-10-29 Jira readback. Planned stories OM2-15–OM2-20 and OM2-31 remained To Do and unassigned, with no Jira estimates. There is no Jira sprint review or closeout record.
+**Live Jira status:** Sprint 2 is a future sprint with 7 stories / 27 points assigned. It has not started, so there is no sprint review or closeout.
 
-**Product evidence delivered outside Jira:** the application includes inventory allocation/release, fulfillment queue actions, shipping with tracking, customer timeline, cancellation, and refund support. The automated integration tests cover inventory allocation, cancellation release/refund, and the delivered return/refund path. Jira does not yet contain the QA tasks or issue transitions that would make these accepted Sprint 2 work.
+**Product evidence:** inventory allocation/release, fulfillment queue actions, shipping/tracking, cancellation and refund support are implemented. Integration tests cover allocation, cancellation release/refund and delivery/return/refund paths. These automated checks are not a Sprint 2 acceptance review.
 
-**Review outcome:** no Jira completion or velocity is claimed. Before the sprint is run, assign the planned stories, link QA tasks, enter acceptance evidence, and configure the dependency chain.
+**Review outcome:** no Sprint 2 points are complete. Start and review this sprint after its work is actually performed; then record Jira acceptance evidence and carryover.

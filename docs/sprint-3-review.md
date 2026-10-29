@@ -1,7 +1,7 @@
 # Sprint 3 Review — Returns, Release Readiness, and Jira Integration
 
-**Jira status: Not started.** OM2 Sprint 3 contained 0 work items and was not started at the 2026-10-29 readback. Planned stories OM2-21–OM2-30 and OM2-32–OM2-33 remained To Do, unassigned, and without Jira estimates. No sprint review or closeout was recorded.
+**Live Jira status:** Sprint 3 is a future sprint with 12 stories / 60 points assigned. It has not started; no sprint review or closeout is recorded.
 
-**Product evidence delivered outside Jira:** the app has return/refund operations, feature flags, Jira-backed readiness and sprint data, an offline adapter, and best-effort auto-bug reporting. The final test run had 11 passing tests. Live Jira runtime configuration and QA issue mapping are still absent, and the Jira versions are not configured.
+**Product evidence:** return/refund operations, feature flags, live Jira readiness and sprint data, offline mode and best-effort auto-bug reporting exist. The automated suite passes 11 tests. The updated app reads Sprint 1 as 0/29 and reports v1.0 NOT READY at 0/60.
 
-**Review outcome:** the app features exist in the repository, but the Jira Sprint 3 backlog and release evidence were not exercised as sprint work. No Jira story points are claimed Done.
+**Review outcome:** implementation and integration have test evidence, but Sprint 3 acceptance and delivery cannot be claimed until the team performs the planned work and records QA in Jira.

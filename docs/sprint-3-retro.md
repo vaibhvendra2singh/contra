@@ -1,21 +1,15 @@
 # Sprint 3 Retrospective — Release Safety
 
-This is a process retrospective from the project work to date; Jira Sprint 3 itself did not run.
+Sprint 3 is assigned in Jira but remains a future sprint. This is a preparation note, not a retrospective of completed work.
 
-## What went well
+## Ready for the sprint
 
-- Jira calls are isolated behind an interface with an offline implementation.
-- Readiness fails closed when release data is missing, and order operations remain available.
-- A local demo startup and test evidence now make the product easier to review.
+- Jira calls sit behind an interface with an offline implementation.
+- Readiness fails closed when release work is incomplete, while order operations continue.
+- The local demo and 11 passing tests provide a working implementation baseline.
 
-## What did not go well
+## Actions for the team
 
-- Release versions and sprint scope were not configured in Jira, so the readiness UI cannot show live release work until Jira is configured.
-- Feature flags have story links but no QA issue keys yet; enabling an inactive flag is therefore blocked as intended.
-- There is no Jira status history, daily burndown data, or completed sprint record to analyze.
-
-## Actions
-
-1. Add the missing Jira QA tasks and map each managed feature flag to both its story and QA issue.
-2. Configure v0.1, v0.2, and v1.0, then verify release readiness against the live issue set.
-3. Record daily scope changes and review evidence before closing Sprint 3.
+1. Carry forward only actual unfinished work from Sprint 2.
+2. Record rollout, readiness, and auto-bug acceptance evidence on linked Jira QA tasks.
+3. Close Sprint 3 and write the actual review/retro before reporting velocity.
