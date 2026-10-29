@@ -1,11 +1,9 @@
 # Sprint Plan
 
-The plan below is the intended three-sprint sequence from the project seed. Jira contains three empty sprints with goals configured. Stories still need sprint assignment and grooming before Sprint 1 can be started.
+| Sprint | Goal | Assigned stories / points | Version | Current state |
+| --- | --- | ---: | --- | --- |
+| Sprint 1 | Deliver reliable order creation, checkout, payment capture, and retry paths. | 6 / 29 | v0.1 Order Core | Active; all To Do, 0 done |
+| Sprint 2 | Allocate inventory and complete fulfillment, shipping, tracking, and cancellation safely. | 7 / 27 | v0.2 Fulfillment & Tracking | Future; no work started |
+| Sprint 3 | Complete returns, controlled rollout, QA readiness, and Jira visibility. | 12 / 60 | v1.0 Returns, Refunds & Release Gating | Future; no work started |
 
-| Sprint | Goal | Planned scope | Release |
-| --- | --- | --- | --- |
-| Sprint 1 | Deliver reliable order creation, checkout, payment capture, and retry paths. | Order Creation & Checkout; Payment Processing | v0.1 Order Core |
-| Sprint 2 | Allocate inventory and complete fulfillment, shipping, tracking, and cancellation safely. | Inventory & Fulfillment; Shipping & Tracking; cancellation story | v0.2 Fulfillment & Tracking |
-| Sprint 3 | Complete returns, controlled rollout, QA readiness, and Jira visibility. | Returns/refunds; Feature Flags; QA & Release Readiness; Jira Integration | v1.0 Returns, Refunds & Release Gating |
-
-This is a plan, not a record of completed sprints. Do not report velocity or sprint outcomes until Jira records actual work and closeout.
+This records the live Jira assignment, not completed work. Update outcomes only from actual Jira status and sprint closeout.

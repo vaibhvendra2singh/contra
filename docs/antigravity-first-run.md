@@ -88,7 +88,7 @@ For a full teacher walkthrough, see [`demo-script.md`](demo-script.md).
 
 ## 7. Optional live Jira connection
 
-Runtime Jira features need an Atlassian API token from the Jira account owner. Create a token through Atlassian account security settings, then put the site URL, Atlassian login email, and token in `.env`. The Jira project URL and observed configuration are recorded in [`jira-setup-status.md`](jira-setup-status.md). Do not paste the token into Antigravity. Restart the app after editing `.env`.
+Runtime Jira features need an Atlassian API token from the Jira account owner. Create a token through Atlassian account security settings, then put the scoped-token API gateway URL (`https://api.atlassian.com/ex/jira/<cloud-id>`), Jira site URL, Atlassian login email, and token in `.env`. The Jira project URL and observed configuration are recorded in [`jira-setup-status.md`](jira-setup-status.md). Do not paste the token into Antigravity. Restart the app after editing `.env`, then run `python3 jira/verify-connection.py` to check project, issue-search, versions, and the configured board's sprint access without printing credentials or issue contents.
 
 The optional REST fallback loads simple `KEY=VALUE` entries from `.env` and supports a dry run:
 

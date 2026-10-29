@@ -1,7 +1,7 @@
 # Sprint 1 Review — Order Core and Payments
 
-**Jira status: Not started.** Read back on 2026-10-29: OM2 Sprint 1 contained 0 work items, was not started, and the six planned Sprint 1 stories (OM2-9–OM2-14) were To Do, unassigned, and had no Jira estimate. No Jira sprint review meeting or sprint closeout is recorded.
+**Live Jira status:** Sprint 1 is active with six stories assigned (29 points). Readback on 2026-10-29 showed all six To Do, unassigned, and zero completed points. No Jira sprint review or closeout is recorded.
 
-**Product evidence delivered outside Jira:** the repository has checkout, card/wallet mock payment, payment retry rules, order status history, and database-backed order persistence. The current test run passed the checkout, payment retry, state machine, cancellation/refund, and return lifecycle tests. These results were not linked to Sprint 1 tickets in Jira.
+**Product evidence:** checkout, mock card/wallet payment, retries, persistence and order state transitions exist in the repository. The real test run passed all 11 automated tests, including order/payment integration cases. These code and test results are not represented as Jira story completion.
 
-**Review outcome:** no accepted Sprint 1 Jira scope or completed Jira story points can be claimed. Before a real Sprint 1 review, groom and estimate OM2-9–OM2-14, add linked development and QA tasks, assign them to the sprint, and record acceptance evidence.
+**Review outcome:** the sprint is in progress; no completion or velocity is reported. The team should assign owners, do the sprint work, record acceptance evidence on Jira, and review/close it after the goal is met.

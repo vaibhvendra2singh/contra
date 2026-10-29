@@ -11,6 +11,8 @@ import java.time.Instant;
 @Component
 @Conditional(JiraRestClient.NotConfiguredJiraCondition.class)
 public class OfflineJiraClient implements JiraClient {
+    @Override public boolean available() { return false; }
+    @Override public String boardUrl() { return ""; }
     @Override public Optional<IssueSummary> issue(String issueKey) { return Optional.empty(); }
     @Override public Optional<ReleaseSummary> release(String versionName) { return Optional.empty(); }
     @Override public List<IssueSummary> recentIssues(int limit) { return List.of(); }

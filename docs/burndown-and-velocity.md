@@ -1,17 +1,11 @@
 # Burndown and Velocity
 
-**Jira readback date:** 2026-10-29. OM2 Sprint 1, Sprint 2, and Sprint 3 each had zero assigned work items and none had started. The 25 Jira stories were To Do, unassigned, and displayed no estimates. Thus Jira has no actual sprint points or burndown history.
+**Live Jira readback:** 2026-10-29. Sprint 1 is active with 6 stories / 29 points; Sprint 2 has 7 / 27 and Sprint 3 has 12 / 60 assigned as future sprints. All stories remain To Do and zero points are recorded as complete.
 
-The source backlog provides planning estimates, but these are not estimates entered in Jira and are shown separately from actual completed points:
-
-| Sprint | Planned points from `jira/seed.json` | Jira assigned points | Jira completed points | Jira outcome |
+| Sprint | Planned points | Jira assigned points | Jira completed points | State |
 | --- | ---: | ---: | ---: | --- |
-| Sprint 1 | 29 | Not set | 0 | Not started |
-| Sprint 2 | 27 | Not set | 0 | Not started |
-| Sprint 3 | 57 | Not set | 0 | Not started |
+| Sprint 1 | 29 | 29 | 0 | Active |
+| Sprint 2 | 27 | 27 | 0 | Future |
+| Sprint 3 | 60 | 60 | 0 | Future |
 
-**Velocity cannot be calculated from completed Jira sprints.** The 0 completed points above means there are no Done points recorded in these unstarted Jira sprints; it is not evidence that the team delivered zero software. The repository has working features and 11 passing tests, but they were not tracked as Jira sprint completions.
-
-**Burndown chart unavailable:** Jira has no sprint start/end dates, assigned scope, estimates, or daily scope/status snapshots. Do not infer a line from the planned seed data.
-
-To produce a real burndown and velocity report, configure estimates and versions, assign stories to a sprint, start it, and capture Jira sprint reports at closeout.
+Velocity cannot be calculated until a sprint is completed. Jira has no historical daily snapshots from which to build a burndown yet; do not infer one from the plan.

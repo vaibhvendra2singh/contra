@@ -31,6 +31,8 @@ public class FeatureFlag {
     }
 
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
+    public void setJiraIssueKey(String jiraIssueKey) { this.jiraIssueKey = jiraIssueKey; }
+    public void setQaIssueKey(String qaIssueKey) { this.qaIssueKey = qaIssueKey; }
     public String getKey() { return key; }
     public String getDescription() { return description; }
     public boolean isEnabled() { return enabled; }

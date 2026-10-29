@@ -1,6 +1,6 @@
 # Product Backlog
 
-Desired backlog derived from `jira/seed.json`. Story point totals are from the source specification; actual Jira estimates and assignments must be verified separately.
+Backlog derived from `jira/seed.json` and checked against Jira on 2026-10-29. Jira has 25 stories, including a distinct Jira-unavailable fail-closed flag story. All 25 stories have estimates, sprint assignments, priorities, labels and versions.
 
 | Epic | Story | MoSCoW | Points | Priority | Target sprint | Target version |
 | --- | --- | --- | ---: | --- | --- | --- |
@@ -29,6 +29,8 @@ Desired backlog derived from `jira/seed.json`. Story point totals are from the s
 | Jira Integration & Dashboard | As a support lead, I want a Jira bug created for repeated payment failures or stuck orders so that operational risks are tracked with context. | Should | 5 | High | Sprint 3 | v1.0 |
 | Jira Integration & Dashboard | As a developer, I want Jira calls behind a replaceable interface so that the app can be tested offline and remain operational during Jira outages. | Should | 5 | High | Sprint 3 | v1.0 |
 
+| Release Management & Feature Flags | As a developer, I want feature flags to default to off when Jira is unavailable so that unverified features cannot affect live order flow. | Should | 3 | High | Sprint 3 | v1.0 |
+
 ## Planned total
 
-113 story points across 24 stories.
+116 story points across 25 stories. Jira sprint totals: Sprint 1 29, Sprint 2 27, Sprint 3 60.

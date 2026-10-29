@@ -1,6 +1,6 @@
 # Requirements Traceability and Final Check
 
-The original Submission 1 file was not in the workspace, so this matrix traces the explicit project brief and its requirements. Replace or extend it with every exact Submission 1 requirement before submission.
+The original Submission 1 file was not present in the workspace. This matrix traces the explicit project brief; replace or extend it with the exact Submission 1 wording before submission.
 
 ## Order management app
 
@@ -15,7 +15,7 @@ The original Submission 1 file was not in the workspace, so this matrix traces t
 | Customer timeline, admin status/stuck/failed dashboard | Done | Order transition records and dashboard endpoints |
 | Simulated notification log | Done | `NotificationLog` and admin notification view |
 | Database feature flags/admin control | Done | `FeatureFlag` entity/repository and admin UI |
-| Jira release gate for flags | Partial | Story and QA keys are checked; Jira QA issue keys are not configured, so enabling a disabled flag is blocked. |
+| Jira release gate for flags | Done | Each seeded flag has a real Jira story and QA key; live Jira verification requires both Done before enablement. |
 | Seed data, REST API docs, state/payment tests | Done | `SeedData`, OpenAPI, `mvn test -q` (11 passing) |
 
 ## Jira setup
@@ -24,13 +24,13 @@ The original Submission 1 file was not in the workspace, so this matrix traces t
 | --- | --- | --- |
 | New Scrum project and OM2 board | Done | Project/board links in `jira-setup-status.md` |
 | Eight requested epics | Done | OM2-1 through OM2-8 |
-| 3–5 stories per epic with AC, Fibonacci points, priority, labels | Partial | 25 story work items exist for 24 desired stories; OM2-24 duplicates OM2-23. Jira AC, points, labels, and priority values need completion. |
-| Dev and QA tasks/subtasks; QA-task blocker link per story | Not done | No tasks/subtasks or issue-to-QA links yet. |
-| Dependency links between payment, fulfillment, shipping, returns | Not verified / pending | Seed defines desired links; live links were not confirmed. |
-| Sprint goals, contents, Sprint 1 start | Partial | Goals are set; all three sprints are empty and unstarted. |
-| v0.1, v0.2, v1.0 versions and story assignments | Not done | Release versions unavailable in visible team-managed project UI; REST fallback is documented but not run. |
-| DoD in Jira description and Confluence spec | Not done | Local documents exist; not entered/published in Jira/Confluence. |
-| Jira sprint dashboard and weekly report | Partial | Snapshot and weekly report saved locally; not published as a live Jira dashboard or Confluence page. |
+| 3–5 stories per epic with AC, Fibonacci points, priority, labels | Done | 25 unique stories with AC, points, priority, labels, sprint and release assignment; captured in live Jira and `jira/seed.json`. |
+| Dev and QA tasks/subtasks; QA-task blocker link per story | Done | 9 development tasks and 25 QA subtasks; each story is blocked by its linked QA subtask. |
+| Dependency links between payment, fulfillment, shipping, returns | Done | Payment → fulfillment → shipping → returns/refunds links are present in Jira. |
+| Sprint goals, contents, Sprint 1 start | Done for setup | Sprint 1 active (6 stories/29 points); Sprint 2 (7/27) and Sprint 3 (12/60) are future. Execution/closeout remains. |
+| v0.1, v0.2, v1.0 versions and story assignments | Done | Three live Jira versions exist with stories assigned. |
+| DoD in Jira and Confluence spec | Partial | DoD/readiness checklist is in OM2-7 epic description; team-managed project has no project description field. No appropriate Confluence project space was available. Local spec is in `docs/spec.md`. |
+| Jira sprint dashboard and weekly report | Done locally | Current factual snapshot and weekly report are in `docs/`; no Confluence project space was available for publishing. |
 | Meeting-notes task capture ready | Partial | Skill/workflow instructions are available; no client notes have been supplied or processed. |
 
 ## App–Jira integration
@@ -38,17 +38,17 @@ The original Submission 1 file was not in the workspace, so this matrix traces t
 | Requirement | Status | Evidence |
 | --- | --- | --- |
 | Jira client interface, mockable/offline-safe | Done | `JiraClient`, `OfflineJiraClient`, unit tests |
-| Selected release readiness with statuses, points, blockers, verdict | Partial | UI and endpoint support v0.1/v0.2/v1.0; live Jira and dependency-field behavior require credentials and verification. |
-| Controlled flag rollout requires completed story and QA | Partial | Enforced in service; QA issue keys currently absent. |
-| Deduplicated auto-bug after payment max retries or stuck order threshold | Implemented, live verification pending | Best-effort Jira REST path and duplicate search; no Jira token in local environment to execute it. |
-| Jira panel on admin dashboard | Partial | Live panel implemented; current sprints are empty and credentials not configured. |
+| Selected release readiness with statuses, points, blockers, verdict | Done | Live endpoint verified for v1.0: 60 total points, 0 done, NOT READY with open-work and blocker reasons. |
+| Controlled flag rollout requires completed story and QA | Done | Real story/QA keys are mapped; app fails closed unless both Jira issues are Done. |
+| Deduplicated auto-bug after payment max retries or stuck order threshold | Implemented; external create not exercised | Jira connected and REST create/dedup path is implemented; avoiding a synthetic live bug. Mock-boundary tests pass. |
+| Jira panel on admin dashboard | Done | Live panel verified: Sprint 1, 0/29 points, six To Do issues and active board link. |
 | Optional webhook | Not implemented | Optional requirement. |
 
 ## Agile execution and submission materials
 
 | Requirement | Status | Evidence |
 | --- | --- | --- |
-| Real sprint issue movement, closeout, carryover | Not done | Jira sprints remain unstarted. No completed Jira work has been claimed. |
+| Real sprint issue movement, closeout, carryover | In progress | Sprint 1 is active; Jira stories remain To Do. Finish real work and close out/roll over in Jira before claiming delivery. |
 | Sprint review and retrospective records | Done as factual status records | Sprint documents state that no Jira sprint ran and record observations/actions. |
 | Planned vs completed points / burndown | Partial | Planned seed points and actual Jira zero recorded; true Jira estimates and burndown history unavailable. |
 | Test report mapped to stories | Done | `test-report.md` records 11 passing tests. |

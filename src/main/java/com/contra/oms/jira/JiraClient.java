@@ -6,6 +6,8 @@ import java.time.Instant;
 
 /** Boundary around Jira so order operations and tests do not depend on Jira availability. */
 public interface JiraClient {
+    boolean available();
+    String boardUrl();
     Optional<IssueSummary> issue(String issueKey);
     Optional<ReleaseSummary> release(String versionName);
     List<IssueSummary> recentIssues(int limit);

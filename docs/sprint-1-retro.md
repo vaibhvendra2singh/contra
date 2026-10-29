@@ -1,21 +1,19 @@
 # Sprint 1 Retrospective — Order Core and Payments
 
-This is a process retrospective from the project work to date; Jira Sprint 1 itself did not run.
+**Status:** Sprint 1 has started in Jira, but no sprint review or closeout has happened. This is a readiness note, not a retrospective of completed sprint work.
 
-## What went well
+## What is ready
 
-- The order state machine enforces allowed transitions in the domain layer.
-- Payment and order behavior has both state-machine and Spring integration coverage.
-- The mock payment gateway makes decline and retry cases reproducible.
+- Jira has six estimated stories totaling 29 points and a clear goal.
+- The repository includes the order state machine, mock payment retries, and automated lifecycle tests.
 
-## What did not go well
+## Risks to address during the sprint
 
-- Jira was created after implementation had already begun, so working code was not tracked as sprint progress.
-- Planned stories lack estimates, sprint assignment, detailed Jira acceptance criteria, and linked QA tasks.
-- The backlog contains duplicate feature-flag story OM2-24 alongside OM2-23.
+- Stories remain To Do and unassigned in the live Jira board.
+- Jira code/test evidence is not attached to each QA subtask.
 
 ## Actions
 
-1. Correct the duplicate and complete story descriptions, estimates, and labels before Sprint 1 starts.
-2. Create and link QA tasks; record actual test evidence against the stories.
-3. Start Sprint 1 only after its scope and goal are visible in Jira; update status as work moves through review and QA.
+1. Assign owners and update statuses as work actually proceeds.
+2. Run and record acceptance tests against the linked QA subtasks.
+3. Write the real review and retrospective at sprint closeout; record any carryover then.

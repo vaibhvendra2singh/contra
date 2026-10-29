@@ -26,9 +26,9 @@ public class SeedData {
                     "00000000-0000-0000-0000-000000000002");
             seedProduct(products, "CONTRA-TEE", "Contra Team T-shirt", "Soft cotton team shirt.", "24.00", 18,
                     "00000000-0000-0000-0000-000000000003");
-            flags.findById("self-service-returns").orElseGet(() -> flags.save(new FeatureFlag("self-service-returns", "Customer return request flow", false, "OM2-32", null)));
-            flags.findById("new-checkout").orElseGet(() -> flags.save(new FeatureFlag("new-checkout", "Updated checkout experience", false, "OM2-9", null)));
-            flags.findById("tracking-notifications").orElseGet(() -> flags.save(new FeatureFlag("tracking-notifications", "Shipping status notifications", false, "OM2-20", null)));
+            seedFlag(flags, "self-service-returns", "Customer return request flow", "OM2-32", "OM2-49");
+            seedFlag(flags, "new-checkout", "Updated checkout experience", "OM2-9", "OM2-34");
+            seedFlag(flags, "tracking-notifications", "Shipping status notifications", "OM2-20", "OM2-44");
         };
     }
 
@@ -52,5 +52,13 @@ public class SeedData {
                              String price, int stock, String id) {
         UUID uuid = UUID.fromString(id);
         if (!repository.existsById(uuid)) repository.save(new Product(uuid, sku, name, description, new BigDecimal(price), stock));
+    }
+
+    private void seedFlag(FeatureFlagRepository repository, String key, String description,
+                          String storyKey, String qaIssueKey) {
+        FeatureFlag flag = repository.findById(key).orElseGet(() -> new FeatureFlag(key, description, false));
+        flag.setJiraIssueKey(storyKey);
+        flag.setQaIssueKey(qaIssueKey);
+        repository.save(flag);
     }
 }

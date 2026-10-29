@@ -1,19 +1,15 @@
 # Test Report
 
-**Run:** `mvn test -q` during Phase 5. **Result:** 11 tests, 0 failures, 0 errors, 0 skipped. The Maven compiler targets Java 17; the available test runtime on this machine was Java 27.
+**Run:** `mvn test -q`, 2026-10-29. **Result:** 11 tests, 0 failures, 0 errors, 0 skipped. The compiler targets Java 17; this machine ran the suite on Java 27.
 
-| Test case | Requirement/story mapping | Result |
-| --- | --- | --- |
-| Full order and return lifecycle records every transition | OM2-11, OM2-32, OM2-33 | PASS |
-| Payment retry maximum is enforced | OM2-13 | PASS |
-| Cancellation before shipping and rejection after shipping | OM2-17, OM2-31 | PASS |
-| Skipping required order states is rejected | OM2-11, OM2-25 | PASS |
-| Checkout allocates stock; cancellation releases and refunds | OM2-9, OM2-14, OM2-15, OM2-17 | PASS |
-| Declined payment retry does not allocate inventory until capture | OM2-12, OM2-13, OM2-15 | PASS |
-| Delivered order completes return and refund flow | OM2-32, OM2-33 | PASS |
-| Jira offline yields NOT READY without failing app integration | OM2-26, OM2-30 | PASS |
-| Flag cannot be enabled without completed story and QA issue | OM2-23 | PASS |
-| Readiness reports points and open blockers | OM2-26 | PASS |
-| Operational bug integration failure is best-effort | OM2-29, OM2-30 | PASS |
+| Test area | Cases | Result |
+| --- | ---: | --- |
+| Order state machine valid/invalid transitions | 4 | PASS |
+| Jira integration behavior, feature flag gating, readiness and failure handling | 4 | PASS |
+| Spring/H2 lifecycle, payment retry, inventory and refund integration | 3 | PASS |
 
-The test suite uses a mock Jira boundary; it does not verify live Jira authentication, version contents, sprint assignments, Jira issue creation, browser rendering, or the real runtime API token. Those require a configured Jira account and manual evidence capture. No known application bugs were recorded by this test run; the live Jira backlog and configuration gaps are listed in `jira-setup-status.md`.
+The test suite uses a mock Jira boundary. Separately, live Jira REST access to the OM2 project, versions, issue search and board sprint data was verified. This does not validate every browser interaction or create an operational auto-bug, which would create external Jira work. The local web app is running at http://localhost:8080 and the Shop and Operations screens were inspected in the browser.
+
+**Story evidence mapping:** state machine and lifecycle cases cover OM2-11, OM2-17, OM2-25, OM2-31, OM2-32 and OM2-33; payment/inventory cases cover OM2-9, OM2-12, OM2-13, OM2-14 and OM2-15; Jira boundary tests cover OM2-23, OM2-26, OM2-29 and OM2-30. This map is test coverage, not a claim that all acceptance criteria on all 25 stories passed QA.
+
+Known limitations: runtime Jira behavior depends on valid local `.env` configuration and Jira availability; user-visible Jira connection must be confirmed in Operations. Manual screenshots are still needed for the evidence checklist.

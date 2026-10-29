@@ -28,8 +28,12 @@ public class JiraIntegrationService {
 
     public ApiModels.ReleaseReadinessView readiness(String version) {
         Optional<JiraClient.ReleaseSummary> response = jira.release(version);
-        if (response.isEmpty()) return new ApiModels.ReleaseReadinessView(version, false, false,
-                List.of("Jira is unavailable or the version does not exist."), Map.of(), 0, 0, List.of());
+        if (response.isEmpty()) {
+            boolean available = jira.available();
+            return new ApiModels.ReleaseReadinessView(version, available, false,
+                    List.of(available ? "The selected Jira version does not exist." : "Jira is unavailable."),
+                    Map.of(), 0, 0, List.of());
+        }
         List<JiraClient.IssueSummary> issues = response.get().issues();
         Map<String, List<ApiModels.JiraIssueView>> grouped = new LinkedHashMap<>();
         for (JiraClient.IssueSummary issue : issues) grouped.computeIfAbsent(issue.status(), k -> new ArrayList<>()).add(view(issue));
@@ -48,7 +52,8 @@ public class JiraIntegrationService {
         Optional<JiraClient.SprintSummary> active = jira.activeSprint();
         return active.map(s -> new ApiModels.JiraPanelView(true, s.boardUrl(), s.name(), s.goal(), s.completedPoints(),
                         s.totalPoints(), s.recentIssues().stream().map(this::view).toList()))
-                .orElseGet(() -> new ApiModels.JiraPanelView(false, "", "", "", 0, 0, List.of()));
+                .orElseGet(() -> new ApiModels.JiraPanelView(jira.available(), jira.boardUrl(), "No active sprint", "",
+                        0, 0, jira.recentIssues(10).stream().map(this::view).toList()));
     }
 
     public Optional<String> createOperationalBug(String orderId, String status, Instant occurredAt) {

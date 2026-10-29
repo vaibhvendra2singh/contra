@@ -1,9 +1,35 @@
 {
   "schemaVersion": 1,
-  "project": {"key": "OM2", "name": "E-Commerce Feature Rollout & Order Management 2", "type": "scrum", "management": "team-managed"},
-  "board": {"columns": ["To Do", "In Progress", "In Review", "QA", "Done"]},
-  "issueTypes": ["Epic", "Story", "Task", "Bug", "Sub-task"],
-  "defaults": {"priority": "Medium", "estimateField": "Story point estimate", "fieldId": "customfield_10016", "labels": ["order-management"]},
+  "project": {
+    "key": "OM2",
+    "name": "E-Commerce Feature Rollout & Order Management 2",
+    "type": "scrum",
+    "management": "team-managed"
+  },
+  "board": {
+    "columns": [
+      "To Do",
+      "In Progress",
+      "In Review",
+      "QA",
+      "Done"
+    ]
+  },
+  "issueTypes": [
+    "Epic",
+    "Story",
+    "Task",
+    "Bug",
+    "Sub-task"
+  ],
+  "defaults": {
+    "priority": "Medium",
+    "estimateField": "Story point estimate",
+    "fieldId": "customfield_10016",
+    "labels": [
+      "order-management"
+    ]
+  },
   "definitionOfDone": [
     "All linked stories meet their acceptance criteria and are Done.",
     "The linked QA task passed and its evidence is recorded.",
@@ -12,91 +38,563 @@
     "Release notes, operational impact, and rollback or flag-off plan are reviewed."
   ],
   "versions": [
-    {"name": "v0.1", "description": "Order Core"},
-    {"name": "v0.2", "description": "Fulfillment & Tracking"},
-    {"name": "v1.0", "description": "Returns, Refunds & Release Gating"}
+    {
+      "name": "v0.1",
+      "description": "Order Core"
+    },
+    {
+      "name": "v0.2",
+      "description": "Fulfillment & Tracking"
+    },
+    {
+      "name": "v1.0",
+      "description": "Returns, Refunds & Release Gating"
+    }
   ],
   "sprints": [
-    {"name": "Sprint 1", "goal": "Deliver reliable order creation, checkout, payment capture, and retry paths.", "epics": ["Order Creation & Checkout", "Payment Processing"]},
-    {"name": "Sprint 2", "goal": "Allocate inventory and complete fulfillment, shipping, tracking, and cancellation safely.", "epics": ["Inventory & Fulfillment", "Shipping & Tracking", "Cancellation, Returns & Refunds"]},
-    {"name": "Sprint 3", "goal": "Complete self-service returns, controlled rollout, QA readiness, and Jira visibility.", "epics": ["Cancellation, Returns & Refunds", "Release Management & Feature Flags", "QA & Release Readiness", "Jira Integration & Dashboard"]}
+    {
+      "name": "Sprint 1",
+      "goal": "Deliver reliable order creation, checkout, payment capture, and retry paths.",
+      "epics": [
+        "Order Creation & Checkout",
+        "Payment Processing"
+      ]
+    },
+    {
+      "name": "Sprint 2",
+      "goal": "Allocate inventory and complete fulfillment, shipping, tracking, and cancellation safely.",
+      "epics": [
+        "Inventory & Fulfillment",
+        "Shipping & Tracking",
+        "Cancellation, Returns & Refunds"
+      ]
+    },
+    {
+      "name": "Sprint 3",
+      "goal": "Complete self-service returns, controlled rollout, QA readiness, and Jira visibility.",
+      "epics": [
+        "Cancellation, Returns & Refunds",
+        "Release Management & Feature Flags",
+        "QA & Release Readiness",
+        "Jira Integration & Dashboard"
+      ]
+    }
   ],
   "dependencies": [
-    {"blocked": "Inventory & Fulfillment", "blockedBy": "Payment Processing", "linkType": "is blocked by"},
-    {"blocked": "Shipping & Tracking", "blockedBy": "Inventory & Fulfillment", "linkType": "is blocked by"},
-    {"blocked": "Cancellation, Returns & Refunds", "blockedBy": "Shipping & Tracking", "linkType": "is blocked by"}
+    {
+      "blocked": "Inventory & Fulfillment",
+      "blockedBy": "Payment Processing",
+      "linkType": "is blocked by"
+    },
+    {
+      "blocked": "Shipping & Tracking",
+      "blockedBy": "Inventory & Fulfillment",
+      "linkType": "is blocked by"
+    },
+    {
+      "blocked": "Cancellation, Returns & Refunds",
+      "blockedBy": "Shipping & Tracking",
+      "linkType": "is blocked by"
+    }
   ],
   "epics": [
     {
-      "name": "Order Creation & Checkout", "priority": "Highest", "labels": ["checkout", "order-core"], "version": "v0.1",
+      "name": "Order Creation & Checkout",
+      "priority": "Highest",
+      "labels": [
+        "checkout",
+        "order-core"
+      ],
+      "version": "v0.1",
       "devTask": "Implement order and checkout APIs with persistence and validation",
       "stories": [
-        {"summary": "As a customer, I want to review my cart and place an order so that I can begin a purchase with confidence.", "points": 5, "priority": "High", "labels": ["checkout", "customer"], "sprint": "Sprint 1", "version": "v0.1", "ac": ["A valid customer and one or more available products create an order.", "The order begins in CREATED and enters PAYMENT_PENDING.", "The response provides an order ID and current status." ]},
-        {"summary": "As a customer, I want to see an accurate order total before payment so that I know what I will be charged.", "points": 3, "priority": "High", "labels": ["checkout", "pricing"], "sprint": "Sprint 1", "version": "v0.1", "ac": ["The total equals the sum of unit prices multiplied by quantities.", "Invalid quantities and unavailable products are rejected.", "The total is persisted with the order." ]},
-        {"summary": "As a customer, I want an order timeline so that I can understand progress without contacting support.", "points": 3, "priority": "Medium", "labels": ["order-timeline", "customer"], "sprint": "Sprint 1", "version": "v0.1", "ac": ["The timeline shows every transition in chronological order.", "Each entry shows status, actor, and timestamp.", "Invalid transitions never appear in the timeline." ]}
+        {
+          "summary": "As a customer, I want to review my cart and place an order so that I can begin a purchase with confidence.",
+          "points": 5,
+          "priority": "High",
+          "labels": [
+            "checkout",
+            "customer"
+          ],
+          "sprint": "Sprint 1",
+          "version": "v0.1",
+          "ac": [
+            "A valid customer and one or more available products create an order.",
+            "The order begins in CREATED and enters PAYMENT_PENDING.",
+            "The response provides an order ID and current status."
+          ]
+        },
+        {
+          "summary": "As a customer, I want to see an accurate order total before payment so that I know what I will be charged.",
+          "points": 3,
+          "priority": "High",
+          "labels": [
+            "checkout",
+            "pricing"
+          ],
+          "sprint": "Sprint 1",
+          "version": "v0.1",
+          "ac": [
+            "The total equals the sum of unit prices multiplied by quantities.",
+            "Invalid quantities and unavailable products are rejected.",
+            "The total is persisted with the order."
+          ]
+        },
+        {
+          "summary": "As a customer, I want an order timeline so that I can understand progress without contacting support.",
+          "points": 3,
+          "priority": "Medium",
+          "labels": [
+            "order-timeline",
+            "customer"
+          ],
+          "sprint": "Sprint 1",
+          "version": "v0.1",
+          "ac": [
+            "The timeline shows every transition in chronological order.",
+            "Each entry shows status, actor, and timestamp.",
+            "Invalid transitions never appear in the timeline."
+          ]
+        }
       ]
     },
     {
-      "name": "Payment Processing", "priority": "Highest", "labels": ["payments", "order-core"], "version": "v0.1",
+      "name": "Payment Processing",
+      "priority": "Highest",
+      "labels": [
+        "payments",
+        "order-core"
+      ],
+      "version": "v0.1",
       "devTask": "Implement mock gateway adapters and durable payment attempt records",
       "stories": [
-        {"summary": "As a customer, I want to pay by card or wallet so that I can use my preferred payment method.", "points": 5, "priority": "Highest", "labels": ["payments", "checkout"], "sprint": "Sprint 1", "version": "v0.1", "ac": ["CARD and WALLET are accepted payment methods.", "A successful capture records amount, method, reference, and time.", "Only captured payments advance the order to PAID." ]},
-        {"summary": "As a customer, I want to retry a declined payment within a configured limit so that a temporary payment problem does not lose my order.", "points": 5, "priority": "High", "labels": ["payments", "retry"], "sprint": "Sprint 1", "version": "v0.1", "ac": ["A decline moves the order to PAYMENT_FAILED and records the attempt.", "A retry moves through PAYMENT_PENDING and respects the configured maximum.", "Inventory is not allocated until capture succeeds." ]},
-        {"summary": "As a support agent, I want captured payments and refunds recorded so that I can reconcile customer payment outcomes.", "points": 8, "priority": "High", "labels": ["payments", "refunds", "support"], "sprint": "Sprint 1", "version": "v0.1", "ac": ["Successful captures and refunds create separate immutable attempt records.", "Refund references are linked to the order.", "Failed or invalid transitions do not create a false refund record." ]}
+        {
+          "summary": "As a customer, I want to pay by card or wallet so that I can use my preferred payment method.",
+          "points": 5,
+          "priority": "Highest",
+          "labels": [
+            "payments",
+            "checkout"
+          ],
+          "sprint": "Sprint 1",
+          "version": "v0.1",
+          "ac": [
+            "CARD and WALLET are accepted payment methods.",
+            "A successful capture records amount, method, reference, and time.",
+            "Only captured payments advance the order to PAID."
+          ]
+        },
+        {
+          "summary": "As a customer, I want to retry a declined payment within a configured limit so that a temporary payment problem does not lose my order.",
+          "points": 5,
+          "priority": "High",
+          "labels": [
+            "payments",
+            "retry"
+          ],
+          "sprint": "Sprint 1",
+          "version": "v0.1",
+          "ac": [
+            "A decline moves the order to PAYMENT_FAILED and records the attempt.",
+            "A retry moves through PAYMENT_PENDING and respects the configured maximum.",
+            "Inventory is not allocated until capture succeeds."
+          ]
+        },
+        {
+          "summary": "As a support agent, I want captured payments and refunds recorded so that I can reconcile customer payment outcomes.",
+          "points": 8,
+          "priority": "High",
+          "labels": [
+            "payments",
+            "refunds",
+            "support"
+          ],
+          "sprint": "Sprint 1",
+          "version": "v0.1",
+          "ac": [
+            "Successful captures and refunds create separate immutable attempt records.",
+            "Refund references are linked to the order.",
+            "Failed or invalid transitions do not create a false refund record."
+          ]
+        }
       ]
     },
     {
-      "name": "Inventory & Fulfillment", "priority": "High", "labels": ["inventory", "fulfillment"], "version": "v0.2",
+      "name": "Inventory & Fulfillment",
+      "priority": "High",
+      "labels": [
+        "inventory",
+        "fulfillment"
+      ],
+      "version": "v0.2",
       "devTask": "Implement locked inventory allocation and fulfillment queue operations",
       "stories": [
-        {"summary": "As an admin, I want inventory allocated only after payment succeeds so that unpaid orders cannot reserve stock indefinitely.", "points": 5, "priority": "High", "labels": ["inventory", "payments"], "sprint": "Sprint 2", "version": "v0.2", "ac": ["Successful payment allocates the requested quantity.", "Failed payment leaves allocated quantity unchanged.", "Concurrent checkout cannot allocate more than available stock." ]},
-        {"summary": "As an order team member, I want a fulfillment queue of allocated orders so that warehouse work is clear and actionable.", "points": 5, "priority": "High", "labels": ["fulfillment", "admin"], "sprint": "Sprint 2", "version": "v0.2", "ac": ["The queue includes INVENTORY_ALLOCATED and FULFILLING orders.", "Starting fulfillment moves only allocated orders to FULFILLING.", "Order items and quantities are visible in the queue." ]},
-        {"summary": "As an order team member, I want canceled pre-shipment orders to release inventory so that sellable stock is restored.", "points": 3, "priority": "High", "labels": ["inventory", "cancellation"], "sprint": "Sprint 2", "version": "v0.2", "ac": ["Cancellation is accepted only before SHIPPED.", "Allocated quantities are released exactly once.", "Stock counts remain consistent after cancellation." ]}
+        {
+          "summary": "As an admin, I want inventory allocated only after payment succeeds so that unpaid orders cannot reserve stock indefinitely.",
+          "points": 5,
+          "priority": "High",
+          "labels": [
+            "inventory",
+            "payments"
+          ],
+          "sprint": "Sprint 2",
+          "version": "v0.2",
+          "ac": [
+            "Successful payment allocates the requested quantity.",
+            "Failed payment leaves allocated quantity unchanged.",
+            "Concurrent checkout cannot allocate more than available stock."
+          ]
+        },
+        {
+          "summary": "As an order team member, I want a fulfillment queue of allocated orders so that warehouse work is clear and actionable.",
+          "points": 5,
+          "priority": "High",
+          "labels": [
+            "fulfillment",
+            "admin"
+          ],
+          "sprint": "Sprint 2",
+          "version": "v0.2",
+          "ac": [
+            "The queue includes INVENTORY_ALLOCATED and FULFILLING orders.",
+            "Starting fulfillment moves only allocated orders to FULFILLING.",
+            "Order items and quantities are visible in the queue."
+          ]
+        },
+        {
+          "summary": "As an order team member, I want canceled pre-shipment orders to release inventory so that sellable stock is restored.",
+          "points": 3,
+          "priority": "High",
+          "labels": [
+            "inventory",
+            "cancellation"
+          ],
+          "sprint": "Sprint 2",
+          "version": "v0.2",
+          "ac": [
+            "Cancellation is accepted only before SHIPPED.",
+            "Allocated quantities are released exactly once.",
+            "Stock counts remain consistent after cancellation."
+          ]
+        }
       ]
     },
     {
-      "name": "Shipping & Tracking", "priority": "High", "labels": ["shipping", "tracking"], "version": "v0.2",
+      "name": "Shipping & Tracking",
+      "priority": "High",
+      "labels": [
+        "shipping",
+        "tracking"
+      ],
+      "version": "v0.2",
       "devTask": "Implement shipment transitions, tracking records, and delivery notifications",
       "stories": [
-        {"summary": "As an order team member, I want to add a tracking number when shipping an order so that delivery can be followed.", "points": 3, "priority": "High", "labels": ["shipping", "admin"], "sprint": "Sprint 2", "version": "v0.2", "ac": ["Only FULFILLING orders may be shipped.", "A tracking number is required and appears on the order.", "Shipping consumes the allocated stock quantity." ]},
-        {"summary": "As a customer, I want to look up my order and tracking status so that I can plan for delivery.", "points": 5, "priority": "High", "labels": ["tracking", "customer"], "sprint": "Sprint 2", "version": "v0.2", "ac": ["The tracking view shows current status and tracking number when present.", "The full order timeline is visible.", "An unknown order returns a clear not-found response." ]},
-        {"summary": "As a customer, I want a notification for every order status change so that I do not miss important updates.", "points": 3, "priority": "Medium", "labels": ["notifications", "customer"], "sprint": "Sprint 2", "version": "v0.2", "ac": ["Each transition creates a simulated email/SMS log entry.", "The recipient and timestamp are recorded.", "Notification failure does not roll back a valid order transition." ]}
+        {
+          "summary": "As an order team member, I want to add a tracking number when shipping an order so that delivery can be followed.",
+          "points": 3,
+          "priority": "High",
+          "labels": [
+            "shipping",
+            "admin"
+          ],
+          "sprint": "Sprint 2",
+          "version": "v0.2",
+          "ac": [
+            "Only FULFILLING orders may be shipped.",
+            "A tracking number is required and appears on the order.",
+            "Shipping consumes the allocated stock quantity."
+          ]
+        },
+        {
+          "summary": "As a customer, I want to look up my order and tracking status so that I can plan for delivery.",
+          "points": 5,
+          "priority": "High",
+          "labels": [
+            "tracking",
+            "customer"
+          ],
+          "sprint": "Sprint 2",
+          "version": "v0.2",
+          "ac": [
+            "The tracking view shows current status and tracking number when present.",
+            "The full order timeline is visible.",
+            "An unknown order returns a clear not-found response."
+          ]
+        },
+        {
+          "summary": "As a customer, I want a notification for every order status change so that I do not miss important updates.",
+          "points": 3,
+          "priority": "Medium",
+          "labels": [
+            "notifications",
+            "customer"
+          ],
+          "sprint": "Sprint 2",
+          "version": "v0.2",
+          "ac": [
+            "Each transition creates a simulated email/SMS log entry.",
+            "The recipient and timestamp are recorded.",
+            "Notification failure does not roll back a valid order transition."
+          ]
+        }
       ]
     },
     {
-      "name": "Cancellation, Returns & Refunds", "priority": "High", "labels": ["returns", "refunds"], "version": "v1.0",
+      "name": "Cancellation, Returns & Refunds",
+      "priority": "High",
+      "labels": [
+        "returns",
+        "refunds"
+      ],
+      "version": "v1.0",
       "devTask": "Implement cancellation rules, returned inventory handling, and refund operations",
       "stories": [
-        {"summary": "As a customer, I want to cancel an order before it ships so that I can stop an unwanted purchase.", "points": 3, "priority": "High", "labels": ["cancellation", "customer"], "sprint": "Sprint 2", "version": "v0.2", "ac": ["Cancellation succeeds before SHIPPED and is rejected after.", "Allocated inventory is released.", "A captured payment triggers a refund record." ]},
-        {"summary": "As a customer, I want to request a return after delivery so that I can send back an item I do not want.", "points": 5, "priority": "High", "labels": ["returns", "customer"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["Only DELIVERED orders may enter RETURN_REQUESTED.", "The request appears in the order timeline.", "Pre-delivery return requests are rejected." ]},
-        {"summary": "As a support agent, I want to receive returned items and issue a refund so that the return lifecycle can be completed and audited.", "points": 5, "priority": "High", "labels": ["returns", "refunds", "support"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["RETURN_REQUESTED can move to RETURNED and restock inventory.", "Only RETURNED orders may be refunded.", "The refund is recorded and the order ends REFUNDED." ]}
+        {
+          "summary": "As a customer, I want to cancel an order before it ships so that I can stop an unwanted purchase.",
+          "points": 3,
+          "priority": "High",
+          "labels": [
+            "cancellation",
+            "customer"
+          ],
+          "sprint": "Sprint 2",
+          "version": "v0.2",
+          "ac": [
+            "Cancellation succeeds before SHIPPED and is rejected after.",
+            "Allocated inventory is released.",
+            "A captured payment triggers a refund record."
+          ]
+        },
+        {
+          "summary": "As a customer, I want to request a return after delivery so that I can send back an item I do not want.",
+          "points": 5,
+          "priority": "High",
+          "labels": [
+            "returns",
+            "customer"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "Only DELIVERED orders may enter RETURN_REQUESTED.",
+            "The request appears in the order timeline.",
+            "Pre-delivery return requests are rejected."
+          ]
+        },
+        {
+          "summary": "As a support agent, I want to receive returned items and issue a refund so that the return lifecycle can be completed and audited.",
+          "points": 5,
+          "priority": "High",
+          "labels": [
+            "returns",
+            "refunds",
+            "support"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "RETURN_REQUESTED can move to RETURNED and restock inventory.",
+            "Only RETURNED orders may be refunded.",
+            "The refund is recorded and the order ends REFUNDED."
+          ]
+        }
       ]
     },
     {
-      "name": "Release Management & Feature Flags", "priority": "High", "labels": ["release", "feature-flags"], "version": "v1.0",
+      "name": "Release Management & Feature Flags",
+      "priority": "High",
+      "labels": [
+        "release",
+        "feature-flags"
+      ],
+      "version": "v1.0",
       "devTask": "Implement persistent feature flags and Jira-linked rollout guards",
       "stories": [
-        {"summary": "As a developer, I want feature flags stored in the database so that rollout state survives an application restart.", "points": 3, "priority": "High", "labels": ["feature-flags", "release"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["Flags have a stable key, description, and enabled state.", "Seed data is idempotent.", "Flag state is available through the admin API." ]},
-        {"summary": "As an admin, I want to enable or disable a feature flag so that I can control rollout without a code deployment.", "points": 3, "priority": "High", "labels": ["feature-flags", "admin"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["An authorized admin can toggle a known flag.", "The new state is persisted and immediately visible.", "Unknown flags return a clear error." ]},
-        {"summary": "As a release manager, I want a feature flag linked to its Jira story and QA task so that incomplete work cannot be rolled out.", "points": 5, "priority": "Highest", "labels": ["feature-flags", "release-gating"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["Each managed flag stores a Jira issue key.", "Enabling requires the story to be Done and linked QA work to pass.", "Unavailable Jira data fails closed for flag changes but not for order processing." ]}
+        {
+          "summary": "As a developer, I want feature flags stored in the database so that rollout state survives an application restart.",
+          "points": 3,
+          "priority": "High",
+          "labels": [
+            "feature-flags",
+            "release"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "Flags have a stable key, description, and enabled state.",
+            "Seed data is idempotent.",
+            "Flag state is available through the admin API."
+          ]
+        },
+        {
+          "summary": "As an admin, I want to enable or disable a feature flag so that I can control rollout without a code deployment.",
+          "points": 3,
+          "priority": "High",
+          "labels": [
+            "feature-flags",
+            "admin"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "An authorized admin can toggle a known flag.",
+            "The new state is persisted and immediately visible.",
+            "Unknown flags return a clear error."
+          ]
+        },
+        {
+          "summary": "As a release manager, I want a feature flag linked to its Jira story and QA task so that incomplete work cannot be rolled out.",
+          "points": 5,
+          "priority": "Highest",
+          "labels": [
+            "feature-flags",
+            "release-gating"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "Each managed flag stores a Jira issue key.",
+            "Enabling requires the story to be Done and linked QA work to pass.",
+            "Unavailable Jira data fails closed for flag changes but not for order processing."
+          ]
+        },
+        {
+          "summary": "As a developer, I want feature flags to default to off when Jira is unavailable so that unverified features cannot affect live order flow.",
+          "points": 3,
+          "priority": "High",
+          "labels": [
+            "feature-flags",
+            "resilience"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "When Jira cannot verify rollout readiness, the flag remains disabled.",
+            "Order processing continues while Jira is unavailable.",
+            "The admin UI explains why the flag could not be enabled."
+          ]
+        }
       ]
     },
     {
-      "name": "QA & Release Readiness", "priority": "Highest", "labels": ["qa", "release-readiness"], "version": "v1.0",
+      "name": "QA & Release Readiness",
+      "priority": "Highest",
+      "labels": [
+        "qa",
+        "release-readiness"
+      ],
+      "version": "v1.0",
       "devTask": "Build readiness checks and lifecycle regression coverage",
       "stories": [
-        {"summary": "As a tester, I want automated lifecycle tests so that invalid state changes and payment regressions are caught before release.", "points": 5, "priority": "Highest", "labels": ["qa", "automation"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["Tests cover valid and invalid state transitions.", "Payment retry, cancellation refund, and return refund paths are tested.", "The test suite runs with a clean H2 database." ]},
-        {"summary": "As a tester, I want readiness checks for a Jira version so that I can explain whether the release can ship.", "points": 8, "priority": "Highest", "labels": ["qa", "release-readiness"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["The page groups issues by status and reports done versus total points.", "Open blockers and unresolved dependencies are listed.", "READY or NOT READY includes explicit reasons." ]},
-        {"summary": "As a release manager, I want a Definition of Done checklist so that every release is assessed consistently.", "points": 5, "priority": "High", "labels": ["qa", "release-process"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["All stories and linked QA tasks must be complete.", "Open blocking bugs and unresolved dependencies prevent readiness.", "Green tests and release notes are part of the checklist." ]}
+        {
+          "summary": "As a tester, I want automated lifecycle tests so that invalid state changes and payment regressions are caught before release.",
+          "points": 5,
+          "priority": "Highest",
+          "labels": [
+            "qa",
+            "automation"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "Tests cover valid and invalid state transitions.",
+            "Payment retry, cancellation refund, and return refund paths are tested.",
+            "The test suite runs with a clean H2 database."
+          ]
+        },
+        {
+          "summary": "As a tester, I want readiness checks for a Jira version so that I can explain whether the release can ship.",
+          "points": 8,
+          "priority": "Highest",
+          "labels": [
+            "qa",
+            "release-readiness"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "The page groups issues by status and reports done versus total points.",
+            "Open blockers and unresolved dependencies are listed.",
+            "READY or NOT READY includes explicit reasons."
+          ]
+        },
+        {
+          "summary": "As a release manager, I want a Definition of Done checklist so that every release is assessed consistently.",
+          "points": 5,
+          "priority": "High",
+          "labels": [
+            "qa",
+            "release-process"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "All stories and linked QA tasks must be complete.",
+            "Open blocking bugs and unresolved dependencies prevent readiness.",
+            "Green tests and release notes are part of the checklist."
+          ]
+        }
       ]
     },
     {
-      "name": "Jira Integration & Dashboard", "priority": "High", "labels": ["jira", "dashboard"], "version": "v1.0",
+      "name": "Jira Integration & Dashboard",
+      "priority": "High",
+      "labels": [
+        "jira",
+        "dashboard"
+      ],
+      "version": "v1.0",
       "devTask": "Implement resilient Jira client, operational bug deduplication, and project dashboard",
       "stories": [
-        {"summary": "As an admin, I want Jira release and sprint progress beside order metrics so that delivery work and live operations are visible together.", "points": 8, "priority": "High", "labels": ["jira", "dashboard"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["The dashboard links to the Jira board and selected version.", "Sprint progress shows completed and remaining story points.", "Recent issues are listed when Jira is available." ]},
-        {"summary": "As a support lead, I want a Jira bug created for repeated payment failures or stuck orders so that operational risks are tracked with context.", "points": 5, "priority": "High", "labels": ["jira", "automation", "payments"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["A bug includes order ID, status, timestamps, and auto-created label.", "An existing open bug for the same order is reused instead of duplicated.", "A Jira outage does not interrupt order processing." ]},
-        {"summary": "As a developer, I want Jira calls behind a replaceable interface so that the app can be tested offline and remain operational during Jira outages.", "points": 5, "priority": "High", "labels": ["jira", "resilience"], "sprint": "Sprint 3", "version": "v1.0", "ac": ["Jira operations are accessed through an interface.", "Tests can substitute a mock Jira client.", "Timeout, rate-limit, and configuration errors are surfaced without failing core order actions." ]}
+        {
+          "summary": "As an admin, I want Jira release and sprint progress beside order metrics so that delivery work and live operations are visible together.",
+          "points": 8,
+          "priority": "High",
+          "labels": [
+            "jira",
+            "dashboard"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "The dashboard links to the Jira board and selected version.",
+            "Sprint progress shows completed and remaining story points.",
+            "Recent issues are listed when Jira is available."
+          ]
+        },
+        {
+          "summary": "As a support lead, I want a Jira bug created for repeated payment failures or stuck orders so that operational risks are tracked with context.",
+          "points": 5,
+          "priority": "High",
+          "labels": [
+            "jira",
+            "automation",
+            "payments"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "A bug includes order ID, status, timestamps, and auto-created label.",
+            "An existing open bug for the same order is reused instead of duplicated.",
+            "A Jira outage does not interrupt order processing."
+          ]
+        },
+        {
+          "summary": "As a developer, I want Jira calls behind a replaceable interface so that the app can be tested offline and remain operational during Jira outages.",
+          "points": 5,
+          "priority": "High",
+          "labels": [
+            "jira",
+            "resilience"
+          ],
+          "sprint": "Sprint 3",
+          "version": "v1.0",
+          "ac": [
+            "Jira operations are accessed through an interface.",
+            "Tests can substitute a mock Jira client.",
+            "Timeout, rate-limit, and configuration errors are surfaced without failing core order actions."
+          ]
+        }
       ]
     }
   ]

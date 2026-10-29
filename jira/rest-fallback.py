@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shlex
 import sys
 import urllib.error
 import urllib.parse
@@ -96,8 +97,12 @@ def load_env_file(path: str = ".env") -> None:
             key, value = line.split("=", 1)
             key = key.strip()
             value = value.strip()
-            if len(value) >= 2 and value[0] == value[-1] and value[0] in ("\"", "'"):
-                value = value[1:-1]
+            try:
+                parsed = shlex.split(value, comments=False)
+                if len(parsed) == 1:
+                    value = parsed[0]
+            except ValueError:
+                continue
             if key and key not in os.environ:
                 os.environ[key] = value
 

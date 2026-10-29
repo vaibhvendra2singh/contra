@@ -24,12 +24,14 @@ if [[ -z "${MAVEN_MAJOR:-}" || "$MAVEN_MAJOR" -lt 3 || ( "$MAVEN_MAJOR" -eq 3 &&
   exit 1
 fi
 
+PORT_OVERRIDE="${SERVER_PORT:-}"
 if [[ -f .env ]]; then
   set -a
   # shellcheck disable=SC1091
   source .env
   set +a
 fi
+if [[ -n "$PORT_OVERRIDE" ]]; then export SERVER_PORT="$PORT_OVERRIDE"; fi
 mkdir -p "$(dirname "${DB_FILE:-./data/oms}")"
 export DEMO_MODE="${DEMO_MODE:-true}"
 

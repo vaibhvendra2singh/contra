@@ -27,19 +27,21 @@ mvn test
 | `DB_FILE` | H2 database file prefix | `./data/oms` |
 | `MAX_PAYMENT_RETRIES` | Maximum retry count | `3` |
 | `STUCK_ORDER_HOURS` | Time before a nonterminal order is considered stuck | `24` |
-| `JIRA_BASE_URL` | Jira Cloud site URL | unset (offline adapter) |
+| `JIRA_BASE_URL` | Jira API gateway URL for the site cloud ID when using scoped tokens | unset (offline adapter) |
+| `JIRA_SITE_URL` | Jira Cloud site URL used for clickable board/issue links | unset |
 | `JIRA_EMAIL` | Jira account email for runtime REST calls | unset |
 | `JIRA_API_TOKEN` | Jira API token for runtime REST calls | unset |
 | `JIRA_PROJECT_KEY` | Project used for status reads and operational bugs | `OM2` |
+| `JIRA_BOARD_ID` | Scrum board used for sprint progress reads | blank (set to your Jira board ID) |
 | `DEMO_MODE` | Create a local delivered demo fixture on first startup | `false` in Spring Boot; `true` in `scripts/start.sh` for the teacher demo |
 
-Generate an Atlassian API token in your account security settings only if you want the running app to query Jira. Put values in `.env`; never commit that file. Project/backlog setup itself was done in the visible Jira browser. The optional version/sprint REST fallback supports `--dry-run` and loads the `JIRA_*` variables from `.env` (exported shell variables take precedence).
+For scoped Atlassian API tokens, `JIRA_BASE_URL` is `https://api.atlassian.com/ex/jira/<cloud-id>` and `JIRA_SITE_URL` is your Jira site URL. Put values in `.env`; never commit that file or expose the token. Project/backlog setup itself was done in the visible Jira browser. The optional version/sprint REST fallback supports `--dry-run` and loads the `JIRA_*` variables from `.env` (exported shell variables take precedence).
 
 ## Jira setup and integration
 
 - Read [`docs/spec.md`](docs/spec.md) and [`jira/seed.json`](jira/seed.json) for the canonical specification and desired backlog.
 - [`jira/rest-fallback.py`](jira/rest-fallback.py) can create missing release versions and sprint goals. Run `python3 jira/rest-fallback.py --dry-run` first.
-- Runtime Jira calls use `JiraClient`; the offline implementation returns empty integration data and never prevents order operations.
+- Runtime Jira calls use `JiraClient`; the offline implementation returns empty integration data and never prevents order operations. Verify a scoped token without printing it using `python3 jira/verify-connection.py`.
 - Admin APIs include `/api/admin/jira/dashboard` and `/api/admin/jira/readiness?version=v1.0`.
 - The admin screen shows sprint progress and release readiness. Demo flags start disabled; enabling requires both linked Jira issues to be Done. Jira credentials are optional: without them the page clearly shows offline/unready status, while checkout and order processing continue normally.
 - Payment failures after the configured retries and old stuck orders create deduplicated Jira Bugs when Jira credentials are configured.
