@@ -77,3 +77,6 @@ Capture these for the submission; the exact target pages are listed in [`docs/ev
 - [`docs/test-report.md`](docs/test-report.md) — test cases and recorded results.
 - [`docs/submission-1-mapping.md`](docs/submission-1-mapping.md) — problem, gap, and client findings mapping.
 - [`docs/jira-setup-status.md`](docs/jira-setup-status.md) — live Jira setup status and known gaps.
+- [`docs/jira-sprint-dashboard.md`](docs/jira-sprint-dashboard.md) and [`docs/weekly-status-report.md`](docs/weekly-status-report.md) — snapshot reports from the visible Jira project.
+- [`docs/final-report.md`](docs/final-report.md), [`docs/presentation-outline.md`](docs/presentation-outline.md), and [`docs/requirements-traceability.md`](docs/requirements-traceability.md) — submission materials and requirement coverage.
+- Sprint review/retro files and [`docs/burndown-and-velocity.md`](docs/burndown-and-velocity.md) record actual Jira sprint state. They explicitly distinguish the plan from work tracked as done.
