@@ -144,16 +144,6 @@ async function loadAdmin() {
         <div class="admin-section-heading"><h2>Recent orders</h2><span>${orders.length} TOTAL PLACED</span></div>
         ${orders.length ? orders.map(order => renderAdminOrder(order)).join('') : '<div class="empty">Orders placed in the shop will appear here.</div>'}
       </section>
-
-      <section class="admin-section">
-        <div class="admin-section-heading"><h2>Notification log</h2><span>SIMULATED EMAIL + SMS</span></div>
-        <div class="notice-list">${notifications.slice(0, 10).map(n => `
-          <div class="notice-row">
-            <span><b>${escapeHtml(n.subject)}</b> · <code class="muted">${escapeHtml(n.recipient)}</code></span>
-            <small>${dateTime(n.createdAt)}</small>
-          </div>
-        `).join('') || '<div class="empty">No notifications logged yet.</div>'}</div>
-      </section>
     `;
 
     root.querySelectorAll('[data-flag]').forEach(button => button.addEventListener('click', async () => {
