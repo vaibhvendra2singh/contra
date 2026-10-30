@@ -3,43 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#162e2b">
+  <meta name="theme-color" content="#ffed00">
   <title>Contra | Order Operations</title>
-  <link rel="stylesheet" href="/styles.css?v=4">
+  <link rel="stylesheet" href="/styles.css?v=6">
 </head>
 <body>
   <div class="topbar-wrapper">
     <header class="topbar">
       <a class="brand" href="#shop" onclick="go('shop')">
-        <div class="brand-logo" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2.5V21.5M2.5 12H21.5M5.28 5.28L18.72 18.72M5.28 18.72L18.72 5.28" stroke="#172a27" stroke-width="2.75" stroke-linecap="round"/>
-            <circle cx="12" cy="12" r="2.2" fill="#d67a53"/>
-          </svg>
-        </div>
-        <span class="brand-text">CONTRA <span class="brand-badge">OMS</span></span>
+        <div class="brand-badge-neo">CONTRA</div>
+        <span class="brand-tag-neo">OMS</span>
       </a>
       <nav aria-label="Main navigation">
         <button class="nav-link active" data-page="shop">
-          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           <span>Shop</span>
         </button>
         <button class="nav-link" data-page="track">
-          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/><circle cx="18.5" cy="15.5" r="2.5"/><path d="M20.27 17.27 22 19"/></svg>
+          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/><circle cx="18.5" cy="15.5" r="2.5"/><path d="M20.27 17.27 22 19"/></svg>
           <span>Track order</span>
         </button>
         <button class="nav-link" data-page="admin">
-          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3"/><rect width="7" height="5" x="14" y="3"/><rect width="7" height="9" x="14" y="12"/><rect width="7" height="5" x="3" y="16"/></svg>
           <span>Operations</span>
         </button>
         <button class="nav-link" data-page="jira">
-          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
           <span>Agile & Jira</span>
         </button>
       </nav>
       <div class="topbar-actions">
         <button class="cart-pill" id="cart-toggle">
-          <svg class="cart-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <svg class="cart-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
           <span>Cart</span>
           <span class="cart-badge" id="cart-count">0</span>
           <span class="cart-arrow">›</span>
@@ -50,47 +45,118 @@
 
   <main>
     <section class="page active" id="page-shop">
-      <div class="hero">
-        <div class="hero-copy"><p class="eyebrow">THE CONTRA STORE · ORDER LIFECYCLE DEMO</p><h1>Good goods.<br><em>Clear delivery.</em></h1><p>Shop a small collection and follow every step from checkout to doorstep.</p><a class="button button-light" href="#catalog">Explore the collection <span>↓</span></a></div>
-        <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="shape shape-one"></div><div class="shape shape-two"></div><div class="shape shape-three"></div><span>MADE TO<br>MOVE WITH YOU</span></div>
-        <div class="hero-index">01 <span>/</span> 03</div>
+      <div class="hero-neo-poster">
+        <div class="hero-poster-header">
+          <p class="eyebrow">THE CONTRA STORE · ORDER LIFECYCLE DEMO</p>
+          <div class="hero-poster-arrow-tile" aria-hidden="true">↓</div>
+          <div class="hero-strip-container">
+            <div class="hero-strip hero-strip-black">GOOD GOODS.</div>
+            <div class="hero-strip hero-strip-cream">CLEAR DELIVERY.</div>
+          </div>
+        </div>
+        <div class="hero-violet-band">
+          <p>Shop an edited collection and follow every step from checkout to doorstep with complete live tracking.</p>
+          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+            <a class="button button-light" href="#catalog">Explore the collection ↓</a>
+            <span class="hero-badge-index">EDITION 01 / 03</span>
+          </div>
+        </div>
       </div>
-      <section class="section" id="catalog"><div class="section-heading"><div><p class="eyebrow">SMALL BATCH · READY TO SHIP</p><h2>Everyday essentials</h2></div><span class="muted" id="stock-note">Live inventory</span></div><div class="product-grid" id="product-grid"><div class="loading">Loading the collection…</div></div></section>
-      <section class="process-strip"><div><span>01</span><b>Secure checkout</b><small>Card or wallet</small></div><div><span>02</span><b>Careful fulfillment</b><small>Inventory allocated</small></div><div><span>03</span><b>Track every step</b><small>Clear status updates</small></div></section>
+
+      <section class="process-strip">
+        <div><span>01</span><b>Secure checkout</b><small>Card or wallet with instant verification</small></div>
+        <div><span>02</span><b>Careful fulfillment</b><small>Automated inventory allocation</small></div>
+        <div><span>03</span><b>Track every step</b><small>Real-time lifecycle & Jira integration</small></div>
+      </section>
+
+      <section class="section" id="catalog">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SMALL BATCH · READY TO SHIP</p>
+            <h2>Everyday essentials</h2>
+          </div>
+          <span class="muted" id="stock-note">Live inventory</span>
+        </div>
+        <div class="product-grid" id="product-grid">
+          <div class="loading">Loading the collection…</div>
+        </div>
+      </section>
     </section>
 
     <section class="page" id="page-track">
-      <div class="subhero"><p class="eyebrow">YOUR ORDER, IN VIEW</p><h1>Follow the journey.</h1><p>Enter your order ID to see its latest status, tracking number, and timeline.</p></div>
-      <form class="lookup-form" id="track-form"><label for="track-id">Order ID</label><div class="input-row"><input id="track-id" placeholder="Paste your order ID" required><button class="button button-dark">Find my order</button></div></form>
+      <div class="subhero">
+        <p class="eyebrow">YOUR ORDER, IN VIEW</p>
+        <h1>Follow the journey.</h1>
+        <p>Enter your order ID to see its latest status, tracking number, and timeline.</p>
+      </div>
+      <form class="lookup-form" id="track-form">
+        <label for="track-id">Order ID</label>
+        <div class="input-row">
+          <input id="track-id" placeholder="Paste your order ID" required>
+          <button class="button button-dark">Find my order</button>
+        </div>
+      </form>
       <div id="tracking-result" class="result-area"></div>
     </section>
 
     <section class="page" id="page-admin">
-      <div class="subhero admin-heading"><div><p class="eyebrow">CONTRA · INTERNAL WORKSPACE</p><h1>Order operations</h1><p>Monitor live orders, coordinate fulfillment, and control feature rollout.</p></div><button class="button button-dark" id="refresh-admin">Refresh dashboard ↻</button></div>
-      <div id="admin-content"><div class="loading">Loading operations…</div></div>
+      <div class="subhero admin-heading">
+        <div>
+          <p class="eyebrow">CONTRA · INTERNAL WORKSPACE</p>
+          <h1>Order operations</h1>
+          <p>Monitor live orders, coordinate fulfillment, and control feature rollout.</p>
+        </div>
+        <button class="button button-dark" id="refresh-admin">Refresh dashboard ↻</button>
+      </div>
+      <div id="admin-content">
+        <div class="loading">Loading operations…</div>
+      </div>
     </section>
 
     <section class="page" id="page-jira">
-      <div class="subhero admin-heading"><div><p class="eyebrow">ATLASSIAN JIRA CLOUD · PROJECT OM2</p><h1>Agile Delivery & Releases</h1><p>Monitor Scrum sprint progress, story points, and release readiness verification.</p></div><button class="button button-dark" id="refresh-jira">Sync Jira ↻</button></div>
-      <div id="jira-content"><div class="loading">Connecting to Jira Cloud (OM2)…</div></div>
+      <div class="subhero admin-heading">
+        <div>
+          <p class="eyebrow">ATLASSIAN JIRA CLOUD · PROJECT OM2</p>
+          <h1>Agile Delivery & Releases</h1>
+          <p>Monitor Scrum sprint progress, story points, and release readiness verification.</p>
+        </div>
+        <button class="button button-dark" id="refresh-jira">Sync Jira ↻</button>
+      </div>
+      <div id="jira-content">
+        <div class="loading">Connecting to Jira Cloud (OM2)…</div>
+      </div>
     </section>
   </main>
 
-  <footer><span>CONTRA ORDER MANAGEMENT</span><span>Built for a safer release and a clearer order lifecycle.</span><a href="/swagger-ui.html">API docs ↗</a></footer>
+  <footer>
+    <span>CONTRA ORDER MANAGEMENT</span>
+    <span>Built for a safer release and a clearer order lifecycle.</span>
+    <a href="/swagger-ui.html">API docs ↗</a>
+  </footer>
 
   <dialog id="checkout-dialog">
     <form method="dialog" class="dialog-close"><button aria-label="Close">×</button></form>
-    <p class="eyebrow">CHECKOUT</p><h2>Where should we send it?</h2>
+    <p class="eyebrow">CHECKOUT</p>
+    <h2>Where should we send it?</h2>
     <form id="checkout-form" class="checkout-form">
       <label>Name<input name="customerName" required placeholder="Your name"></label>
       <label>Email<input name="customerEmail" type="email" required placeholder="you@example.com"></label>
-      <div class="form-split"><label>Payment method<select name="paymentMethod"><option value="CARD">Card</option><option value="WALLET">Wallet</option></select></label><label>Demo token<input name="paymentToken" placeholder="Use fail-demo to simulate a decline"></label></div>
-      <p class="form-hint">This demo uses a mock payment gateway. No payment details are collected.</p>
+      <div class="form-split">
+        <label>Payment method
+          <select name="paymentMethod">
+            <option value="CARD">Card</option>
+            <option value="WALLET">Wallet</option>
+          </select>
+        </label>
+        <label>Demo token<input name="paymentToken" placeholder="Use fail-demo to simulate a decline"></label>
+      </div>
+      <p class="form-hint">This demo uses a mock payment gateway. No real card details are collected.</p>
       <div class="checkout-total"><span>Order total</span><strong id="checkout-total">₹0.00</strong></div>
-      <button class="button button-dark button-wide">Place order</button>
+      <button class="button button-emphasis button-wide">Place order</button>
     </form>
   </dialog>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="/app.js?v=5" defer></script>
+  <script src="/app.js?v=6" defer></script>
 </body>
 </html>

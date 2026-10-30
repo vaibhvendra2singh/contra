@@ -13,3 +13,4 @@ if [[ -d "$PROJECT_ROOT/target/classes/static" ]]; then
 fi
 
 echo "✅ Frontend successfully restored to Version 1!"
+

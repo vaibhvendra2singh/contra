@@ -382,3 +382,4 @@ def create_guide_pdf(output_path):
 if __name__ == "__main__":
     out_file = "/Users/vaibhvendra/Desktop/clg/project/AGILE PROJECT/Contra_Live_Demo_Visual_Guide.pdf"
     create_guide_pdf(out_file)
+
