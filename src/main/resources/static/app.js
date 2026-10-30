@@ -192,9 +192,9 @@ async function loadJira() {
             <div class="version-select-wrap">
               <label>Release Version:
                 <select id="jira-version" class="pill-select">
-                  <option ${readiness.version === 'v0.1' ? 'selected' : ''}>v0.1</option>
-                  <option ${readiness.version === 'v0.2' ? 'selected' : ''}>v0.2</option>
-                  <option ${readiness.version === 'v1.0' ? 'selected' : ''}>v1.0</option>
+                  <option value="v1.0" ${readiness.version === 'v1.0' ? 'selected' : ''}>v1.0 (Sprint 3 · Current Release)</option>
+                  <option value="v0.2" ${readiness.version === 'v0.2' ? 'selected' : ''}>v0.2 (Sprint 2 · Fulfillment)</option>
+                  <option value="v0.1" ${readiness.version === 'v0.1' ? 'selected' : ''}>v0.1 (Sprint 1 · Order Core)</option>
                 </select>
               </label>
             </div>
