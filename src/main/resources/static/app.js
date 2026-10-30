@@ -18,6 +18,7 @@ function go(page) {
   document.querySelectorAll('.nav-link').forEach(node => node.classList.toggle('active', node.dataset.page === page));
   if (page === 'shop') loadCatalog();
   if (page === 'admin') loadAdmin();
+  if (page === 'jira') loadJira();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 document.querySelectorAll('.nav-link').forEach(button => button.addEventListener('click', () => go(button.dataset.page)));
@@ -25,7 +26,8 @@ $('#cart-toggle').addEventListener('click', () => {
   if (!state.cart.size) return toast('Your cart is empty. Add something from the collection first.');
   openCheckout();
 });
-$('#refresh-admin').addEventListener('click', loadAdmin);
+$('#refresh-admin')?.addEventListener('click', loadAdmin);
+$('#refresh-jira')?.addEventListener('click', loadJira);
 
 async function loadCatalog() {
   const grid = $('#product-grid');
@@ -92,7 +94,6 @@ async function loadAdmin() {
   const root = $('#admin-content');
   const statuses = ['PAYMENT_PENDING', 'PAYMENT_FAILED', 'INVENTORY_ALLOCATED', 'FULFILLING', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
 
-  // 1. Instantly render the local operational data without waiting for external Jira network calls
   try {
     const [dashboard, orders, flags, notifications] = await Promise.all([
       api('/api/admin/dashboard'),
@@ -101,44 +102,155 @@ async function loadAdmin() {
       api('/api/admin/notifications')
     ]);
 
-    root.innerHTML = `<div class="dashboard-grid"><div class="metric-card"><span>Total orders</span><strong>${orders.length}</strong></div><div class="metric-card"><span>Need attention</span><strong>${dashboard.stuckOrders}</strong></div><div class="metric-card"><span>Failed payments</span><strong>${dashboard.failedPayments}</strong></div><div class="metric-card"><span>In fulfillment</span><strong>${dashboard.fulfillmentQueue.length}</strong></div></div>
-      <section class="admin-section"><div class="admin-section-heading"><h2>Orders by status</h2><span>LIVE ORDER FLOW</span></div><div class="table-wrap"><table><thead><tr><th>Status</th><th>Orders</th></tr></thead><tbody>${statuses.map(status => `<tr><td>${pretty(status)}</td><td>${dashboard.ordersByStatus[status] || 0}</td></tr>`).join('')}</tbody></table></div></section>
-      <section class="admin-section"><div class="admin-section-heading"><h2>Fulfillment queue</h2><span>ALLOCATED → SHIPPED</span></div>${dashboard.fulfillmentQueue.length ? dashboard.fulfillmentQueue.map(order => renderAdminOrder(order)).join('') : '<div class="empty">No orders are waiting in the fulfillment queue.</div>'}</section>
-      <section class="admin-section"><div class="admin-section-heading"><h2>Feature flags</h2><span>DEMO CONTROL</span></div><div class="feature-flags">${flags.map(flag => `<div class="flag-row"><div><b>${escapeHtml(flag.key)}</b><small>${escapeHtml(flag.description)} · Jira ${escapeHtml(flag.jiraIssueKey || 'unlinked')} · QA ${escapeHtml(flag.qaIssueKey || 'unlinked')}</small></div><button class="switch ${flag.enabled ? 'on' : ''}" aria-label="Toggle ${escapeHtml(flag.key)}" data-flag="${escapeHtml(flag.key)}" data-enabled="${flag.enabled}"></button></div>`).join('')}</div></section>
-      <section class="admin-section" id="jira-delivery-section"><div class="admin-section-heading"><h2>Jira delivery</h2><span>CHECKING JIRA CLOUD…</span></div><div class="loading">Connecting to Jira Cloud (OM2)…</div></section>
-      <section class="admin-section" id="jira-readiness-section"><div class="admin-section-heading"><h2>Release readiness</h2><span>CHECKING VERDICT…</span></div><div class="loading">Loading release readiness checks…</div></section>
-      <section class="admin-section"><div class="admin-section-heading"><h2>Recent orders</h2><span>${orders.length} TOTAL</span></div>${orders.length ? orders.map(order => renderAdminOrder(order)).join('') : '<div class="empty">Orders placed in the shop will appear here.</div>'}</section>
-      <section class="admin-section"><div class="admin-section-heading"><h2>Notification log</h2><span>SIMULATED EMAIL + SMS</span></div><div class="notice-list">${notifications.slice(0, 8).map(n => `<div class="notice-row"><span><b>${escapeHtml(n.subject)}</b> · ${escapeHtml(n.recipient)}</span><small>${dateTime(n.createdAt)}</small></div>`).join('') || '<div class="empty">No notifications logged yet.</div>'}</div></section>`;
+    root.innerHTML = `
+      <div class="dashboard-grid">
+        <div class="metric-card"><span>Total orders</span><strong>${orders.length}</strong></div>
+        <div class="metric-card"><span>Need attention</span><strong>${dashboard.stuckOrders}</strong></div>
+        <div class="metric-card"><span>Failed payments</span><strong>${dashboard.failedPayments}</strong></div>
+        <div class="metric-card"><span>In fulfillment</span><strong>${dashboard.fulfillmentQueue.length}</strong></div>
+      </div>
+      
+      <div class="admin-two-col">
+        <section class="admin-card">
+          <div class="admin-section-heading"><h2>Orders by status</h2><span>LIVE ORDER FLOW</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Status</th><th>Count</th></tr></thead>
+              <tbody>${statuses.map(status => `<tr><td><span class="status-pill status-${status.toLowerCase()}">${pretty(status)}</span></td><td><b>${dashboard.ordersByStatus[status] || 0}</b></td></tr>`).join('')}</tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="admin-card">
+          <div class="admin-section-heading"><h2>Fulfillment queue</h2><span>ALLOCATED → SHIPPED</span></div>
+          ${dashboard.fulfillmentQueue.length ? dashboard.fulfillmentQueue.map(order => renderAdminOrder(order)).join('') : '<div class="empty">No orders are waiting in the fulfillment queue.</div>'}
+        </section>
+      </div>
+
+      <section class="admin-section">
+        <div class="admin-section-heading"><h2>Feature flags</h2><span>DEMO RELEASE GATING</span></div>
+        <div class="feature-flags">${flags.map(flag => `
+          <div class="flag-row">
+            <div>
+              <b>${escapeHtml(flag.key)}</b>
+              <small>${escapeHtml(flag.description)} · Jira <code>${escapeHtml(flag.jiraIssueKey || 'unlinked')}</code> · QA <code>${escapeHtml(flag.qaIssueKey || 'unlinked')}</code></small>
+            </div>
+            <button class="switch ${flag.enabled ? 'on' : ''}" aria-label="Toggle ${escapeHtml(flag.key)}" data-flag="${escapeHtml(flag.key)}" data-enabled="${flag.enabled}"></button>
+          </div>
+        `).join('')}</div>
+      </section>
+
+      <section class="admin-section">
+        <div class="admin-section-heading"><h2>Recent orders</h2><span>${orders.length} TOTAL PLACED</span></div>
+        ${orders.length ? orders.map(order => renderAdminOrder(order)).join('') : '<div class="empty">Orders placed in the shop will appear here.</div>'}
+      </section>
+
+      <section class="admin-section">
+        <div class="admin-section-heading"><h2>Notification log</h2><span>SIMULATED EMAIL + SMS</span></div>
+        <div class="notice-list">${notifications.slice(0, 10).map(n => `
+          <div class="notice-row">
+            <span><b>${escapeHtml(n.subject)}</b> · <code class="muted">${escapeHtml(n.recipient)}</code></span>
+            <small>${dateTime(n.createdAt)}</small>
+          </div>
+        `).join('') || '<div class="empty">No notifications logged yet.</div>'}</div>
+      </section>
+    `;
 
     root.querySelectorAll('[data-flag]').forEach(button => button.addEventListener('click', async () => {
-      try { await api(`/api/admin/flags/${encodeURIComponent(button.dataset.flag)}`, { method: 'PUT', body: JSON.stringify({ enabled: button.dataset.enabled !== 'true' }) }); await loadAdmin(); }
-      catch (error) { toast(error.message); }
+      try { 
+        await api(`/api/admin/flags/${encodeURIComponent(button.dataset.flag)}`, { method: 'PUT', body: JSON.stringify({ enabled: button.dataset.enabled !== 'true' }) }); 
+        await loadAdmin(); 
+      } catch (error) { toast(error.message); }
     }));
     root.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', () => adminAction(button)));
 
-    // 2. Load the external Jira Cloud REST data in parallel in the background without blocking the screen
-    Promise.all([
+  } catch (error) { 
+    root.innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`; 
+  }
+}
+
+async function loadJira() {
+  const root = $('#jira-content');
+  root.innerHTML = '<div class="loading">Connecting to Jira Cloud (OM2)…</div>';
+
+  try {
+    const [jiraPanel, readiness] = await Promise.all([
       api('/api/admin/jira/dashboard').catch(() => ({ jiraAvailable: false })),
       api('/api/admin/jira/readiness?version=v1.0').catch(() => ({ ready: false, reasons: ['Jira unreachable'] }))
-    ]).then(([jiraPanel, readiness]) => {
-      const jiraDelivery = $('#jira-delivery-section', root);
-      if (jiraDelivery) {
-        jiraDelivery.innerHTML = `<div class="admin-section-heading"><h2>Jira delivery</h2><span>${jiraPanel.jiraAvailable ? 'CONNECTED' : 'OFFLINE'}</span></div>${jiraPanel.jiraAvailable ? `<p>${escapeHtml(jiraPanel.sprintName)} · ${jiraPanel.donePoints}/${jiraPanel.totalPoints} points done · ${escapeHtml(jiraPanel.sprintGoal)}</p><p><a href="${escapeHtml(jiraPanel.boardUrl)}" target="_blank" rel="noreferrer">Open Jira board ↗</a></p><div class="notice-list">${jiraPanel.recentIssues.map(i => `<div class="notice-row"><span><a href="${escapeHtml(i.url)}" target="_blank" rel="noreferrer">${escapeHtml(i.key)}</a> · ${escapeHtml(i.summary)}</span><small>${escapeHtml(i.status)}</small></div>`).join('') || '<div class="empty">No recent work items.</div>'}</div>` : '<div class="empty">Jira is not configured or cannot be reached. Order operations continue normally.</div>'}`;
-      }
-      const jiraReadiness = $('#jira-readiness-section', root);
-      if (jiraReadiness) {
-        jiraReadiness.innerHTML = `<div class="admin-section-heading"><h2>Release readiness</h2><label>Version <select id="jira-version"><option ${readiness.version === 'v0.1' ? 'selected' : ''}>v0.1</option><option ${readiness.version === 'v0.2' ? 'selected' : ''}>v0.2</option><option ${readiness.version === 'v1.0' ? 'selected' : ''}>v1.0</option></select></label><span id="readiness-verdict" class="status-pill">${readiness.ready ? 'READY' : 'NOT READY'}</span></div><div id="readiness-content">${renderReadiness(readiness)}</div>`;
-        $('#jira-version', jiraReadiness)?.addEventListener('change', async event => {
-          try {
-            const result = await api(`/api/admin/jira/readiness?version=${encodeURIComponent(event.target.value)}`);
-            $('#readiness-verdict', jiraReadiness).textContent = result.ready ? 'READY' : 'NOT READY';
-            $('#readiness-content', jiraReadiness).innerHTML = renderReadiness(result);
-          } catch (error) { toast(error.message); }
-        });
-      }
+    ]);
+
+    root.innerHTML = `
+      <div class="jira-hero-banner ${jiraPanel.jiraAvailable ? 'connected' : 'offline'}">
+        <div class="jira-hero-left">
+          <div class="jira-status-pill">${jiraPanel.jiraAvailable ? '● JIRA CLOUD CONNECTED' : '○ JIRA OFFLINE'}</div>
+          <h2>${escapeHtml(jiraPanel.sprintName || 'OM2 Agile Delivery')}</h2>
+          <p class="jira-goal">${escapeHtml(jiraPanel.sprintGoal || 'Scrum Sprints · Epics · Quality Gates')}</p>
+        </div>
+        <div class="jira-hero-right">
+          <div class="jira-stat-box">
+            <span>SPRINT POINTS DONE</span>
+            <strong>${jiraPanel.donePoints || 0} / ${jiraPanel.totalPoints || 60}</strong>
+          </div>
+          ${jiraPanel.boardUrl ? `<a href="${escapeHtml(jiraPanel.boardUrl)}" target="_blank" rel="noreferrer" class="button button-light">Open Jira Board ↗</a>` : ''}
+        </div>
+      </div>
+
+      <div class="jira-sections-grid">
+        <section class="admin-card">
+          <div class="admin-section-heading">
+            <h2>Release readiness</h2>
+            <div class="version-select-wrap">
+              <label>Release Version:
+                <select id="jira-version" class="pill-select">
+                  <option ${readiness.version === 'v0.1' ? 'selected' : ''}>v0.1</option>
+                  <option ${readiness.version === 'v0.2' ? 'selected' : ''}>v0.2</option>
+                  <option ${readiness.version === 'v1.0' ? 'selected' : ''}>v1.0</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="readiness-banner ${readiness.ready ? 'ready' : 'unready'}">
+            <span class="status-pill">${readiness.ready ? 'READY TO SHIP' : 'CHECKS PENDING'}</span>
+            <strong>${readiness.donePoints || 0} / ${readiness.totalPoints || 0} Story Points Complete</strong>
+          </div>
+          <div id="readiness-content" style="margin-top:16px;">${renderReadiness(readiness)}</div>
+        </section>
+
+        <section class="admin-card">
+          <div class="admin-section-heading">
+            <h2>Scrum work items</h2>
+            <span>RECENT JIRA STORIES</span>
+          </div>
+          <div class="notice-list">
+            ${(jiraPanel.recentIssues && jiraPanel.recentIssues.length) ? jiraPanel.recentIssues.map(i => `
+              <div class="notice-row">
+                <div>
+                  <a href="${escapeHtml(i.url || '#')}" target="_blank" rel="noreferrer" class="jira-issue-link"><b>${escapeHtml(i.key)}</b></a>
+                  <span> · ${escapeHtml(i.summary)}</span>
+                </div>
+                <span class="status-pill status-${(i.status || '').toLowerCase().replace(/\s+/g, '-')}">${escapeHtml(i.status)}</span>
+              </div>
+            `).join('') : '<div class="empty">No recent work items found in active sprint.</div>'}
+          </div>
+        </section>
+      </div>
+    `;
+
+    $('#jira-version', root)?.addEventListener('change', async event => {
+      try {
+        const result = await api(`/api/admin/jira/readiness?version=${encodeURIComponent(event.target.value)}`);
+        const banner = root.querySelector('.readiness-banner');
+        if (banner) {
+          banner.className = `readiness-banner ${result.ready ? 'ready' : 'unready'}`;
+          banner.innerHTML = `<span class="status-pill">${result.ready ? 'READY TO SHIP' : 'CHECKS PENDING'}</span><strong>${result.donePoints || 0} / ${result.totalPoints || 0} Story Points Complete</strong>`;
+        }
+        $('#readiness-content', root).innerHTML = renderReadiness(result);
+      } catch (error) { toast(error.message); }
     });
 
-  } catch (error) { root.innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`; }
+  } catch (error) {
+    root.innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`;
+  }
 }
 function renderReadiness(readiness) {
   return `<p>${readiness.donePoints}/${readiness.totalPoints} story points complete</p>${readiness.reasons.length ? `<ul>${readiness.reasons.map(reason => `<li>${escapeHtml(reason)}</li>`).join('')}</ul>` : '<p>All Jira readiness checks passed.</p>'}<div class="notice-list">${Object.entries(readiness.issuesByStatus).map(([status, issues]) => `<div class="notice-row"><span><b>${escapeHtml(status)}</b> · ${issues.map(i => `<a href="${escapeHtml(i.url)}" target="_blank" rel="noreferrer">${escapeHtml(i.key)}</a>`).join(', ')}</span></div>`).join('')}${readiness.blockers.map(i => `<div class="notice-row"><span>Blocker · ${escapeHtml(i.key)} ${escapeHtml(i.summary)}</span></div>`).join('')}</div>`;

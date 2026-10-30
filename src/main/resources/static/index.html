@@ -5,18 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#162e2b">
   <title>Contra | Order Operations</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css?v=3">
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="#shop"><span class="brand-mark">C</span><span>CONTRA <small>ORDER OPERATIONS</small></span></a>
-    <nav aria-label="Main navigation">
-      <button class="nav-link active" data-page="shop">Shop</button>
-      <button class="nav-link" data-page="track">Track order</button>
-      <button class="nav-link" data-page="admin">Operations</button>
-    </nav>
-    <button class="cart-pill" id="cart-toggle">Cart <span id="cart-count">0</span></button>
-  </header>
+  <div class="topbar-wrapper">
+    <header class="topbar">
+      <a class="brand" href="#shop" onclick="go('shop')">
+        <span class="brand-mark">C</span>
+        <span class="brand-text">CONTRA <span class="brand-badge">OMS</span></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <button class="nav-link active" data-page="shop">
+          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Shop</span>
+        </button>
+        <button class="nav-link" data-page="track">
+          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/><circle cx="18.5" cy="15.5" r="2.5"/><path d="M20.27 17.27 22 19"/></svg>
+          <span>Track order</span>
+        </button>
+        <button class="nav-link" data-page="admin">
+          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          <span>Operations</span>
+        </button>
+        <button class="nav-link" data-page="jira">
+          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+          <span>Agile & Jira</span>
+        </button>
+      </nav>
+      <div class="topbar-actions">
+        <button class="cart-pill" id="cart-toggle">
+          <svg class="cart-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span>Cart</span>
+          <span class="cart-badge" id="cart-count">0</span>
+          <span class="cart-arrow">›</span>
+        </button>
+      </div>
+    </header>
+  </div>
 
   <main>
     <section class="page active" id="page-shop">
@@ -39,6 +64,11 @@
       <div class="subhero admin-heading"><div><p class="eyebrow">CONTRA · INTERNAL WORKSPACE</p><h1>Order operations</h1><p>Monitor live orders, coordinate fulfillment, and control feature rollout.</p></div><button class="button button-dark" id="refresh-admin">Refresh dashboard ↻</button></div>
       <div id="admin-content"><div class="loading">Loading operations…</div></div>
     </section>
+
+    <section class="page" id="page-jira">
+      <div class="subhero admin-heading"><div><p class="eyebrow">ATLASSIAN JIRA CLOUD · PROJECT OM2</p><h1>Agile Delivery & Releases</h1><p>Monitor Scrum sprint progress, story points, and release readiness verification.</p></div><button class="button button-dark" id="refresh-jira">Sync Jira ↻</button></div>
+      <div id="jira-content"><div class="loading">Connecting to Jira Cloud (OM2)…</div></div>
+    </section>
   </main>
 
   <footer><span>CONTRA ORDER MANAGEMENT</span><span>Built for a safer release and a clearer order lifecycle.</span><a href="/swagger-ui.html">API docs ↗</a></footer>
@@ -56,6 +86,6 @@
     </form>
   </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="/app.js?v=2" defer></script>
+  <script src="/app.js?v=4" defer></script>
 </body>
 </html>
