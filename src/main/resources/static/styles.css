@@ -1202,6 +1202,60 @@ dialog::backdrop {
   font-weight: 900;
 }
 
+.cart-clear-pill {
+  background: var(--dp-color-contrast);
+  color: var(--dp-color-signal);
+  border: var(--dp-border-divider) solid var(--dp-color-ink);
+  box-shadow: var(--dp-shadow-xs);
+  padding: 8px 14px;
+  font-size: var(--dp-typography-metadata);
+  font-weight: 900;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.cart-clear-pill:hover {
+  background: var(--dp-color-signal);
+  color: var(--dp-color-contrast);
+}
+
+.cart-items-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--dp-color-ground);
+  border: var(--dp-border-annotation) solid var(--dp-color-ink);
+  padding: 12px 16px;
+  margin-top: 10px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.checkout-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--dp-typography-small);
+  font-weight: 700;
+  border-bottom: 1px dashed var(--dp-color-ink);
+  padding-bottom: 6px;
+}
+
+.checkout-item-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.checkout-actions-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.checkout-actions-row button {
+  flex: 1;
+}
+
 /* ==========================================================================
    TOAST NOTIFICATION
    ========================================================================== */

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffed00">
   <title>Contra | Order Operations</title>
-  <link rel="stylesheet" href="/styles.css?v=6">
+  <link rel="stylesheet" href="/styles.css?v=7">
 </head>
 <body>
   <div class="topbar-wrapper">
@@ -39,6 +39,7 @@
           <span class="cart-badge" id="cart-count">0</span>
           <span class="cart-arrow">›</span>
         </button>
+        <button class="cart-clear-pill" id="topbar-clear-cart" title="Clear all items in cart" style="display: none; margin-left: 8px;">✕ Clear</button>
       </div>
     </header>
   </div>
@@ -138,6 +139,7 @@
     <form method="dialog" class="dialog-close"><button aria-label="Close">×</button></form>
     <p class="eyebrow">CHECKOUT</p>
     <h2>Where should we send it?</h2>
+    <div class="cart-items-preview" id="checkout-items-list"></div>
     <form id="checkout-form" class="checkout-form">
       <label>Name<input name="customerName" required placeholder="Your name"></label>
       <label>Email<input name="customerEmail" type="email" required placeholder="you@example.com"></label>
@@ -152,11 +154,14 @@
       </div>
       <p class="form-hint">This demo uses a mock payment gateway. No real card details are collected.</p>
       <div class="checkout-total"><span>Order total</span><strong id="checkout-total">₹0.00</strong></div>
-      <button class="button button-emphasis button-wide">Place order</button>
+      <div class="checkout-actions-row">
+        <button type="button" class="button button-light" id="dialog-clear-cart">Clear cart</button>
+        <button type="submit" class="button button-emphasis">Place order</button>
+      </div>
     </form>
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="/app.js?v=8" defer></script>
+  <script src="/app.js?v=9" defer></script>
 </body>
 </html>

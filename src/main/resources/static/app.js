@@ -31,6 +31,19 @@ function updateCartCount() {
   const count = [...state.cart.values()].reduce((sum, count) => sum + count, 0);
   const badge = $('#cart-count');
   if (badge) badge.textContent = count;
+  const topbarClear = $('#topbar-clear-cart');
+  if (topbarClear) {
+    topbarClear.style.display = count > 0 ? 'inline-flex' : 'none';
+  }
+}
+
+function clearCart() {
+  if (!state.cart.size) return;
+  state.cart.clear();
+  saveCartToStorage();
+  const dialog = $('#checkout-dialog');
+  if (dialog && dialog.open) dialog.close();
+  toast('Cart cleared.');
 }
 
 async function api(path, options = {}) {
@@ -72,6 +85,8 @@ $('#cart-toggle').addEventListener('click', () => {
   if (!state.cart.size) return toast('Your cart is empty. Add something from the collection first.');
   openCheckout();
 });
+$('#topbar-clear-cart')?.addEventListener('click', clearCart);
+$('#dialog-clear-cart')?.addEventListener('click', clearCart);
 $('#refresh-admin')?.addEventListener('click', loadAdmin);
 $('#refresh-jira')?.addEventListener('click', loadJira);
 
@@ -99,6 +114,18 @@ async function openCheckout() {
   }
   const total = [...state.cart].reduce((sum, [id, quantity]) => sum + (state.products.find(p => p.id === id)?.price || 0) * quantity, 0);
   $('#checkout-total').textContent = money(total);
+
+  const itemsContainer = $('#checkout-items-list');
+  if (itemsContainer) {
+    itemsContainer.innerHTML = [...state.cart].map(([id, quantity]) => {
+      const p = state.products.find(prod => prod.id === id);
+      return `<div class="checkout-item-row">
+        <span><b>${quantity}×</b> ${escapeHtml(p ? p.name : id)}</span>
+        <span>${money((p?.price || 0) * quantity)}</span>
+      </div>`;
+    }).join('') || '<div class="muted">No items in bag</div>';
+  }
+
   try {
     const savedName = localStorage.getItem('contra_customer_name');
     const savedEmail = localStorage.getItem('contra_customer_email');
