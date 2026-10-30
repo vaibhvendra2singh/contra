@@ -49,7 +49,7 @@ else
 fi
 
 SERVER_PORT="${SERVER_PORT:-8080}"
-export DEMO_MODE="${DEMO_MODE:-true}"
+export DEMO_MODE="${DEMO_MODE:-false}"
 
 # 3. Port Check & Cleanup
 echo -e "\n${BOLD}[3/5] Checking Port Availability (Port ${SERVER_PORT})...${RESET}"
