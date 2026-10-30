@@ -3,24 +3,70 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const money = value => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value || 0);
 const dateTime = value => new Date(value).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
 
+function loadCartFromStorage() {
+  try {
+    const raw = localStorage.getItem('contra_cart');
+    if (raw) {
+      const items = JSON.parse(raw);
+      if (Array.isArray(items)) {
+        state.cart = new Map(items);
+      }
+    }
+  } catch (e) {
+    console.warn('Could not read cart from localStorage', e);
+  }
+  updateCartCount();
+}
+
+function saveCartToStorage() {
+  try {
+    localStorage.setItem('contra_cart', JSON.stringify([...state.cart]));
+  } catch (e) {
+    console.warn('Could not save cart to localStorage', e);
+  }
+  updateCartCount();
+}
+
+function updateCartCount() {
+  const count = [...state.cart.values()].reduce((sum, count) => sum + count, 0);
+  const badge = $('#cart-count');
+  if (badge) badge.textContent = count;
+}
+
 async function api(path, options = {}) {
   const response = await fetch(path, { headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }, ...options });
   const body = response.status === 204 ? null : await response.json().catch(() => null);
   if (!response.ok) throw new Error(body?.message || `Request failed (${response.status})`);
   return body;
 }
+
 function toast(message) {
   const node = $('#toast'); node.textContent = message; node.classList.add('show');
   clearTimeout(toast.timer); toast.timer = setTimeout(() => node.classList.remove('show'), 3200);
 }
-function go(page) {
+
+function go(page, updateHash = true) {
   document.querySelectorAll('.page').forEach(node => node.classList.toggle('active', node.id === `page-${page}`));
   document.querySelectorAll('.nav-link').forEach(node => node.classList.toggle('active', node.dataset.page === page));
+  if (updateHash) {
+    location.hash = page;
+    try { localStorage.setItem('contra_last_page', page); } catch (_) {}
+  }
   if (page === 'shop') loadCatalog();
   if (page === 'admin') loadAdmin();
   if (page === 'jira') loadJira();
+  if (page === 'track') {
+    const lastTrackId = localStorage.getItem('contra_last_track_id');
+    if (lastTrackId && $('#track-id')) {
+      $('#track-id').value = lastTrackId;
+      if (!$('#tracking-result').hasChildNodes() || $('#tracking-result').textContent.trim() === '') {
+        showOrder(lastTrackId);
+      }
+    }
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 document.querySelectorAll('.nav-link').forEach(button => button.addEventListener('click', () => go(button.dataset.page)));
 $('#cart-toggle').addEventListener('click', () => {
   if (!state.cart.size) return toast('Your cart is empty. Add something from the collection first.');
@@ -40,16 +86,28 @@ async function loadCatalog() {
     grid.querySelectorAll('[data-add]').forEach(button => button.addEventListener('click', () => addToCart(button.dataset.add)));
   } catch (error) { grid.innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`; }
 }
+
 function addToCart(id) {
   state.cart.set(id, (state.cart.get(id) || 0) + 1);
-  $('#cart-count').textContent = [...state.cart.values()].reduce((sum, count) => sum + count, 0);
+  saveCartToStorage();
   toast('Added to your bag.');
 }
-function openCheckout() {
+
+async function openCheckout() {
+  if (!state.products.length) {
+    try { state.products = await api('/api/products'); } catch (_) {}
+  }
   const total = [...state.cart].reduce((sum, [id, quantity]) => sum + (state.products.find(p => p.id === id)?.price || 0) * quantity, 0);
   $('#checkout-total').textContent = money(total);
+  try {
+    const savedName = localStorage.getItem('contra_customer_name');
+    const savedEmail = localStorage.getItem('contra_customer_email');
+    if (savedName && $('[name="customerName"]')) $('[name="customerName"]').value = savedName;
+    if (savedEmail && $('[name="customerEmail"]')) $('[name="customerEmail"]').value = savedEmail;
+  } catch (_) {}
   $('#checkout-dialog').showModal();
 }
+
 $('#checkout-form').addEventListener('submit', async event => {
   event.preventDefault();
   const form = new FormData(event.currentTarget);
@@ -57,22 +115,45 @@ $('#checkout-form').addEventListener('submit', async event => {
   request.items = [...state.cart].map(([productId, quantity]) => ({ productId, quantity }));
   try {
     const order = await api('/api/orders', { method: 'POST', body: JSON.stringify(request) });
-    state.cart.clear(); $('#cart-count').textContent = '0'; $('#checkout-dialog').close(); event.currentTarget.reset();
+    try {
+      if (request.customerName) localStorage.setItem('contra_customer_name', request.customerName);
+      if (request.customerEmail) localStorage.setItem('contra_customer_email', request.customerEmail);
+    } catch (_) {}
+    state.cart.clear();
+    saveCartToStorage();
+    $('#checkout-dialog').close();
+    event.currentTarget.reset();
     toast(order.message);
-    $('#track-id').value = order.orderId; go('track'); await showOrder(order.orderId);
+    $('#track-id').value = order.orderId;
+    go('track');
+    await showOrder(order.orderId);
     await loadCatalog();
   } catch (error) { toast(error.message); }
 });
+
 $('#track-form').addEventListener('submit', async event => {
   event.preventDefault(); await showOrder($('#track-id').value.trim());
 });
+
 async function showOrder(id) {
+  if (!id) return;
+  try { localStorage.setItem('contra_last_track_id', id); } catch (_) {}
   const target = $('#tracking-result'); target.innerHTML = '<div class="loading">Looking up your order…</div>';
   try {
     const order = await api(`/api/track/${encodeURIComponent(id)}`);
     target.innerHTML = renderOrder(order, true);
     const cancel = $('[data-cancel]', target);
     if (cancel) cancel.addEventListener('click', async () => { try { await api(`/api/orders/${order.id}/cancel`, { method: 'POST' }); await showOrder(order.id); } catch (e) { toast(e.message); } });
+    const ret = $('[data-return]', target);
+    if (ret) ret.addEventListener('click', async () => { try { await api(`/api/orders/${order.id}/returns`, { method: 'POST' }); await showOrder(order.id); } catch (e) { toast(e.message); } });
+    const retry = $('[data-retry]', target);
+    if (retry) retry.addEventListener('click', async () => {
+      const token = prompt('Payment token (leave blank for success; use fail-demo to simulate another decline):', '');
+      if (token === null) return;
+      try { await api(`/api/orders/${order.id}/retry-payment`, { method: 'POST', body: JSON.stringify({ paymentToken: token }) }); await showOrder(order.id); } catch (e) { toast(e.message); }
+    });
+  } catch (error) { target.innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`; }
+}
     const ret = $('[data-return]', target);
     if (ret) ret.addEventListener('click', async () => { try { await api(`/api/orders/${order.id}/returns`, { method: 'POST' }); await showOrder(order.id); } catch (e) { toast(e.message); } });
     const retry = $('[data-retry]', target);
@@ -270,4 +351,19 @@ async function adminAction(button) {
 }
 function pretty(value) { return (value || '').toLowerCase().replaceAll('_', ' ').replace(/\b\w/g, char => char.toUpperCase()); }
 function escapeHtml(value) { return String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]); }
-loadCatalog();
+
+// Restore cart from storage
+loadCartFromStorage();
+
+// Listen for hash changes
+window.addEventListener('hashchange', () => {
+  const hash = location.hash.replace('#', '').trim();
+  if (hash && ['shop', 'track', 'admin', 'jira'].includes(hash)) {
+    go(hash, false);
+  }
+});
+
+// Restore last viewed page or default to shop
+const initialPage = location.hash.replace('#', '').trim() || localStorage.getItem('contra_last_page') || 'shop';
+go(['shop', 'track', 'admin', 'jira'].includes(initialPage) ? initialPage : 'shop', false);
+
