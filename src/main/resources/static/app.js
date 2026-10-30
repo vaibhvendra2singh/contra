@@ -181,16 +181,6 @@ async function showOrder(id) {
     });
   } catch (error) { target.innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`; }
 }
-    const ret = $('[data-return]', target);
-    if (ret) ret.addEventListener('click', async () => { try { await api(`/api/orders/${order.id}/returns`, { method: 'POST' }); await showOrder(order.id); } catch (e) { toast(e.message); } });
-    const retry = $('[data-retry]', target);
-    if (retry) retry.addEventListener('click', async () => {
-      const token = prompt('Payment token (leave blank for success; use fail-demo to simulate another decline):', '');
-      if (token === null) return;
-      try { await api(`/api/orders/${order.id}/retry-payment`, { method: 'POST', body: JSON.stringify({ paymentToken: token }) }); await showOrder(order.id); } catch (e) { toast(e.message); }
-    });
-  } catch (error) { target.innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`; }
-}
 function renderOrder(order, customerView = false) {
   const actions = [];
   if (customerView && !['SHIPPED', 'DELIVERED', 'CANCELLED', 'RETURN_REQUESTED', 'RETURNED', 'REFUNDED'].includes(order.status)) actions.push(`<button data-cancel>Cancel order</button>`);
