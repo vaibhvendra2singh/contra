@@ -173,7 +173,15 @@ async function showOrder(id) {
     const order = await api(`/api/track/${encodeURIComponent(id)}`);
     target.innerHTML = renderOrder(order, true);
     const cancel = $('[data-cancel]', target);
-    if (cancel) cancel.addEventListener('click', async () => { try { await api(`/api/orders/${order.id}/cancel`, { method: 'POST' }); await showOrder(order.id); } catch (e) { toast(e.message); } });
+    if (cancel) cancel.addEventListener('click', async () => {
+      if (!confirm('Are you sure you want to cancel this order?')) return;
+      try {
+        await api(`/api/orders/${order.id}/cancel`, { method: 'POST' });
+        toast('Order cancelled successfully.');
+        await showOrder(order.id);
+        await loadCatalog();
+      } catch (e) { toast(e.message); }
+    });
     const ret = $('[data-return]', target);
     if (ret) ret.addEventListener('click', async () => { try { await api(`/api/orders/${order.id}/returns`, { method: 'POST' }); await showOrder(order.id); } catch (e) { toast(e.message); } });
     const retry = $('[data-retry]', target);
@@ -186,10 +194,12 @@ async function showOrder(id) {
 }
 function renderOrder(order, customerView = false) {
   const actions = [];
-  if (customerView && !['SHIPPED', 'DELIVERED', 'CANCELLED', 'RETURN_REQUESTED', 'RETURNED', 'REFUNDED'].includes(order.status)) actions.push(`<button data-cancel>Cancel order</button>`);
-  if (customerView && order.status === 'PAYMENT_FAILED') actions.push('<button data-retry>Retry payment</button>');
-  if (customerView && order.status === 'DELIVERED') actions.push('<button data-return>Request a return</button>');
-  return `<article class="order-card"><div class="order-header"><div><h2>Order ${escapeHtml(order.id.slice(0, 8).toUpperCase())}</h2><div class="muted">${escapeHtml(order.customerName)} · ${money(order.total)}</div></div><span class="status-pill">${pretty(order.status)}</span></div>${order.trackingNumber ? `<p class="stock-label">TRACKING · ${escapeHtml(order.trackingNumber)}</p>` : ''}<div class="timeline">${order.timeline.map(item => `<div class="timeline-item"><b>${pretty(item.toStatus)}</b><small>${escapeHtml(item.actor)} · ${dateTime(item.occurredAt)}</small></div>`).join('')}</div>${actions.length ? `<div class="order-actions">${actions.join('')}</div>` : ''}</article>`;
+  if (customerView && ['CREATED', 'PAYMENT_PENDING', 'PAID', 'INVENTORY_ALLOCATED', 'FULFILLING'].includes(order.status)) {
+    actions.push(`<button class="button button-signal" data-cancel>Cancel order</button>`);
+  }
+  if (customerView && order.status === 'PAYMENT_FAILED') actions.push('<button class="button button-emphasis" data-retry>Retry payment</button>');
+  if (customerView && order.status === 'DELIVERED') actions.push('<button class="button button-light" data-return>Request a return</button>');
+  return `<article class="order-card"><div class="order-header"><div><h2>Order ${escapeHtml(order.id.slice(0, 8).toUpperCase())}</h2><div class="muted">${escapeHtml(order.customerName)} · ${money(order.total)}</div></div><span class="status-pill status-${order.status.toLowerCase()}">${pretty(order.status)}</span></div>${order.trackingNumber ? `<p class="stock-label">TRACKING · ${escapeHtml(order.trackingNumber)}</p>` : ''}<div class="timeline">${order.timeline.map(item => `<div class="timeline-item"><b>${pretty(item.toStatus)}</b><small>${escapeHtml(item.actor)} · ${dateTime(item.occurredAt)}</small></div>`).join('')}</div>${actions.length ? `<div class="order-actions">${actions.join(' ')}</div>` : ''}</article>`;
 }
 async function loadAdmin() {
   const root = $('#admin-content');
@@ -347,18 +357,24 @@ function renderReadiness(readiness) {
   return `<p>${readiness.donePoints}/${readiness.totalPoints} story points complete</p>${readiness.reasons.length ? `<ul>${readiness.reasons.map(reason => `<li>${escapeHtml(reason)}</li>`).join('')}</ul>` : '<p>All Jira readiness checks passed.</p>'}<div class="notice-list">${Object.entries(readiness.issuesByStatus).map(([status, issues]) => `<div class="notice-row"><span><b>${escapeHtml(status)}</b> · ${issues.map(i => `<a href="${escapeHtml(i.url)}" target="_blank" rel="noreferrer">${escapeHtml(i.key)}</a>`).join(', ')}</span></div>`).join('')}${readiness.blockers.map(i => `<div class="notice-row"><span>Blocker · ${escapeHtml(i.key)} ${escapeHtml(i.summary)}</span></div>`).join('')}</div>`;
 }
 function renderAdminOrder(order) {
-  let action = '';
-  if (order.status === 'INVENTORY_ALLOCATED') action = `<button data-action="fulfill" data-id="${order.id}">Start fulfillment</button>`;
-  if (order.status === 'FULFILLING') action = `<button data-action="ship" data-id="${order.id}">Add tracking & ship</button>`;
-  if (order.status === 'SHIPPED') action = `<button data-action="deliver" data-id="${order.id}">Mark delivered</button>`;
-  if (order.status === 'RETURN_REQUESTED') action = `<button data-action="returned" data-id="${order.id}">Receive return</button>`;
-  if (order.status === 'RETURNED') action = `<button data-action="refund" data-id="${order.id}">Issue refund</button>`;
-  return `<article class="order-card"><div class="order-header"><div><h2>${escapeHtml(order.id.slice(0, 8).toUpperCase())} · ${money(order.total)}</h2><div class="muted">Order ID: <code>${escapeHtml(order.id)}</code></div><div class="muted">${escapeHtml(order.customerName)} · ${escapeHtml(order.customerEmail)}</div></div><span class="status-pill">${pretty(order.status)}</span></div><p class="stock-label">${order.items.map(item => `${item.quantity} × ${escapeHtml(item.productName)}`).join(' · ')}</p>${action ? `<div class="order-actions">${action}</div>` : ''}</article>`;
+  const actions = [];
+  if (order.status === 'INVENTORY_ALLOCATED') actions.push(`<button class="button button-dark" data-action="fulfill" data-id="${order.id}">Start fulfillment</button>`);
+  if (order.status === 'FULFILLING') actions.push(`<button class="button button-dark" data-action="ship" data-id="${order.id}">Add tracking & ship</button>`);
+  if (['PAYMENT_PENDING', 'PAYMENT_FAILED', 'INVENTORY_ALLOCATED', 'FULFILLING'].includes(order.status)) {
+    actions.push(`<button class="button button-signal" data-action="cancel" data-id="${order.id}">Cancel order</button>`);
+  }
+  if (order.status === 'SHIPPED') actions.push(`<button class="button button-emphasis" data-action="deliver" data-id="${order.id}">Mark delivered</button>`);
+  if (order.status === 'RETURN_REQUESTED') actions.push(`<button class="button button-dark" data-action="returned" data-id="${order.id}">Receive return</button>`);
+  if (order.status === 'RETURNED') actions.push(`<button class="button button-emphasis" data-action="refund" data-id="${order.id}">Issue refund</button>`);
+  return `<article class="order-card"><div class="order-header"><div><h2>${escapeHtml(order.id.slice(0, 8).toUpperCase())} · ${money(order.total)}</h2><div class="muted">Order ID: <code>${escapeHtml(order.id)}</code></div><div class="muted">${escapeHtml(order.customerName)} · ${escapeHtml(order.customerEmail)}</div></div><span class="status-pill status-${order.status.toLowerCase()}">${pretty(order.status)}</span></div><p class="stock-label">${order.items.map(item => `${item.quantity} × ${escapeHtml(item.productName)}`).join(' · ')}</p>${actions.length ? `<div class="order-actions">${actions.join(' ')}</div>` : ''}</article>`;
 }
 async function adminAction(button) {
   const id = button.dataset.id, action = button.dataset.action;
   try {
-    if (action === 'ship') {
+    if (action === 'cancel') {
+      if (!confirm('Are you sure you want to cancel this order? Allocated inventory will be returned to stock.')) return;
+      await api(`/api/orders/${id}/cancel`, { method: 'POST' });
+    } else if (action === 'ship') {
       const trackingNumber = prompt('Tracking number:', `CT-${Math.random().toString(36).slice(2, 9).toUpperCase()}`);
       if (!trackingNumber) return;
       await api(`/api/admin/orders/${id}/ship`, { method: 'POST', body: JSON.stringify({ trackingNumber }) });
