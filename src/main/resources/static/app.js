@@ -137,7 +137,8 @@ async function openCheckout() {
 
 $('#checkout-form').addEventListener('submit', async event => {
   event.preventDefault();
-  const form = new FormData(event.currentTarget);
+  const formElement = event.currentTarget || $('#checkout-form');
+  const form = new FormData(formElement);
   const request = Object.fromEntries(form.entries());
   request.items = [...state.cart].map(([productId, quantity]) => ({ productId, quantity }));
   try {
@@ -148,12 +149,14 @@ $('#checkout-form').addEventListener('submit', async event => {
     } catch (_) {}
     state.cart.clear();
     saveCartToStorage();
-    $('#checkout-dialog').close();
-    event.currentTarget.reset();
-    toast(order.message);
-    $('#track-id').value = order.orderId;
-    go('track');
-    await showOrder(order.orderId);
+    $('#checkout-dialog')?.close();
+    formElement?.reset();
+    toast(order.message || 'Order placed successfully.');
+    if (order.orderId) {
+      if ($('#track-id')) $('#track-id').value = order.orderId;
+      go('track');
+      await showOrder(order.orderId);
+    }
     await loadCatalog();
   } catch (error) { toast(error.message); }
 });
