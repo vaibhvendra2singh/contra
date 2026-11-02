@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffed00">
   <title>Contra | Order Operations</title>
-  <link rel="stylesheet" href="/styles.css?v=8">
+  <link rel="stylesheet" href="/styles.css?v=9">
 </head>
 <body>
   <div class="topbar-wrapper">
@@ -52,7 +52,7 @@
     <section class="page active" id="page-home">
       <div class="hero-neo-poster">
         <div class="hero-poster-header">
-          <p class="eyebrow">THE CONTRA STORE · ORDER LIFECYCLE DEMO</p>
+          <span class="eyebrow">THE CONTRA STORE · ORDER LIFECYCLE DEMO</span>
           <div class="hero-poster-arrow-tile" aria-hidden="true">↓</div>
           <div class="hero-strip-container">
             <div class="hero-strip hero-strip-black">GOOD GOODS.</div>
@@ -78,7 +78,7 @@
       <section class="home-feature-grid">
         <div class="home-feature-card">
           <div>
-            <p class="eyebrow">STOREFRONT</p>
+            <span class="eyebrow">STOREFRONT</span>
             <h3>Everyday Essentials</h3>
             <p>Explore our curated collection of ceramics, tees, and tote bags with live inventory protection.</p>
           </div>
@@ -86,7 +86,7 @@
         </div>
         <div class="home-feature-card">
           <div>
-            <p class="eyebrow">OPERATIONS</p>
+            <span class="eyebrow">OPERATIONS</span>
             <h3>Live Order Console</h3>
             <p>Track order flow, advance fulfillment states, test failure scenarios, and trigger refunds.</p>
           </div>
@@ -94,7 +94,7 @@
         </div>
         <div class="home-feature-card">
           <div>
-            <p class="eyebrow">SCRUM DELIVERY</p>
+            <span class="eyebrow">SCRUM DELIVERY</span>
             <h3>Jira Agile Project</h3>
             <p>Direct integration with Atlassian Jira Cloud OM2 for Sprint 3 velocity and release readiness gates.</p>
           </div>
@@ -105,7 +105,7 @@
 
     <section class="page" id="page-shop">
       <div class="subhero">
-        <p class="eyebrow">SMALL BATCH · READY TO SHIP</p>
+        <span class="eyebrow">SMALL BATCH · READY TO SHIP</span>
         <h1>Everyday Essentials</h1>
         <p>Browse our limited collection. Inventory is allocated immediately upon order checkout.</p>
       </div>
@@ -113,7 +113,7 @@
       <section class="section" id="catalog">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">CONTRA CATALOG · ₹ INR</p>
+            <span class="eyebrow">CONTRA CATALOG · ₹ INR</span>
             <h2>Available Collection</h2>
           </div>
           <span class="muted" id="stock-note">Live inventory</span>
@@ -126,7 +126,7 @@
 
     <section class="page" id="page-track">
       <div class="subhero">
-        <p class="eyebrow">YOUR ORDER, IN VIEW</p>
+        <span class="eyebrow">YOUR ORDER, IN VIEW</span>
         <h1>Follow the journey.</h1>
         <p>Enter your order ID to see its latest status, tracking number, and timeline.</p>
       </div>
@@ -143,7 +143,7 @@
     <section class="page" id="page-admin">
       <div class="subhero admin-heading">
         <div>
-          <p class="eyebrow">CONTRA · INTERNAL WORKSPACE</p>
+          <span class="eyebrow">CONTRA · INTERNAL WORKSPACE</span>
           <h1>Order operations</h1>
           <p>Monitor live orders, coordinate fulfillment, and control feature rollout.</p>
         </div>
@@ -157,7 +157,7 @@
     <section class="page" id="page-jira">
       <div class="subhero admin-heading">
         <div>
-          <p class="eyebrow">ATLASSIAN JIRA CLOUD · PROJECT OM2</p>
+          <span class="eyebrow">ATLASSIAN JIRA CLOUD · PROJECT OM2</span>
           <h1>Agile Delivery & Releases</h1>
           <p>Monitor Scrum sprint progress, story points, and release readiness verification.</p>
         </div>
@@ -177,7 +177,7 @@
 
   <dialog id="checkout-dialog">
     <form method="dialog" class="dialog-close"><button aria-label="Close">×</button></form>
-    <p class="eyebrow">CHECKOUT</p>
+    <span class="eyebrow">CHECKOUT</span>
     <h2>Where should we send it?</h2>
     <div class="cart-items-preview" id="checkout-items-list"></div>
     <form id="checkout-form" class="checkout-form">
@@ -202,6 +202,6 @@
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="/app.js?v=13" defer></script>
+  <script src="/app.js?v=14" defer></script>
 </body>
 </html>

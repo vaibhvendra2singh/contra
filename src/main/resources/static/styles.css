@@ -308,17 +308,21 @@ main {
   display: block;
 }
 
-.eyebrow {
+.eyebrow,
+p.eyebrow,
+span.eyebrow {
   display: inline-block;
-  font-size: var(--dp-typography-label);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  background: var(--dp-color-ink);
-  color: var(--dp-color-contrast);
-  padding: 4px 10px;
-  margin-bottom: 12px;
-  border: 1px solid var(--dp-color-ink);
+  font-size: var(--dp-typography-label) !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  background: var(--dp-color-ink) !important;
+  color: var(--dp-color-contrast) !important;
+  padding: 4px 10px !important;
+  margin-bottom: 12px !important;
+  border: 1px solid var(--dp-color-ink) !important;
+  line-height: 1.2 !important;
+  flex: none !important;
 }
 
 /* ==========================================================================
@@ -491,7 +495,7 @@ main {
   margin: 10px 0;
 }
 
-.home-feature-card p {
+.home-feature-card p:not(.eyebrow) {
   font-size: var(--dp-typography-reading);
   font-weight: 600;
   color: #333;
