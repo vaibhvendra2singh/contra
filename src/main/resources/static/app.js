@@ -59,6 +59,8 @@ function toast(message) {
 }
 
 function go(page, updateHash = true) {
+  const validPages = ['home', 'shop', 'track', 'admin', 'jira'];
+  if (!validPages.includes(page)) page = 'home';
   document.querySelectorAll('.page').forEach(node => node.classList.toggle('active', node.id === `page-${page}`));
   document.querySelectorAll('.nav-link').forEach(node => node.classList.toggle('active', node.dataset.page === page));
   if (updateHash) {
@@ -394,12 +396,12 @@ loadCartFromStorage();
 // Listen for hash changes
 window.addEventListener('hashchange', () => {
   const hash = location.hash.replace('#', '').trim();
-  if (hash && ['shop', 'track', 'admin', 'jira'].includes(hash)) {
+  if (hash && ['home', 'shop', 'track', 'admin', 'jira'].includes(hash)) {
     go(hash, false);
   }
 });
 
-// Restore last viewed page or default to shop
-const initialPage = location.hash.replace('#', '').trim() || localStorage.getItem('contra_last_page') || 'shop';
-go(['shop', 'track', 'admin', 'jira'].includes(initialPage) ? initialPage : 'shop', false);
+// Restore last viewed page or default to home
+const initialPage = location.hash.replace('#', '').trim() || localStorage.getItem('contra_last_page') || 'home';
+go(['home', 'shop', 'track', 'admin', 'jira'].includes(initialPage) ? initialPage : 'home', false);
 

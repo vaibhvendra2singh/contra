@@ -5,18 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffed00">
   <title>Contra | Order Operations</title>
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=8">
 </head>
 <body>
   <div class="topbar-wrapper">
     <header class="topbar">
-      <a class="brand" href="#shop" onclick="go('shop')">
+      <a class="brand" href="#home" onclick="go('home')">
         <div class="brand-badge-neo">CONTRA</div>
         <span class="brand-tag-neo">OMS</span>
       </a>
       <nav aria-label="Main navigation">
-        <button class="nav-link active" data-page="shop">
+        <button class="nav-link active" data-page="home">
           <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Home</span>
+        </button>
+        <button class="nav-link" data-page="shop">
+          <svg class="nav-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
           <span>Shop</span>
         </button>
         <button class="nav-link" data-page="track">
@@ -45,7 +49,7 @@
   </div>
 
   <main>
-    <section class="page active" id="page-shop">
+    <section class="page active" id="page-home">
       <div class="hero-neo-poster">
         <div class="hero-poster-header">
           <p class="eyebrow">THE CONTRA STORE · ORDER LIFECYCLE DEMO</p>
@@ -58,7 +62,8 @@
         <div class="hero-violet-band">
           <p>Shop an edited collection and follow every step from checkout to doorstep with complete live tracking.</p>
           <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-            <a class="button button-light" href="#catalog">Explore the collection ↓</a>
+            <button class="button button-light" onclick="go('shop')">Enter Shop →</button>
+            <button class="button button-dark" onclick="go('track')">Track Order ↗</button>
             <span class="hero-badge-index">EDITION 01 / 03</span>
           </div>
         </div>
@@ -70,11 +75,46 @@
         <div><span>03</span><b>Track every step</b><small>Real-time lifecycle & Jira integration</small></div>
       </section>
 
+      <section class="home-feature-grid">
+        <div class="home-feature-card">
+          <div>
+            <p class="eyebrow">STOREFRONT</p>
+            <h3>Everyday Essentials</h3>
+            <p>Explore our curated collection of ceramics, tees, and tote bags with live inventory protection.</p>
+          </div>
+          <button class="button button-emphasis button-wide" onclick="go('shop')">Browse Store →</button>
+        </div>
+        <div class="home-feature-card">
+          <div>
+            <p class="eyebrow">OPERATIONS</p>
+            <h3>Live Order Console</h3>
+            <p>Track order flow, advance fulfillment states, test failure scenarios, and trigger refunds.</p>
+          </div>
+          <button class="button button-light button-wide" onclick="go('admin')">View Operations →</button>
+        </div>
+        <div class="home-feature-card">
+          <div>
+            <p class="eyebrow">SCRUM DELIVERY</p>
+            <h3>Jira Agile Project</h3>
+            <p>Direct integration with Atlassian Jira Cloud OM2 for Sprint 3 velocity and release readiness gates.</p>
+          </div>
+          <button class="button button-dark button-wide" onclick="go('jira')">Open Jira Panel →</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="page" id="page-shop">
+      <div class="subhero">
+        <p class="eyebrow">SMALL BATCH · READY TO SHIP</p>
+        <h1>Everyday Essentials</h1>
+        <p>Browse our limited collection. Inventory is allocated immediately upon order checkout.</p>
+      </div>
+
       <section class="section" id="catalog">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">SMALL BATCH · READY TO SHIP</p>
-            <h2>Everyday essentials</h2>
+            <p class="eyebrow">CONTRA CATALOG · ₹ INR</p>
+            <h2>Available Collection</h2>
           </div>
           <span class="muted" id="stock-note">Live inventory</span>
         </div>
@@ -162,6 +202,6 @@
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="/app.js?v=12" defer></script>
+  <script src="/app.js?v=13" defer></script>
 </body>
 </html>

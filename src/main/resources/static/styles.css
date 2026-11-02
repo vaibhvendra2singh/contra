@@ -461,6 +461,44 @@ main {
   font-weight: 600;
 }
 
+.home-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--dp-spacing-gap);
+  margin-top: 36px;
+}
+
+.home-feature-card {
+  background: var(--dp-color-contrast);
+  border: var(--dp-border-panel) solid var(--dp-color-ink);
+  box-shadow: var(--dp-shadow-md);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.home-feature-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--dp-shadow-lg);
+}
+
+.home-feature-card h3 {
+  font-size: 22px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  margin: 10px 0;
+}
+
+.home-feature-card p {
+  font-size: var(--dp-typography-reading);
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px;
+  flex: 1;
+}
+
 /* ==========================================================================
    CATALOG & PRODUCT CARDS
    ========================================================================== */
